@@ -1,0 +1,20 @@
+{
+	"ApiSelections": {
+		"ExcludedControllerNames": [
+			"DemoMvc.Controllers.Home"
+		],
+		"DataModelAssemblyNames": [
+			"CoreMvc"
+		],
+		"CherryPickingMethods": 3
+	},
+
+	"ClientApiOutputs": {
+		"ClientLibraryProjectFolderName": "..\\CoreWebApi.ClientApi",
+		"GenerateBothAsyncAndSync": true,
+
+		"CamelCase": true,
+		"ContentType": "application/json",
+		"TypeScriptJQFolder": "..\\Scripts\\ClientApi"
+	}
+}
