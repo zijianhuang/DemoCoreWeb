@@ -1,0 +1,16 @@
+{
+	"ApiSelections": {
+		"DataModelAssemblyNames": [
+			"CoreWebApi"
+		],
+		"CherryPickingMethods": 3
+	},
+
+	"ClientApiOutputs": {
+		"ClientLibraryProjectFolderName": "..\\CoreWebApi.ClientApi",
+		"GenerateBothAsyncAndSync": true,
+
+		"CamelCase": true,
+		"ContentType": "application/json"
+	}
+}
