@@ -1,7 +1,7 @@
 import { NgModule, Inject } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
@@ -11,8 +11,8 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import * as namespaces from '../clientapi/WebApiNG2ClientAuto';
 
-export function clientFactory(baseUrl: string, http: HttpClient) {
-	return new namespaces.CoreNG_Controllers_Client.SampleData(baseUrl, http);
+export function clientFactory(http: HttpClient) {
+	return new namespaces.CoreNG_Controllers_Client.SampleData('', http);
 }
 
 @NgModule({
@@ -39,9 +39,9 @@ export function clientFactory(baseUrl: string, http: HttpClient) {
 		{
 			provide: namespaces.CoreNG_Controllers_Client.SampleData,
 			useFactory: clientFactory,
-			deps: [HttpClient],
+			deps: [HttpClient]
 
-		},
+		}
 	]
 
 })

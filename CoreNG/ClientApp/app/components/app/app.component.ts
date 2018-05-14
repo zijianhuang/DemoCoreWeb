@@ -7,3 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 }
+//To upgrade from 4 to 5, thanks to http://www.talkingdotnet.com/upgrade-angular-4-app-angular-5-visual-studio-2017/
