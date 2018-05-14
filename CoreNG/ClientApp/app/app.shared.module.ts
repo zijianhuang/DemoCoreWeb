@@ -12,7 +12,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import * as namespaces from '../clientapi/WebApiNG2ClientAuto';
 
 export function clientFactory(http: HttpClient) {
-	return new namespaces.CoreNG_Controllers_Client.SampleData('', http);
+	return new namespaces.CoreNG_Controllers_Client.SampleData(undefined, http);
 }
 
 @NgModule({

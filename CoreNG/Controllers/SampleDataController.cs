@@ -14,6 +14,10 @@ namespace CoreNG.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+		/// <summary>
+		/// Get random weather forecast
+		/// </summary>
+		/// <returns>A list of random weather data</returns>
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
