@@ -1,23 +1,25 @@
-import { Component, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as namespaces from '../../../clientapi/WebApiNG2ClientAuto';
 
 @Component({
     selector: 'fetchdata',
     templateUrl: './fetchdata.component.html'
 })
-export class FetchDataComponent {
-    public forecasts: WeatherForecast[];
+export class FetchDataComponent implements OnInit {
+	public forecasts: namespaces.CoreNG_Controllers_Client.WeatherForecast[];
 
-    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
-        http.get(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
-            this.forecasts = result.json() as WeatherForecast[];
-        }, error => console.error(error));
-    }
-}
+	constructor(@Inject(namespaces.CoreNG_Controllers_Client.SampleData) private clientService: namespaces.CoreNG_Controllers_Client.SampleData) {
+	}
 
-interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+	ngOnInit() {
+		this.clientService.weatherForecasts().subscribe(
+			data => {
+				this.forecasts = data;
+			},
+			error => {
+				console.error(error);
+			}
+		);
+	}
 }

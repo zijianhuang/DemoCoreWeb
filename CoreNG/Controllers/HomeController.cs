@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreNG.Controllers
 {
-    public class HomeController : Controller
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public class HomeController : Controller
     {
         public IActionResult Index()
         {

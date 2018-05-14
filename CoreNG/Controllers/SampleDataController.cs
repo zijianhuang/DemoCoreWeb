@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Runtime.Serialization;
 namespace CoreNG.Controllers
 {
     [Route("api/[controller]")]
@@ -26,19 +26,27 @@ namespace CoreNG.Controllers
             });
         }
 
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
 
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
-        }
-    }
+		//The scarfolding codes of Core NG put this class nested inside the controller. However, such nested data class is generally not a good practice.
+		[DataContract]
+		public class WeatherForecast
+		{
+			[DataMember]
+			public string DateFormatted { get; set; }
+			[DataMember]
+			public int TemperatureC { get; set; }
+			[DataMember]
+			public string Summary { get; set; }
+
+			[DataMember]
+			public int TemperatureF
+			{
+				get
+				{
+					return 32 + (int)(TemperatureC / 0.5556);
+				}
+			}
+		}
+	}
+
 }
