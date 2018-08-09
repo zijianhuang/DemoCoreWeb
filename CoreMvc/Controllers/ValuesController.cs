@@ -21,7 +21,7 @@ namespace CoreWebApi.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value"+id;
         }
 
         // POST api/values
@@ -41,5 +41,12 @@ namespace CoreWebApi.Controllers
         public void Delete(int id)
         {
         }
-    }
+
+		[HttpPost("template")]
+		public string GenerateTemplate([FromBody]string tips)
+		{
+			return tips.ToUpper();
+		}
+
+	}
 }

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApp", "CoreWebApp\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMvc", "CoreMvc\CoreMvc.csproj", "{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNG", "CoreNG\CoreNG.csproj", "{CB43C753-F361-4073-9CC5-735DB8534CD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNG", "CoreNG\CoreNG.csproj", "{CB43C753-F361-4073-9CC5-735DB8534CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreWebApi.ClientApi", "CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj", "{2C693CA1-CBE6-4674-9555-2B17B5939B5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi.ClientApi", "CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj", "{2C693CA1-CBE6-4674-9555-2B17B5939B5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{5850CB11-0730-4DD1-BE73-6B7BCC072DF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5850CB11-0730-4DD1-BE73-6B7BCC072DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5850CB11-0730-4DD1-BE73-6B7BCC072DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5850CB11-0730-4DD1-BE73-6B7BCC072DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5850CB11-0730-4DD1-BE73-6B7BCC072DF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

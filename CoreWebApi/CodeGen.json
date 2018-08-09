@@ -7,8 +7,8 @@
 	},
 
 	"ClientApiOutputs": {
-		"ClientLibraryProjectFolderName": "..\\CoreWebApi.ClientApi",
-		"GenerateBothAsyncAndSync": true,
+		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
+		"GenerateBothAsyncAndSync": false,
 
 		"CamelCase": true,
 		"ContentType": "application/json"
