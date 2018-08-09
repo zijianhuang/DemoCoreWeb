@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fonlow.Web.MetaTransformCore" Version="1.0.1" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="2.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Fonlow.Web.MetaTransformCore" Version="1.1.0" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="2.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>

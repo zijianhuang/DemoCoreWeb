@@ -10,7 +10,7 @@
 	},
 
 	"ClientApiOutputs": {
-		"ClientLibraryProjectFolderName": "..\\CoreWebApi.ClientApi",
+		"ClientLibraryProjectFolderName": "..\\..\\CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 
 		"CamelCase": true,
