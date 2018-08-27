@@ -74,18 +74,6 @@ namespace IntegrationTests
 			Assert.Equal("ABC", await api.GenerateTemplateAsync("abc"));
 		}
 
-		[Fact]
-		public async Task TestPostTuple()
-		{
-			Assert.Equal("Abc", await api.PostTuple3Async(new Tuple<string, string, int>("Abc", "eft", 3)));
-		}
-
-		[Fact]
-		public async Task TestPostTupleVariant()
-		{
-			Assert.Equal("EFG", await api.PostTuple3VariantAsync(new Tuple<string, string, int>("EFG", "eft", 3)));
-		}
-
 
 	}
 }

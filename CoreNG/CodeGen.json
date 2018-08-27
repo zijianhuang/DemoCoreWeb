@@ -9,6 +9,6 @@
 	"ClientApiOutputs": {
 		"CamelCase": true,
 		"ContentType": "application/json",
-		"TypeScriptNG2Folder": "..\\..\\CoreNG\\ClientApp\\ClientApi"
+		"TypeScriptNG2Folder": "..\\..\\..\\..\\CoreNG\\ClientApp\\ClientApi"
 	}
 }

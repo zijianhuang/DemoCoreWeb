@@ -10,11 +10,11 @@
 	},
 
 	"ClientApiOutputs": {
-		"ClientLibraryProjectFolderName": "..\\..\\CoreWebApi.ClientApi",
+		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\..\\CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 
 		"CamelCase": true,
 		"ContentType": "application/json",
-		"TypeScriptJQFolder": "..\\Scripts\\ClientApi"
+		"TypeScriptJQFolder": "..\\..\\..\\..\\Scripts\\ClientApi"
 	}
 }

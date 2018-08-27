@@ -89,7 +89,7 @@ namespace DemoWebApi.Controllers
 			return HeroesData.Instance.Dic.Values.Where(d => d.Name.Contains(name)).ToArray();
 		}
 
-	}
+    }
 
 	public sealed class Constants
 	{
