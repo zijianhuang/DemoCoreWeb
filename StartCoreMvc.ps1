@@ -1,6 +1,6 @@
 ﻿#Launch WebApi Website and POST a request for generating client APIs
 cd $PSScriptRoot
-$path = "$PSScriptRoot\CoreMVC\bin\Debug\netcoreapp2.1"
+$path = "$PSScriptRoot\CoreMVC\bin\Debug\netcoreapp2.2"
 $procArgs = @{
     FilePath         = "dotnet.exe"
     ArgumentList     = "$path\CoreMVC.dll"
