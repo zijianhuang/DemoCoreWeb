@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreWebApi.Controllers
+namespace DemoWebApi.Controllers
 {
 //	[ApiExplorerSettings(IgnoreApi = false)]
 	[Route("api/[controller]")]

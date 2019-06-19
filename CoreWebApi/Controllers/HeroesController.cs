@@ -12,7 +12,7 @@ namespace DemoWebApi.Controllers
 	/// </summary>
 	[Route("api/[controller]")]
 	public class HeroesController : ControllerBase
-    {
+	{
 		/// <summary>
 		/// Get all heroes.
 		/// </summary>
@@ -89,7 +89,7 @@ namespace DemoWebApi.Controllers
 			return HeroesData.Instance.Dic.Values.Where(d => d.Name.Contains(name)).ToArray();
 		}
 
-    }
+	}
 
 	public sealed class Constants
 	{
@@ -99,40 +99,40 @@ namespace DemoWebApi.Controllers
 	/// Complex hero type
 	/// </summary>
 	[DataContract(Namespace = Constants.DataNamespace)]
-    public class Hero
-    {
-        [DataMember]
-        public long Id { get; set; }
+	public class Hero
+	{
+		[DataMember]
+		public long Id { get; set; }
 
-        [DataMember]
-        public string Name { get; set; }
-    }
+		[DataMember]
+		public string Name { get; set; }
+	}
 
 
-    public sealed class HeroesData
-    {
-        private static readonly Lazy<HeroesData> lazy =
-            new Lazy<HeroesData>(() => new HeroesData());
+	public sealed class HeroesData
+	{
+		private static readonly Lazy<HeroesData> lazy =
+			new Lazy<HeroesData>(() => new HeroesData());
 
-        public static HeroesData Instance { get { return lazy.Value; } }
+		public static HeroesData Instance { get { return lazy.Value; } }
 
-        private HeroesData()
-        {
-            Dic = new ConcurrentDictionary<long, Hero>(new KeyValuePair<long, Hero>[] {
-                new KeyValuePair<long, Hero>(11, new Hero {Id=11, Name="Mr. Nice" }),
-                new KeyValuePair<long, Hero>(12, new Hero {Id=12, Name="Narco" }),
-                new KeyValuePair<long, Hero>(13, new Hero {Id=13, Name="Bombasto" }),
-                new KeyValuePair<long, Hero>(14, new Hero {Id=14, Name="Celeritas" }),
-                new KeyValuePair<long, Hero>(15, new Hero {Id=15, Name="Magneta" }),
-                new KeyValuePair<long, Hero>(16, new Hero {Id=16, Name="RubberMan" }),
-                new KeyValuePair<long, Hero>(17, new Hero {Id=17, Name="Dynama" }),
-                new KeyValuePair<long, Hero>(18, new Hero {Id=18, Name="Dr IQ" }),
-                new KeyValuePair<long, Hero>(19, new Hero {Id=19, Name="Magma" }),
-                new KeyValuePair<long, Hero>(20, new Hero {Id=29, Name="Tornado" }),
+		private HeroesData()
+		{
+			Dic = new ConcurrentDictionary<long, Hero>(new KeyValuePair<long, Hero>[] {
+				new KeyValuePair<long, Hero>(11, new Hero {Id=11, Name="Mr. Nice" }),
+				new KeyValuePair<long, Hero>(12, new Hero {Id=12, Name="Narco" }),
+				new KeyValuePair<long, Hero>(13, new Hero {Id=13, Name="Bombasto" }),
+				new KeyValuePair<long, Hero>(14, new Hero {Id=14, Name="Celeritas" }),
+				new KeyValuePair<long, Hero>(15, new Hero {Id=15, Name="Magneta" }),
+				new KeyValuePair<long, Hero>(16, new Hero {Id=16, Name="RubberMan" }),
+				new KeyValuePair<long, Hero>(17, new Hero {Id=17, Name="Dynama" }),
+				new KeyValuePair<long, Hero>(18, new Hero {Id=18, Name="Dr IQ" }),
+				new KeyValuePair<long, Hero>(19, new Hero {Id=19, Name="Magma" }),
+				new KeyValuePair<long, Hero>(20, new Hero {Id=29, Name="Tornado" }),
 
-                });
-        }
+				});
+		}
 
-        public ConcurrentDictionary<long, Hero> Dic { get; private set; }
-    }
+		public ConcurrentDictionary<long, Hero> Dic { get; private set; }
+	}
 }
