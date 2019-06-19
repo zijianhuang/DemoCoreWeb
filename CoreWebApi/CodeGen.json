@@ -15,6 +15,8 @@
 	"ClientApiOutputs": {
 		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
+		"TypeScriptAxiosFolder": "..\\..\\..\\..\\..\\axios\\src\\clientapi",
+		"TypeScriptAxiosFile": "WebApiCoreAxiosClientAuto.ts",
 
 		"CamelCase": true,
 		"ContentType": "application/json"
