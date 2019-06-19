@@ -1,6 +1,12 @@
 {
 	"ApiSelections": {
+		"ExcludedControllerNames": [
+			"DemoWebApi.Controllers.Home",
+			"DemoWebApi.Controllers.FileUpload"
+		],
+
 		"DataModelAssemblyNames": [
+			"DemoWebApi.DemoDataCore",
 			"CoreWebApi"
 		],
 		"CherryPickingMethods": 3
@@ -8,7 +14,7 @@
 
 	"ClientApiOutputs": {
 		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
-		"GenerateBothAsyncAndSync": false,
+		"GenerateBothAsyncAndSync": true,
 
 		"CamelCase": true,
 		"ContentType": "application/json"

@@ -30,6 +30,8 @@ namespace CoreWebApi
 					options.Conventions.Add(new Fonlow.CodeDom.Web.ApiExplorerVisibilityEnabledConvention());//To make ApiExplorer be visible to WebApiClientGen
 #endif
 				});
+
+			services.AddRouting();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

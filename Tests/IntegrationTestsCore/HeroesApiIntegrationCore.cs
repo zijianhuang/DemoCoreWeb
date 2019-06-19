@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 
 namespace IntegrationTests
 {
-	public class ValuesFixture : IDisposable
+	public class HeroesFixture : IDisposable
 	{
-		public ValuesFixture()
+		public HeroesFixture()
 		{
 			var baseUri = new Uri("http://localhost:5000/");
 
@@ -19,10 +15,10 @@ namespace IntegrationTests
 			//  .Accept
 			//  .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));//.net core has different behavior as described at https://github.com/zijianhuang/webapiclientgen/issues/26
 
-			Api = new CoreWebApi.Controllers.Client.Values(httpClient, baseUri);
+			Api = new DemoWebApi.Controllers.Client.Heroes(httpClient, baseUri);
 		}
 
-		public CoreWebApi.Controllers.Client.Values Api { get; private set; }
+		public DemoWebApi.Controllers.Client.Heroes Api { get; private set; }
 
 		System.Net.Http.HttpClient httpClient;
 
@@ -51,29 +47,14 @@ namespace IntegrationTests
 	}
 
 
-	public class ValuesApiIntegration : IClassFixture<ValuesFixture>
+	public partial class HeroesApiIntegration : IClassFixture<HeroesFixture>
 	{
-		public ValuesApiIntegration(ValuesFixture fixture)
+		public HeroesApiIntegration(HeroesFixture fixture)
 		{
 			api = fixture.Api;
 		}
 
-		CoreWebApi.Controllers.Client.Values api;
-
-
-		[Fact]
-		public async Task TestGetWithId()
-		{
-			Assert.Equal("value3", await api.GetAsync(3));
-		}
-
-
-		[Fact]
-		public async Task TestGenerateTemplate()
-		{
-			Assert.Equal("ABC", await api.GenerateTemplateAsync("abc"));
-		}
-
+		DemoWebApi.Controllers.Client.Heroes api;
 
 	}
 }
