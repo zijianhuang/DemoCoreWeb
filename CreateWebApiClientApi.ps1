@@ -17,4 +17,13 @@ $restArgs = @{
 }
 Invoke-RestMethod @restArgs
 
+#Step 3: Compile generated TS codes to JS if App is coded in JS.
+$procTscArgs = @{
+    FilePath         = "node"
+    ArgumentList     = "`"C:\Program Files (x86)\Microsoft SDKs\TypeScript\3.2\tsc.js`" $PSScriptRoot\axios\src\clientapi\WebApiCoreAxiosClientAuto.ts -d"
+    PassThru         = $true
+    
+}
+$processTsc = Start-Process @procTscArgs
+
 Stop-Process $process
