@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="2.7.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.5" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="2.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.5">
+      <NoWarn></NoWarn>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
