@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -26,5 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj" />
   </ItemGroup>
+
+  <Import Project="..\DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems" Label="Shared" />
 
 </Project>

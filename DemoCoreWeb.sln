@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi", "CoreWebApi\CoreWebApi.csproj", "{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}"
 EndProject
@@ -28,9 +28,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DemoWebApi.ControllersShared", "DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.shproj", "{A30A256B-C0E7-410E-A002-7A5590D1E9A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core3WebApi", "Core3WebApi\Core3WebApi.csproj", "{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{3ca753f3-b771-4bce-9406-1708b44f907b}*SharedItemsImports = 13
+		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
 		Tests\IntegrationTestsShared\IntegrationTestsShared.projitems*{eb9ee874-f621-4a9f-ab17-7e29e392f26a}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +71,10 @@ Global
 		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
