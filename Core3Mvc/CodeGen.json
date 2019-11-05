@@ -1,0 +1,19 @@
+{
+	"ApiSelections": {
+		"ExcludedControllerNames": [
+			"Demo3Mvc.Controllers.Home"
+		],
+		"DataModelAssemblyNames": [
+			"DemoWebApi.DemoDataCore",
+			"CoreMvc"
+		],
+		"CherryPickingMethods": 3
+	},
+
+	"ClientApiOutputs": {
+		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
+		"GenerateBothAsyncAndSync": true,
+
+		"CamelCase": true
+	}
+}
