@@ -1,8 +1,5 @@
 import { AxiosResponse } from 'axios';
 export declare namespace DemoWebApi_Controllers_Client {
-    /**
-     * Complex hero type
-     */
     interface Hero {
         id?: number;
         name?: string;
@@ -220,11 +217,7 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         getMyGenericPerson(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>>;
         /**
-         * Get a person
-         * so to know the person
          * GET api/Entities/getPerson/{id}
-         * @param {number} id unique id of that guy
-         * @return {DemoWebApi_DemoData_Client.Person} person in db
          */
         getPerson(id: number): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
@@ -244,12 +237,10 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         delete(id: number): Promise<AxiosResponse>;
         /**
-         * Get all heroes.
          * GET api/Heroes
          */
         get(): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
         /**
-         * Get a hero.
          * GET api/Heroes/{id}
          */
         getById(id: number): Promise<DemoWebApi_Controllers_Client.Hero>;
@@ -258,20 +249,15 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         post(name: string): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
-         * Add a hero
          * POST api/Heroes/q?name={name}
          */
         postWithQuery(name: string): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
-         * Update hero.
          * PUT api/Heroes
          */
         put(hero: DemoWebApi_Controllers_Client.Hero): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
-         * Search heroes
          * GET api/Heroes/search/{name}
-         * @param {string} name keyword contained in hero name.
-         * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
          */
         search(name: string): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
     }
@@ -351,7 +337,6 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         getdouble(): Promise<number>;
         /**
-         * Result of 0.1d + 0.2d - 0.3d
          * GET api/SuperDemo/DoubleZero
          */
         getDoubleZero(): Promise<number>;
@@ -490,7 +475,6 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         postCollection(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
         /**
-         * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
          * POST api/SuperDemo/DateTimeOffset
          */
         postDateTimeOffset(d: Date): Promise<boolean>;
@@ -823,12 +807,10 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         delete(id: number): Promise<AxiosResponse>;
         /**
-         * Get a list of value
          * GET api/Values
          */
         get(): Promise<Array<string>>;
         /**
-         * Get by both Id and name
          * GET api/Values/{id}?name={name}
          */
         getByIdAndName(id: number, name: string): Promise<string>;
@@ -845,7 +827,6 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         post(value: string): Promise<string>;
         /**
-         * Update with valjue
          * PUT api/Values/{id}
          */
         put(id: number, value: string): Promise<AxiosResponse>;

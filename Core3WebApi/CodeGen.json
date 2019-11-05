@@ -4,7 +4,8 @@
 		],
 
 		"DataModelAssemblyNames": [
-			"DemoWebApi.DemoDataCore"		
+			"DemoWebApi.DemoDataCore",
+			"Core3WebApi"
 		],
 		"CherryPickingMethods": 3
 	},
