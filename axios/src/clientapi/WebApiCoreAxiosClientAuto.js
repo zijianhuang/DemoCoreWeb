@@ -112,7 +112,11 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].post(this.baseUri + 'api/Entities/MyGenericPerson', JSON.stringify(s), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
         };
         /**
+         * Get a person
+         * so to know the person
          * GET api/Entities/getPerson/{id}
+         * @param {number} id unique id of that guy
+         * @return {DemoWebApi_DemoData_Client.Person} person in db
          */
         Entities.prototype.getPerson = function (id) {
             return axios_1["default"].get(this.baseUri + 'api/Entities/getPerson/' + id).then(function (d) { return d.data; });
@@ -144,37 +148,44 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"]["delete"](this.baseUri + 'api/Heroes/' + id, { responseType: 'text' });
         };
         /**
+         * Get all heroes.
          * GET api/Heroes
          */
         Heroes.prototype.get = function () {
             return axios_1["default"].get(this.baseUri + 'api/Heroes').then(function (d) { return d.data; });
         };
         /**
+         * Get a hero.
          * GET api/Heroes/{id}
          */
         Heroes.prototype.getById = function (id) {
-            return axios_1["default"].get(this.baseUri + 'api/Heroes/' + id, { responseType: 'text' });
+            return axios_1["default"].get(this.baseUri + 'api/Heroes/' + id).then(function (d) { return d.data; });
         };
         /**
          * POST api/Heroes
          */
         Heroes.prototype.post = function (name) {
-            return axios_1["default"].post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+            return axios_1["default"].post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
         };
         /**
+         * Add a hero
          * POST api/Heroes/q?name={name}
          */
         Heroes.prototype.postWithQuery = function (name) {
-            return axios_1["default"].post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { responseType: 'text' });
+            return axios_1["default"].post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
         };
         /**
+         * Update hero.
          * PUT api/Heroes
          */
         Heroes.prototype.put = function (hero) {
-            return axios_1["default"].put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+            return axios_1["default"].put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
         };
         /**
+         * Search heroes
          * GET api/Heroes/search/{name}
+         * @param {string} name keyword contained in hero name.
+         * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
          */
         Heroes.prototype.search = function (name) {
             return axios_1["default"].get(this.baseUri + 'api/Heroes/search/' + encodeURIComponent(name)).then(function (d) { return d.data; });
@@ -211,7 +222,7 @@ var DemoWebApi_Controllers_Client;
          * GET api/SuperDemo/ActionStringResult
          */
         SuperDemo.prototype.getActionStringResult = function () {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/ActionStringResult').then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/ActionStringResult', { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * GET api/SuperDemo/bool
@@ -292,6 +303,7 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].get(this.baseUri + 'api/SuperDemo/doulbe').then(function (d) { return d.data; });
         };
         /**
+         * Result of 0.1d + 0.2d - 0.3d
          * GET api/SuperDemo/DoubleZero
          */
         SuperDemo.prototype.getDoubleZero = function () {
@@ -301,7 +313,7 @@ var DemoWebApi_Controllers_Client;
          * GET api/SuperDemo/EmptyString
          */
         SuperDemo.prototype.getEmptyString = function () {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/EmptyString').then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/EmptyString', { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * GET api/SuperDemo/FloatZero
@@ -409,7 +421,7 @@ var DemoWebApi_Controllers_Client;
          * GET api/SuperDemo/NullString
          */
         SuperDemo.prototype.getNullString = function () {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NullString').then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NullString', { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * GET api/SuperDemo/DoubleNullable?location={location}&dd={dd}&de={de}
@@ -484,6 +496,7 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].post(this.baseUri + 'api/SuperDemo/Collection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
         };
         /**
+         * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
          * POST api/SuperDemo/DateTimeOffset
          */
         SuperDemo.prototype.postDateTimeOffset = function (d) {
@@ -693,43 +706,43 @@ var DemoWebApi_Controllers_Client;
          * POST api/Tuple/Tuple2
          */
         Tuple.prototype.postTuple2 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple3
          */
         Tuple.prototype.postTuple3 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple4
          */
         Tuple.prototype.postTuple4 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple5
          */
         Tuple.prototype.postTuple5 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple6
          */
         Tuple.prototype.postTuple6 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple7
          */
         Tuple.prototype.postTuple7 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple8
          */
         Tuple.prototype.postTuple8 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         return Tuple;
     }());
@@ -746,36 +759,39 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"]["delete"](this.baseUri + 'api/Values/' + id, { responseType: 'text' });
         };
         /**
+         * Get a list of value
          * GET api/Values
          */
         Values.prototype.get = function () {
             return axios_1["default"].get(this.baseUri + 'api/Values').then(function (d) { return d.data; });
         };
         /**
+         * Get by both Id and name
          * GET api/Values/{id}?name={name}
          */
         Values.prototype.getByIdAndName = function (id, name) {
-            return axios_1["default"].get(this.baseUri + 'api/Values/' + id + '?name=' + encodeURIComponent(name)).then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/Values/' + id + '?name=' + encodeURIComponent(name), { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * GET api/Values?name={name}
          */
         Values.prototype.getByName = function (name) {
-            return axios_1["default"].get(this.baseUri + 'api/Values?name=' + encodeURIComponent(name)).then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/Values?name=' + encodeURIComponent(name), { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * GET api/Values/{id}
          */
         Values.prototype.getById = function (id) {
-            return axios_1["default"].get(this.baseUri + 'api/Values/' + id).then(function (d) { return d.data; });
+            return axios_1["default"].get(this.baseUri + 'api/Values/' + id, { responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Values
          */
         Values.prototype.post = function (value) {
-            return axios_1["default"].post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
+         * Update with valjue
          * PUT api/Values/{id}
          */
         Values.prototype.put = function (id, value) {

@@ -1,5 +1,17 @@
 import Axios from 'axios';
 import { AxiosResponse } from 'axios';
+export namespace DemoWebApi_Controllers_Client {
+
+    /**
+     * Complex hero type
+     */
+    export interface Hero {
+        id?: number;
+        name?: string;
+    }
+
+}
+
 export namespace DemoWebApi_DemoData_Client {
     export interface Address {
         city?: string;
@@ -269,7 +281,11 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * Get a person
+         * so to know the person
          * GET api/Entities/getPerson/{id}
+         * @param {number} id unique id of that guy
+         * @return {DemoWebApi_DemoData_Client.Person} person in db
          */
         getPerson(id: number): Promise<DemoWebApi_DemoData_Client.Person> {
             return Axios.get(this.baseUri + 'api/Entities/getPerson/' + id).then(d => d.data as DemoWebApi_DemoData_Client.Person);
@@ -302,45 +318,52 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * Get all heroes.
          * GET api/Heroes
          */
-        get(): Promise<Array<any>> {
-            return Axios.get(this.baseUri + 'api/Heroes').then(d => d.data as Array<any>);
+        get(): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
+            return Axios.get(this.baseUri + 'api/Heroes').then(d => d.data as Array<DemoWebApi_Controllers_Client.Hero>);
         }
 
         /**
+         * Get a hero.
          * GET api/Heroes/{id}
          */
-        getById(id: number): Promise<AxiosResponse> {
-            return Axios.get(this.baseUri + 'api/Heroes/' + id, { responseType: 'text' });
+        getById(id: number): Promise<DemoWebApi_Controllers_Client.Hero> {
+            return Axios.get(this.baseUri + 'api/Heroes/' + id).then(d => d.data as DemoWebApi_Controllers_Client.Hero);
         }
 
         /**
          * POST api/Heroes
          */
-        post(name: string): Promise<AxiosResponse> {
-            return Axios.post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+        post(name: string): Promise<DemoWebApi_Controllers_Client.Hero> {
+            return Axios.post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as DemoWebApi_Controllers_Client.Hero);
         }
 
         /**
+         * Add a hero
          * POST api/Heroes/q?name={name}
          */
-        postWithQuery(name: string): Promise<AxiosResponse> {
-            return Axios.post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { responseType: 'text' });
+        postWithQuery(name: string): Promise<DemoWebApi_Controllers_Client.Hero> {
+            return Axios.post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as DemoWebApi_Controllers_Client.Hero);
         }
 
         /**
+         * Update hero.
          * PUT api/Heroes
          */
-        put(hero: any): Promise<AxiosResponse> {
-            return Axios.put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+        put(hero: DemoWebApi_Controllers_Client.Hero): Promise<DemoWebApi_Controllers_Client.Hero> {
+            return Axios.put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as DemoWebApi_Controllers_Client.Hero);
         }
 
         /**
+         * Search heroes
          * GET api/Heroes/search/{name}
+         * @param {string} name keyword contained in hero name.
+         * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
          */
-        search(name: string): Promise<Array<any>> {
-            return Axios.get(this.baseUri + 'api/Heroes/search/' + encodeURIComponent(name)).then(d => d.data as Array<any>);
+        search(name: string): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
+            return Axios.get(this.baseUri + 'api/Heroes/search/' + encodeURIComponent(name)).then(d => d.data as Array<DemoWebApi_Controllers_Client.Hero>);
         }
     }
 
@@ -371,7 +394,7 @@ export namespace DemoWebApi_Controllers_Client {
          * GET api/SuperDemo/ActionStringResult
          */
         getActionStringResult(): Promise<string> {
-            return Axios.get(this.baseUri + 'api/SuperDemo/ActionStringResult').then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/SuperDemo/ActionStringResult', { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
@@ -466,6 +489,7 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * Result of 0.1d + 0.2d - 0.3d
          * GET api/SuperDemo/DoubleZero
          */
         getDoubleZero(): Promise<number> {
@@ -476,7 +500,7 @@ export namespace DemoWebApi_Controllers_Client {
          * GET api/SuperDemo/EmptyString
          */
         getEmptyString(): Promise<string> {
-            return Axios.get(this.baseUri + 'api/SuperDemo/EmptyString').then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/SuperDemo/EmptyString', { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
@@ -602,7 +626,7 @@ export namespace DemoWebApi_Controllers_Client {
          * GET api/SuperDemo/NullString
          */
         getNullString(): Promise<string> {
-            return Axios.get(this.baseUri + 'api/SuperDemo/NullString').then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/SuperDemo/NullString', { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
@@ -690,6 +714,7 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
          * POST api/SuperDemo/DateTimeOffset
          */
         postDateTimeOffset(d: Date): Promise<boolean> {
@@ -929,49 +954,49 @@ export namespace DemoWebApi_Controllers_Client {
          * POST api/Tuple/Tuple2
          */
         postTuple2(tuple: {item1: string, item2: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple3
          */
         postTuple3(tuple: {item1: string, item2: string, item3: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple4
          */
         postTuple4(tuple: {item1: string, item2: string, item3: string, item4: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple5
          */
         postTuple5(tuple: {item1: string, item2: string, item3: string, item4: string, item5: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple6
          */
         postTuple6(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple7
          */
         postTuple7(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: number, item7: number}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Tuple/Tuple8
          */
         postTuple8(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: string, item7: string, rest: {item1: string, item2: string, item3: string}}): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
     }
 
@@ -987,6 +1012,7 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * Get a list of value
          * GET api/Values
          */
         get(): Promise<Array<string>> {
@@ -994,34 +1020,36 @@ export namespace DemoWebApi_Controllers_Client {
         }
 
         /**
+         * Get by both Id and name
          * GET api/Values/{id}?name={name}
          */
         getByIdAndName(id: number, name: string): Promise<string> {
-            return Axios.get(this.baseUri + 'api/Values/' + id + '?name=' + encodeURIComponent(name)).then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/Values/' + id + '?name=' + encodeURIComponent(name), { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * GET api/Values?name={name}
          */
         getByName(name: string): Promise<string> {
-            return Axios.get(this.baseUri + 'api/Values?name=' + encodeURIComponent(name)).then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/Values?name=' + encodeURIComponent(name), { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * GET api/Values/{id}
          */
         getById(id: number): Promise<string> {
-            return Axios.get(this.baseUri + 'api/Values/' + id).then(d => d.data as string);
+            return Axios.get(this.baseUri + 'api/Values/' + id, { responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
          * POST api/Values
          */
         post(value: string): Promise<string> {
-            return Axios.post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json' } }).then(d => d.data as string);
+            return Axios.post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(d => d.data as string);
         }
 
         /**
+         * Update with valjue
          * PUT api/Values/{id}
          */
         put(id: number, value: string): Promise<AxiosResponse> {

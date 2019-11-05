@@ -6,7 +6,7 @@
 And this repository contains the following demo applications:
 1. CoreWebApi, ASP.NET Core Web API providing data to other test suites.
 1. CoreMvc, ASP.NET Core MVC.
-1. CoreNG, .NET Core + Angular 2+ with Heroes Tour.
+1. CoreNG, .NET Core + Angular 2+.
 1. axios, JEST test suite using the generated TypeScript codes for Axios which is recommended by React and Vue.js.
 1. vueTS, JEST test suite with Vue TypeScript and the generated TypeScript codes.
 1. **Projects marked with number 3 are .NET Core 3.0 projects.**
