@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 export namespace CoreNG_Controllers_Client {
     export interface WeatherForecast {
         dateFormatted?: string;
-        temperatureC?: number;
         summary?: string;
+        temperatureC?: number;
         temperatureF?: number;
     }
 

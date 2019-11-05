@@ -1,0 +1,15 @@
+{
+	"ApiSelections": {
+		"DataModelAssemblyNames": [
+			"DemoWebApi.DemoDataCore",
+			"CoreNG3"
+		],
+		"CherryPickingMethods": 3
+	},
+
+	"ClientApiOutputs": {
+		"CamelCase": true,
+		"ContentType": "application/json",
+		"TypeScriptNG2Folder": "..\\..\\..\\ClientApp\\src\\clientapi"
+	}
+}
