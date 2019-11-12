@@ -14,10 +14,17 @@
 		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
-		"TypeScriptAxiosFolder": "..\\..\\..\\..\\axios\\src\\clientapi",
-		"TypeScriptAxiosFile": "WebApiCoreAxiosClientAuto.ts",
-
 		"CamelCase": true,
-		"ContentType": "application/json"
+		"Plugins": [
+			{
+				"AssemblyName": "Fonlow.WebApiClientGenCore.Axios",
+				"TargetDir": "..\\..\\..\\..\\axios\\src\\clientapi",
+				"TSFile": "WebApiCoreAxiosClientAuto.ts",
+				"AsModule": true,
+				"ContentType": "application/json;charset=UTF-8"
+			}
+
+		]
+
 	}
 }

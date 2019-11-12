@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi", "CoreWebApi\CoreWebApi.csproj", "{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApp", "CoreWebApp\CoreWebApp.csproj", "{501806F0-1BD0-40E4-B48F-0865F3DDF38E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMvc", "CoreMvc\CoreMvc.csproj", "{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNG", "CoreNG\CoreNG.csproj", "{CB43C753-F361-4073-9CC5-735DB8534CD2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi.ClientApi", "CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj", "{2C693CA1-CBE6-4674-9555-2B17B5939B5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWebApi.DemoDataCore", "DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj", "{CAD158E0-5120-4EF0-9892-79C2C184A27B}"
@@ -30,11 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DemoWebApi.ControllersShared", "DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.shproj", "{A30A256B-C0E7-410E-A002-7A5590D1E9A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core3WebApi", "Core3WebApi\Core3WebApi.csproj", "{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3WebApi", "Core3WebApi\Core3WebApi.csproj", "{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNG3", "CoreNG3\CoreNG3.csproj", "{2A8A1560-FC36-4328-A570-530E3001DF31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core3Mvc", "Core3Mvc\Core3Mvc.csproj", "{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3Mvc", "Core3Mvc\Core3Mvc.csproj", "{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -47,22 +39,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFC34F1F-EE3D-4F18-AE09-2529B147FF07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{501806F0-1BD0-40E4-B48F-0865F3DDF38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{501806F0-1BD0-40E4-B48F-0865F3DDF38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{501806F0-1BD0-40E4-B48F-0865F3DDF38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{501806F0-1BD0-40E4-B48F-0865F3DDF38E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{318DA46A-4E0D-4E04-8B6D-2916E127C5D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB43C753-F361-4073-9CC5-735DB8534CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB43C753-F361-4073-9CC5-735DB8534CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB43C753-F361-4073-9CC5-735DB8534CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB43C753-F361-4073-9CC5-735DB8534CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C693CA1-CBE6-4674-9555-2B17B5939B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -62,7 +62,7 @@ var DemoCoreWeb_Controllers_Client;
          * POST api/SpecialTypes/AnonymousObject
          */
         SpecialTypes.prototype.postAnonymousObject = function (obj) {
-            return axios_1["default"].post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+            return axios_1["default"].post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
         };
         return SpecialTypes;
     }());
@@ -79,7 +79,7 @@ var DemoWebApi_Controllers_Client;
          * POST api/Entities/createPerson
          */
         Entities.prototype.createPerson = function (p) {
-            return axios_1["default"].post(this.baseUri + 'api/Entities/createPerson', JSON.stringify(p), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Entities/createPerson', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * DELETE api/Entities/{id}
@@ -97,19 +97,19 @@ var DemoWebApi_Controllers_Client;
          * POST api/Entities/Mims
          */
         Entities.prototype.getMims = function (p) {
-            return axios_1["default"].post(this.baseUri + 'api/Entities/Mims', JSON.stringify(p), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Entities/Mims', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Entities/MyGeneric
          */
         Entities.prototype.getMyGeneric = function (s) {
-            return axios_1["default"].post(this.baseUri + 'api/Entities/MyGeneric', JSON.stringify(s), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Entities/MyGeneric', JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Entities/MyGenericPerson
          */
         Entities.prototype.getMyGenericPerson = function (s) {
-            return axios_1["default"].post(this.baseUri + 'api/Entities/MyGenericPerson', JSON.stringify(s), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Entities/MyGenericPerson', JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * GET api/Entities/getPerson/{id}
@@ -121,13 +121,13 @@ var DemoWebApi_Controllers_Client;
          * PUT api/Entities/link?id={id}&relationship={relationship}
          */
         Entities.prototype.linkPerson = function (id, relationship, person) {
-            return axios_1["default"].put(this.baseUri + 'api/Entities/link?id=' + id + '&relationship=' + encodeURIComponent(relationship), JSON.stringify(person), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].put(this.baseUri + 'api/Entities/link?id=' + id + '&relationship=' + encodeURIComponent(relationship), JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * PUT api/Entities/updatePerson
          */
         Entities.prototype.updatePerson = function (person) {
-            return axios_1["default"].put(this.baseUri + 'api/Entities/updatePerson', JSON.stringify(person), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+            return axios_1["default"].put(this.baseUri + 'api/Entities/updatePerson', JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
         };
         return Entities;
     }());
@@ -159,19 +159,19 @@ var DemoWebApi_Controllers_Client;
          * POST api/Heroes
          */
         Heroes.prototype.post = function (name) {
-            return axios_1["default"].post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Heroes', JSON.stringify(name), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Heroes/q?name={name}
          */
         Heroes.prototype.postWithQuery = function (name) {
-            return axios_1["default"].post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Heroes/q?name=' + encodeURIComponent(name), null, { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * PUT api/Heroes
          */
         Heroes.prototype.put = function (hero) {
-            return axios_1["default"].put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].put(this.baseUri + 'api/Heroes', JSON.stringify(hero), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * GET api/Heroes/search/{name}
@@ -469,97 +469,97 @@ var DemoWebApi_Controllers_Client;
          * POST api/SuperDemo/PostActionResult2
          */
         SuperDemo.prototype.postActionResult2 = function (s) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostActionResult2', JSON.stringify(s), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostActionResult2', JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/PostActionResult3
          */
         SuperDemo.prototype.postActionResult3 = function (person) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostActionResult3', JSON.stringify(person), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostActionResult3', JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/Collection
          */
         SuperDemo.prototype.postCollection = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/Collection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/Collection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/DateTimeOffset
          */
         SuperDemo.prototype.postDateTimeOffset = function (d) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffset', JSON.stringify(d), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffset', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/DateTimeOffsetNullable
          */
         SuperDemo.prototype.postDateTimeOffsetNullable = function (d) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffsetNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffsetNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/StringPersonDic
          */
         SuperDemo.prototype.postDictionary = function (dic) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/StringPersonDic', JSON.stringify(dic), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/StringPersonDic', JSON.stringify(dic), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/ICollection
          */
         SuperDemo.prototype.postICollection = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/ICollection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/ICollection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/IList
          */
         SuperDemo.prototype.postIList = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IList', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IList', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/int2d
          */
         SuperDemo.prototype.postInt2D = function (a) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/int2d', JSON.stringify(a), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/int2d', JSON.stringify(a), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/int2djagged
          */
         SuperDemo.prototype.postInt2DJagged = function (a) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/int2djagged', JSON.stringify(a), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/int2djagged', JSON.stringify(a), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/intArray
          */
         SuperDemo.prototype.postIntArray = function (a) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/intArray', JSON.stringify(a), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/intArray', JSON.stringify(a), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/IReadOnlyCollection
          */
         SuperDemo.prototype.postIReadOnlyCollection = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IReadOnlyCollection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IReadOnlyCollection', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/IReadOnlyList
          */
         SuperDemo.prototype.postIReadOnlyList = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IReadOnlyList', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/IReadOnlyList', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/List
          */
         SuperDemo.prototype.postList = function (list) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/List', JSON.stringify(list), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/List', JSON.stringify(list), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/NextYear
          */
         SuperDemo.prototype.postNextYear = function (dt) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/NextYear', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/NextYear', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/SuperDemo/PostEmpty/{i}
          */
         SuperDemo.prototype.postWithQueryButEmptyBody = function (s, i) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostEmpty/' + i, JSON.stringify(s), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostEmpty/' + i, JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
@@ -639,97 +639,97 @@ var DemoWebApi_Controllers_Client;
          * POST api/Tuple/PeopleCompany2
          */
         Tuple.prototype.linkPeopleCompany2 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany2', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany2', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany3
          */
         Tuple.prototype.linkPeopleCompany3 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany3', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany3', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany4
          */
         Tuple.prototype.linkPeopleCompany4 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany4', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany4', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany5
          */
         Tuple.prototype.linkPeopleCompany5 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany5', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany5', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany6
          */
         Tuple.prototype.linkPeopleCompany6 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany6', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany6', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany7
          */
         Tuple.prototype.linkPeopleCompany7 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany7', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany7', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PeopleCompany8
          */
         Tuple.prototype.linkPeopleCompany8 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany8', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PeopleCompany8', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/PersonCompany1
          */
         Tuple.prototype.linkPersonCompany1 = function (peopleAndCompany) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/PersonCompany1', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/PersonCompany1', JSON.stringify(peopleAndCompany), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple1
          */
         Tuple.prototype.postTuple1 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple1', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' } }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple1', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple2
          */
         Tuple.prototype.postTuple2 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple3
          */
         Tuple.prototype.postTuple3 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple4
          */
         Tuple.prototype.postTuple4 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple5
          */
         Tuple.prototype.postTuple5 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple6
          */
         Tuple.prototype.postTuple6 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple7
          */
         Tuple.prototype.postTuple7 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Tuple/Tuple8
          */
         Tuple.prototype.postTuple8 = function (tuple) {
-            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         return Tuple;
     }());
@@ -773,13 +773,13 @@ var DemoWebApi_Controllers_Client;
          * POST api/Values
          */
         Values.prototype.post = function (value) {
-            return axios_1["default"].post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' }).then(function (d) { return d.data; });
+            return axios_1["default"].post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' }).then(function (d) { return d.data; });
         };
         /**
          * PUT api/Values/{id}
          */
         Values.prototype.put = function (id, value) {
-            return axios_1["default"].put(this.baseUri + 'api/Values/' + id, JSON.stringify(value), { headers: { 'Content-Type': 'application/json' }, responseType: 'text' });
+            return axios_1["default"].put(this.baseUri + 'api/Values/' + id, JSON.stringify(value), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
         };
         return Values;
     }());

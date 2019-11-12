@@ -5,7 +5,7 @@
 		],
 		"DataModelAssemblyNames": [
 			"DemoWebApi.DemoDataCore",
-			"CoreMvc"
+			"Core3Mvc"
 		],
 		"CherryPickingMethods": 3
 	},
@@ -15,6 +15,10 @@
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
 
-		"CamelCase": true
+		"CamelCase": true,
+
+		"Plugins": [
+
+		]
 	}
 }
