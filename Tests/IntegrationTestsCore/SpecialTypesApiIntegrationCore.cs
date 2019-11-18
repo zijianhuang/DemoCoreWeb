@@ -4,46 +4,18 @@ using Xunit;
 
 namespace IntegrationTests
 {
-	public class SpecialTypesFixture : IDisposable
+	public class SpecialTypesFixture : Fonlow.Testing.DefaultHttpClient
 	{
 		public SpecialTypesFixture()
 		{
-			var baseUri = new Uri("http://localhost:5000/");
-
-			httpClient = new System.Net.Http.HttpClient();
-
-			Api = new DemoCoreWeb.Controllers.Client.SpecialTypes(httpClient, baseUri);
+			Api = new DemoCoreWeb.Controllers.Client.SpecialTypes(HttpClient, BaseUri);
 		}
 
 		public DemoCoreWeb.Controllers.Client.SpecialTypes Api { get; private set; }
-
-		System.Net.Http.HttpClient httpClient;
-
-		#region IDisposable pattern
-		bool disposed;
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposed)
-			{
-				if (disposing)
-				{
-					httpClient.Dispose();
-				}
-
-				disposed = true;
-			}
-		}
-		#endregion
 	}
 
 
+	[Collection("ServiceLaunch")]
 	public partial class SpecialTypesApiIntegration : IClassFixture<SpecialTypesFixture>
 	{
 		public SpecialTypesApiIntegration(SpecialTypesFixture fixture)

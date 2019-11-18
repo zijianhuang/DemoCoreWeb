@@ -3,6 +3,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
+	[Collection("ServiceLaunch")]
 	public partial class DotNetCoreSpecial : IClassFixture<SuperDemoFixture>
 	{
 		public DotNetCoreSpecial(SuperDemoFixture fixture)
