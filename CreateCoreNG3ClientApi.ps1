@@ -1,6 +1,6 @@
 cd $PSScriptRoot
 #Make sure CodeGen.json is saved in format ANSI or UTF-8 without BOM, since ASP.NET Core 2.0 Web API will fail to deserialize POST Body that contains BOM.
-$path = "$PSScriptRoot\CoreNG3\bin\Debug\netcoreapp3.0"
+$path = "$PSScriptRoot\CoreNG3\bin\Debug\netcoreapp3.1"
 $procArgs = @{
     FilePath         = "dotnet.exe"
     ArgumentList     = "$path\CoreNG3.dll"
