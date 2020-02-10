@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Fonlow.WebApiClientGenCore" Version="3.2.2" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="1.0.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.jQuery" Version="1.0.0" />

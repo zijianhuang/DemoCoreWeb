@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Fonlow.CodeDom.Web;
 
 namespace DemoWebApi.Controllers
 {
@@ -18,24 +17,6 @@ namespace DemoWebApi.Controllers
 		public IEnumerable<string> Get()
 		{
 			return new string[] { "value1", "value2" };
-		}
-
-		/// <summary>
-		/// Get by both Id and name
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		[HttpGet("{id}")]
-		public string Get(int id, [RequiredFromQuery] string name)
-		{
-			return name + id.ToString();
-		}
-
-		[HttpGet]
-		public string Get([RequiredFromQuery] string name)
-		{
-			return name.ToUpper();
 		}
 
 		[HttpGet("{id}")]

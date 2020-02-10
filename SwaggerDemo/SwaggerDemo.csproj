@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj" />
+  </ItemGroup>
+
+
+</Project>

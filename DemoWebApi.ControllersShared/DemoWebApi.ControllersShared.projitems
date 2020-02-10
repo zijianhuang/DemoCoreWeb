@@ -9,7 +9,6 @@
     <Import_RootNamespace>DemoWebApi.ControllersShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)CodeGenController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitiesController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileUploadController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HeroesController.cs" />
