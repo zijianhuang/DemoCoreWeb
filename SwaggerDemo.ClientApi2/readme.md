@@ -1,0 +1,1 @@
+﻿Generated through NSwagStudio v13.2.2 with Operation Generation Mode = MultipleClientsFromOperationId
