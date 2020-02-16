@@ -37,3 +37,5 @@ _ReSharper*/
 /packages
 /DemoNGCli/NG
 /axios/node_modules
+/fetchapi/coverage
+/fetchapi/node_modules

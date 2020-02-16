@@ -13,32 +13,33 @@ namespace Fonlow.WebApiClientGen
 	public class CodeGenController : ControllerBase
 	{
 		private readonly IApiDescriptionGroupCollectionProvider apiExplorer;
-		private readonly IHostingEnvironment hostingEnvironment;
+		private readonly string webRootPath;
 
 		/// <summary>
 		/// For injecting some environment config by the run time.
 		/// </summary>
 		/// <param name="apiExplorer"></param>
 		/// <param name="hostingEnvironment"></param>
-		public CodeGenController(IApiDescriptionGroupCollectionProvider apiExplorer, IHostingEnvironment hostingEnvironment)
+		public CodeGenController(IApiDescriptionGroupCollectionProvider apiExplorer, IWebHostEnvironment hostingEnvironment)
 		{
 			this.apiExplorer = apiExplorer;
-			this.hostingEnvironment = hostingEnvironment;
+			this.webRootPath = hostingEnvironment.WebRootPath;
 		}
 
 		/// <summary>
 		/// Trigger the API to generate WebApiClientAuto.cs for an established client API project.
-		/// POST to  http://localhost:56321/api/CodeGen with json object CodeGenParameters
 		/// </summary>
 		/// <param name="settings"></param>
 		/// <returns>OK if OK</returns>
 		[HttpPost]
 		public ActionResult TriggerCodeGen([FromBody] CodeGenSettings settings)
 		{
-			if (settings == null || settings.ClientApiOutputs == null)
-				return new BadRequestResult();
+			if (settings == null)
+				return BadRequest("No settings");
 
-			string webRootPath = hostingEnvironment.WebRootPath;
+			if (settings.ClientApiOutputs == null)
+				return BadRequest("No settings/ClientApiOutputs");
+
 			Fonlow.Web.Meta.WebApiDescription[] apiDescriptions;
 			try
 			{
@@ -46,10 +47,15 @@ namespace Fonlow.WebApiClientGen
 				apiDescriptions = descriptions.Select(d => Fonlow.Web.Meta.MetaTransform.GetWebApiDescription(d)).OrderBy(d => d.ActionDescriptor.ActionName).ToArray();
 
 			}
+			catch (Fonlow.Web.Meta.CodeGenException e)
+			{
+				System.Diagnostics.Trace.TraceWarning(e.Message);
+				return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+			}
 			catch (System.InvalidOperationException e)
 			{
 				System.Diagnostics.Trace.TraceWarning(e.Message);
-				return StatusCode((int)HttpStatusCode.ServiceUnavailable);
+				return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
 			}
 
 			if (!settings.ClientApiOutputs.CamelCase.HasValue)
@@ -59,16 +65,16 @@ namespace Fonlow.WebApiClientGen
 
 			try
 			{
-				CodeGen.GenerateClientAPIs(webRootPath, settings, apiDescriptions);
+				CodeGen.GenerateClientAPIs(this.webRootPath, settings, apiDescriptions);
 			}
 			catch (Fonlow.Web.Meta.CodeGenException e)
 			{
-				var msg = e.Message + " : " + e.Description;
+				var msg = e.Message + (string.IsNullOrEmpty(e.Description) ? string.Empty : (" : " + e.Description));
 				System.Diagnostics.Trace.TraceError(msg);
 				return BadRequest(msg);
 			}
 
-			return Ok();
+			return Ok("Done");
 		}
 	}
 

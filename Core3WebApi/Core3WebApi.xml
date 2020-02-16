@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Core3WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Fonlow.WebApiClientGen.CodeGenController.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            For injecting some environment config by the run time.
+            </summary>
+            <param name="apiExplorer"></param>
+            <param name="hostingEnvironment"></param>
+        </member>
+        <member name="M:Fonlow.WebApiClientGen.CodeGenController.TriggerCodeGen(Fonlow.CodeDom.Web.CodeGenSettings)">
+            <summary>
+            Trigger the API to generate WebApiClientAuto.cs for an established client API project.
+            </summary>
+            <param name="settings"></param>
+            <returns>OK if OK</returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.EntitiesController.GetPerson(System.Int64)">
+            <summary>
+            Get a person
+            so to know the person
+            </summary>
+            <param name="id">unique id of that guy</param>
+            <returns>person in db</returns>
+        </member>
+        <member name="T:DemoWebApi.Controllers.HeroesController">
+            <summary>
+            Heroes operations
+            </summary>
+        </member>
+        <member name="M:DemoWebApi.Controllers.HeroesController.Get">
+            <summary>
+            Get all heroes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.HeroesController.Get(System.Int64)">
+            <summary>
+            Get a hero.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.HeroesController.PostWithQuery(System.String)">
+            <summary>
+            Add a hero
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.HeroesController.Put(DemoWebApi.Controllers.Hero)">
+            <summary>
+            Update hero.
+            </summary>
+            <param name="hero"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.HeroesController.Search(System.String)">
+            <summary>
+            Search heroes
+            </summary>
+            <param name="name">keyword contained in hero name.</param>
+            <returns>Hero array matching the keyword.</returns>
+        </member>
+        <member name="T:DemoWebApi.Controllers.Hero">
+            <summary>
+            Complex hero type
+            </summary>
+        </member>
+        <member name="T:DemoWebApi.Controllers.SuperDemoController">
+            <summary>
+            For testing different commbinations of parameters and returns
+            </summary>
+        </member>
+        <member name="M:DemoWebApi.Controllers.SuperDemoController.PostDateTimeOffset(System.DateTimeOffset)">
+            <summary>
+            DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
+            </summary>
+            <param name="d"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.SuperDemoController.GetDoubleZero">
+            <summary>
+            Result of 0.1d + 0.2d - 0.3d
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.SuperDemoController.GetNextYearNullable(System.Int32,System.Nullable{System.DateTime})">
+            <summary>
+            If Dt is not defined, add a year from now
+            </summary>
+            <param name="n"></param>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.SuperDemoController.GetNextHourNullable(System.Int32,System.Nullable{System.DateTimeOffset})">
+            <summary>
+            If Dt is not defined, add a hour from now
+            </summary>
+            <param name="n"></param>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.SuperDemoController.SearchDateRange(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            
+            </summary>
+            <param name="startDate"></param>
+            <param name="endDate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DemoWebApi.Controllers.TupleController">
+            <summary>
+            https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.3.3
+            </summary>
+        </member>
+        <member name="M:DemoWebApi.Controllers.ValuesController.Get">
+            <summary>
+            Get a list of value
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.ValuesController.Get(System.Int32,System.String)">
+            <summary>
+            Get by both Id and name
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DemoWebApi.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            Update with valjue
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
+    </members>
+</doc>
