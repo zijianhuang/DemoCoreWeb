@@ -16,7 +16,6 @@
     <PackageReference Include="Fonlow.WebApiClientGenCore" Version="3.5.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="1.1.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="1.1.0" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore.jQuery" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
   </ItemGroup>
 
