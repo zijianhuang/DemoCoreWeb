@@ -811,14 +811,6 @@ export declare namespace DemoWebApi_Controllers_Client {
          */
         get(): Promise<Array<string>>;
         /**
-         * GET api/Values/{id}?name={name}
-         */
-        getByIdAndName(id: number, name: string): Promise<string>;
-        /**
-         * GET api/Values?name={name}
-         */
-        getByName(name: string): Promise<string>;
-        /**
          * GET api/Values/{id}
          */
         getById(id: number): Promise<string>;

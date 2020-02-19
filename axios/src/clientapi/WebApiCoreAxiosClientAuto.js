@@ -752,18 +752,6 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].get(this.baseUri + 'api/Values').then(function (d) { return d.data; });
         };
         /**
-         * GET api/Values/{id}?name={name}
-         */
-        Values.prototype.getByIdAndName = function (id, name) {
-            return axios_1["default"].get(this.baseUri + 'api/Values/' + id + '?name=' + encodeURIComponent(name), { responseType: 'text' }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/Values?name={name}
-         */
-        Values.prototype.getByName = function (name) {
-            return axios_1["default"].get(this.baseUri + 'api/Values?name=' + encodeURIComponent(name), { responseType: 'text' }).then(function (d) { return d.data; });
-        };
-        /**
          * GET api/Values/{id}
          */
         Values.prototype.getById = function (id) {
