@@ -596,5 +596,13 @@ namespace DemoWebApi.Controllers
 			return new Tuple<DateTime?, DateTime?>(startDate, endDate);
 		}
 
+        ////[HttpGet("AnotherAddress")]
+        ////public DemoData.Another.Address GetAddress()
+        ////{
+        ////    return new DemoData.Another.Address
+        ////    {
+        ////        Street="Somewhere St"
+        ////    };
+        ////}
 	}
 }

@@ -37,6 +37,8 @@ namespace DemoWebApi.DemoData.Client
 		/// </summary>
 		public System.Guid EntityId { get; set; }
 		
+		public System.Drawing.Point GeoLocation { get; set; }
+		
 		public System.Guid Id { get; set; }
 		
 		public string PostalCode { get; set; }
@@ -53,6 +55,8 @@ namespace DemoWebApi.DemoData.Client
 		/// It is a field
 		/// </summary>
 		public DemoWebApi.DemoData.Another.Client.MyPoint Location { get; set; }
+		
+		public DemoWebApi.DemoData.Another.Client.YourPoint YourLocation { get; set; }
 	}
 	
 	public enum AddressType
@@ -232,6 +236,20 @@ namespace DemoWebApi.DemoData.Another.Client
 	/// for Demo
 	/// </summary>
 	public struct MyPoint
+	{
+		
+		/// <summary>
+		/// X
+		/// </summary>
+		public double X;
+		
+		/// <summary>
+		/// Y
+		/// </summary>
+		public double Y;
+	}
+	
+	public struct YourPoint
 	{
 		
 		/// <summary>

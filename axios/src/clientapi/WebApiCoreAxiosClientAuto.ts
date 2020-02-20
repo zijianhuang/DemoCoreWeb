@@ -18,6 +18,7 @@ export namespace DemoWebApi_DemoData_Client {
 		 * Foreign key to Entity
 		 */
 		entityId?: string;
+		geoLocation?: any;
 		id?: string;
 		postalCode?: string;
 		state?: string;
@@ -29,6 +30,7 @@ export namespace DemoWebApi_DemoData_Client {
 		 * It is a field
 		 */
 		location?: DemoWebApi_DemoData_Another_Client.MyPoint;
+		yourLocation?: DemoWebApi_DemoData_Another_Client.YourPoint;
 	}
 
 	export enum AddressType { Postal, Residential }
@@ -153,6 +155,19 @@ export namespace DemoWebApi_DemoData_Another_Client {
 	 * for Demo
 	 */
 	export interface MyPoint {
+
+		/**
+		 * X
+		 */
+		x: number;
+
+		/**
+		 * Y
+		 */
+		y: number;
+	}
+
+	export interface YourPoint {
 
 		/**
 		 * X

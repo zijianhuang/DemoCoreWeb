@@ -131,11 +131,16 @@ namespace DemoWebApi.DemoData
         [DataMember]
         public AddressType Type { get; set; }
 
+        [DataMember]
+        public System.Drawing.Point GeoLocation { get; set; }
         /// <summary>
         /// It is a field
         /// </summary>
         [DataMember]
         public DemoWebApi.DemoData.Another.MyPoint Location;
+
+        [DataMember]
+        public DemoWebApi.DemoData.Another.YourPoint YourLocation;
     }
 
     /// <summary>
@@ -302,4 +307,51 @@ namespace DemoWebApi.DemoData.Another
         /// </summary>
         public double Y;
     }
+
+    [DataContract(Namespace = Constants.DataNamespace)]
+    public struct YourPoint
+    {
+        /// <summary>
+        /// X
+        /// </summary>
+        [DataMember]
+        public double X;
+
+        /// <summary>
+        /// Y
+        /// </summary>
+        [DataMember]
+        public double Y;
+    }
+
+    ///// <summary>
+    ///// Swashbuckle.AspNetCore does not like type with the same name in different namespaces.
+    ///// InvalidOperationException: Can't use schemaId "$Address" for type "$DemoWebApi.DemoData.Another.Address". The same schemaId is already used for type "$DemoWebApi.DemoData.Address"
+    ///// Swashbuckle.AspNetCore.SwaggerGen.SchemaRepository.ReserveIdFor(Type type, string schemaId)
+    ///// </summary>
+    //[DataContract(Namespace = Constants.DataNamespace)]
+    //public class Address
+    //{
+    //    [DataMember]
+    //    public Guid Id { get; set; }
+
+
+    //    [DataMember]
+    //    public string Street { get; set; }
+
+
+    //    [DataMember]
+    //    public string City { get; set; }
+
+    //    [DataMember]
+    //    public string State { get; set; }
+
+    //    [DataMember]
+    //    public string PostalCode { get; set; }
+
+
+    //    [DataMember]
+    //    public AddressType Type { get; set; }
+
+    //}
 }

@@ -84,6 +84,7 @@ namespace DemoWebApi.Controllers
 						Street1="Rainbow rd",
 						State="Queensland",
 						Type= AddressType.Residential,
+						GeoLocation= new System.Drawing.Point {X=100, Y=200}
 					}
 				}),
 
