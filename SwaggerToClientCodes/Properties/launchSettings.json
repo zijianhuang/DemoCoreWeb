@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SwaggerToClientCodes": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\VSProjects\\WebApiClientGenCoreSwaggerDemo\\SwaggerTSGenerated\\myswagger.json"
+    }
+  }
+}
