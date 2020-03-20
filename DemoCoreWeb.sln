@@ -30,9 +30,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3Mvc", "Core3Mvc\Core3M
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{2a8a1560-fc36-4328-a570-530e3001df31}*SharedItemsImports = 5
 		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{3ca753f3-b771-4bce-9406-1708b44f907b}*SharedItemsImports = 13
+		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{5c64d0fe-b283-4a4f-b235-49c5f6fd0229}*SharedItemsImports = 5
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
+		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{cad158e0-5120-4ef0-9892-79c2c184a27b}*SharedItemsImports = 5
+		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{d9b87bde-8771-49db-99d2-91f2d35a1d48}*SharedItemsImports = 5
 		Tests\IntegrationTestsShared\IntegrationTestsShared.projitems*{eb9ee874-f621-4a9f-ab17-7e29e392f26a}*SharedItemsImports = 13
+		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{f2be5539-dcaf-4c13-8682-654ba1d0ccdd}*SharedItemsImports = 5
+		Tests\IntegrationTestsShared\IntegrationTestsShared.projitems*{f2be5539-dcaf-4c13-8682-654ba1d0ccdd}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
