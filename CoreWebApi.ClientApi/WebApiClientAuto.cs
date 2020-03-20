@@ -301,6 +301,81 @@ namespace DemoWebApi.Models.Client
 		public string NewPassword { get; set; }
 	}
 }
+namespace Core3WebApi.Controllers.Client
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Net.Http;
+	using Newtonsoft.Json;
+	
+	
+	public partial class Statistics
+	{
+		
+		private System.Net.Http.HttpClient client;
+		
+		private System.Uri baseUri;
+		
+		public Statistics(System.Net.Http.HttpClient client, System.Uri baseUri)
+		{
+			if (client == null)
+				throw new ArgumentNullException("Null HttpClient.", "client");
+
+			if (baseUri == null)
+				throw new ArgumentNullException("Null baseUri", "baseUri");
+
+			this.client = client;
+			this.baseUri = baseUri;
+		}
+		
+		/// <summary>
+		/// GET api/Statistics/distribution
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetDistributionAsync()
+		{
+			var requestUri = new Uri(this.baseUri, "api/Statistics/distribution");
+			var responseMessage = await client.GetAsync(requestUri);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCode();
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using (JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream)))
+				{
+				var serializer = new JsonSerializer();
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+				}
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/Statistics/distribution
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject GetDistribution()
+		{
+			var requestUri = new Uri(this.baseUri, "api/Statistics/distribution");
+			var responseMessage = this.client.GetAsync(requestUri).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCode();
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using (JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream)))
+				{
+				var serializer = new JsonSerializer();
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+				}
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+	}
+}
 namespace DemoCoreWeb.Controllers.Client
 {
 	using System;

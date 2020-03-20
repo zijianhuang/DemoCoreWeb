@@ -39,6 +39,23 @@ var DemoWebApi_DemoData_Client;
         PhoneType[PhoneType["Fax"] = 3] = "Fax";
     })(PhoneType = DemoWebApi_DemoData_Client.PhoneType || (DemoWebApi_DemoData_Client.PhoneType = {}));
 })(DemoWebApi_DemoData_Client = exports.DemoWebApi_DemoData_Client || (exports.DemoWebApi_DemoData_Client = {}));
+var Core3WebApi_Controllers_Client;
+(function (Core3WebApi_Controllers_Client) {
+    var Statistics = /** @class */ (function () {
+        function Statistics(baseUri) {
+            if (baseUri === void 0) { baseUri = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/'; }
+            this.baseUri = baseUri;
+        }
+        /**
+         * GET api/Statistics/distribution
+         */
+        Statistics.prototype.getDistribution = function () {
+            return axios_1["default"].get(this.baseUri + 'api/Statistics/distribution', { responseType: 'text' });
+        };
+        return Statistics;
+    }());
+    Core3WebApi_Controllers_Client.Statistics = Statistics;
+})(Core3WebApi_Controllers_Client = exports.Core3WebApi_Controllers_Client || (exports.Core3WebApi_Controllers_Client = {}));
 var DemoCoreWeb_Controllers_Client;
 (function (DemoCoreWeb_Controllers_Client) {
     var SpecialTypes = /** @class */ (function () {

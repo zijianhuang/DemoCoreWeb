@@ -173,6 +173,16 @@ export declare namespace DemoWebApi_Models_Client {
         newPassword?: string;
     }
 }
+export declare namespace Core3WebApi_Controllers_Client {
+    class Statistics {
+        private baseUri;
+        constructor(baseUri?: string);
+        /**
+         * GET api/Statistics/distribution
+         */
+        getDistribution(): Promise<AxiosResponse>;
+    }
+}
 export declare namespace DemoCoreWeb_Controllers_Client {
     class SpecialTypes {
         private baseUri;

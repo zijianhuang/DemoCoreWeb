@@ -202,6 +202,21 @@ export namespace DemoWebApi_Models_Client {
 
 }
 
+export namespace Core3WebApi_Controllers_Client {
+	export class Statistics {
+		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		}
+
+		/**
+		 * GET api/Statistics/distribution
+		 */
+		getDistribution(): Promise<Response> {
+			return fetch(this.baseUri + 'api/Statistics/distribution', {method: 'get'});
+		}
+	}
+
+}
+
 export namespace DemoCoreWeb_Controllers_Client {
 	export class SpecialTypes {
 		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
