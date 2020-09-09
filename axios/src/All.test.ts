@@ -470,12 +470,9 @@ describe('SuperDemo API', () => {
 
   it('getActionResult', (done) => {
     service.getActionResult().then(
-      data => {
-		console.debug('getActionResult');
-		console.debug(data); // abcdefg
-		expect(data).toBe('abcdefg'); //axios give string directly rather than a response structure
-		// expect(data.status).toBe(200);
-        // expect(data.data).toBe('"abcdefg"');
+      response => {
+        expect(response.status).toBe(200);
+        expect(response.data).toBe('abcdefg');
 
         done();
       },

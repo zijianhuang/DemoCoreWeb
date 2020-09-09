@@ -8,7 +8,8 @@ namespace IntegrationTests
 	{
 		public HeroesFixture()
 		{
-			Api = new DemoWebApi.Controllers.Client.Heroes(HttpClient, BaseUri);
+			HttpClient.BaseAddress = BaseUri;
+			Api = new DemoWebApi.Controllers.Client.Heroes(HttpClient);
 		}
 
 		public DemoWebApi.Controllers.Client.Heroes Api { get; private set; }

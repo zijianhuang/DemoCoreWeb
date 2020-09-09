@@ -14,7 +14,7 @@
 		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
-
+		"UseEnsureSuccessStatusCodeEx": true,
 		"CamelCase": true,
 
 		"Plugins": [

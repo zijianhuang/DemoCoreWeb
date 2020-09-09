@@ -7,8 +7,9 @@ namespace IntegrationTests
 	public class SpecialTypesFixture : Fonlow.Testing.DefaultHttpClient
 	{
 		public SpecialTypesFixture()
-		{
-			Api = new DemoCoreWeb.Controllers.Client.SpecialTypes(HttpClient, BaseUri);
+        {
+            HttpClient.BaseAddress = BaseUri;
+            Api = new DemoCoreWeb.Controllers.Client.SpecialTypes(HttpClient);
 		}
 
 		public DemoCoreWeb.Controllers.Client.SpecialTypes Api { get; private set; }

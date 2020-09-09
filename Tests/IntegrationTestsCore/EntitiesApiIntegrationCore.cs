@@ -7,7 +7,8 @@ namespace IntegrationTests
     {
         public EntitiesFixture()
         {
-            Api = new DemoWebApi.Controllers.Client.Entities(HttpClient, BaseUri);
+            HttpClient.BaseAddress = BaseUri;
+            Api = new DemoWebApi.Controllers.Client.Entities(HttpClient);
         }
 
         public DemoWebApi.Controllers.Client.Entities Api { get; private set; }

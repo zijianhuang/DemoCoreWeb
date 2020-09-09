@@ -1,6 +1,6 @@
 import * as moment from 'moment';
-//import * as namespaces from './clientapi/WebApiCoreFetchClientAuto';
-import * as namespaces from './clientapi/WebApiFetchClientAuto';
+import * as namespaces from './clientapi/WebApiCoreFetchClientAuto';
+//import * as namespaces from './clientapi/WebApiFetchClientAuto';
 const DemoWebApi_Controllers_Client = namespaces.DemoWebApi_Controllers_Client;
 
 describe('Basic', ()=>{
@@ -17,7 +17,7 @@ describe('Basic', ()=>{
 
 });
 
-const forDotNetCore=false;
+const forDotNetCore=true;
 const baseUri = forDotNetCore ? 'http://localhost:5000/' : 'http://localhost:10965/';
 
 describe('Values', ()=>{
@@ -67,7 +67,7 @@ describe('Heroes API', () => {
   const service= new namespaces.DemoWebApi_Controllers_Client.Heroes(baseUri);
 
    it('getAll', (done) => {
-    service.getHeros().then(
+    service.get().then(
       data => {
         console.debug(data.length);
         expect(data.length).toBeGreaterThan(0);

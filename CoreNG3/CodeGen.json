@@ -9,6 +9,7 @@
 
 	"ClientApiOutputs": {
 		"CamelCase": true,
+		"UseEnsureSuccessStatusCodeEx": true,
 
 		"Plugins": [
 			{
