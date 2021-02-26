@@ -7,13 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi.ClientApi", "Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWebApi.DemoDataCore", "DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj", "{CAD158E0-5120-4EF0-9892-79C2C184A27B}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DemoWebApi.DemoDataShared", "DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.shproj", "{3CA753F3-B771-4BCE-9406-1708B44F907B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{39445712-FE9F-4406-A103-F181E9DC2233}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsCore", "Tests\IntegrationTestsCore\IntegrationTestsCore.csproj", "{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestsShared", "Tests\IntegrationTestsShared\IntegrationTestsShared.shproj", "{EB9EE874-F621-4A9F-AB17-7E29E392F26A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C32E2512-1839-4A94-B119-A33161C2EA92}"
 	ProjectSection(SolutionItems) = preProject
@@ -31,14 +27,9 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{2a8a1560-fc36-4328-a570-530e3001df31}*SharedItemsImports = 5
-		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{3ca753f3-b771-4bce-9406-1708b44f907b}*SharedItemsImports = 13
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{5c64d0fe-b283-4a4f-b235-49c5f6fd0229}*SharedItemsImports = 5
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
-		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{cad158e0-5120-4ef0-9892-79c2c184a27b}*SharedItemsImports = 5
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{d9b87bde-8771-49db-99d2-91f2d35a1d48}*SharedItemsImports = 5
-		Tests\IntegrationTestsShared\IntegrationTestsShared.projitems*{eb9ee874-f621-4a9f-ab17-7e29e392f26a}*SharedItemsImports = 13
-		DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems*{f2be5539-dcaf-4c13-8682-654ba1d0ccdd}*SharedItemsImports = 5
-		Tests\IntegrationTestsShared\IntegrationTestsShared.projitems*{f2be5539-dcaf-4c13-8682-654ba1d0ccdd}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,7 +66,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD} = {39445712-FE9F-4406-A103-F181E9DC2233}
-		{EB9EE874-F621-4A9F-AB17-7E29E392F26A} = {39445712-FE9F-4406-A103-F181E9DC2233}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3EFB0EB-BFFA-4C16-B235-B121695229EF}

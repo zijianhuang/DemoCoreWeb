@@ -37,8 +37,4 @@
     <ProjectReference Include="..\..\CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj" />
   </ItemGroup>
 
-  <Import Project="..\IntegrationTestsShared\IntegrationTestsShared.projitems" Label="Shared" />
-
-  <Import Project="..\..\DemoWebApi.DemoDataShared\DemoWebApi.DemoDataShared.projitems" Label="Shared" />
-
 </Project>
