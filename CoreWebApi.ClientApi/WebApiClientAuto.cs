@@ -11,9 +11,6 @@ namespace DemoWebApi.Controllers.Client
 {
 	
 	
-	/// <summary>
-	/// Complex hero type
-	/// </summary>
 	public class Hero : object
 	{
 		
@@ -132,7 +129,6 @@ namespace DemoWebApi.DemoData.Client
 	}
 	
 	public class MimsResult<T> : object
-	
 	{
 		
 		public System.DateTime GeneratedAt { get; set; }
@@ -145,9 +141,6 @@ namespace DemoWebApi.DemoData.Client
 	}
 	
 	public class MyGeneric<T, K, U> : object
-	
-	
-	
 	{
 		
 		public K MyK { get; set; }
@@ -288,89 +281,6 @@ namespace DemoWebApi.Models.Client
 		public string ConfirmPassword { get; set; }
 		
 		public string NewPassword { get; set; }
-	}
-}
-namespace Core3WebApi.Controllers.Client
-{
-	using System;
-	using System.Linq;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using System.Net.Http;
-	using Newtonsoft.Json;
-	using Fonlow.Net.Http;
-	
-	
-	public partial class Statistics
-	{
-		
-		private System.Net.Http.HttpClient client;
-		
-		private JsonSerializerSettings jsonSerializerSettings;
-		
-		public Statistics(System.Net.Http.HttpClient client, JsonSerializerSettings jsonSerializerSettings=null)
-		{
-			if (client == null)
-				throw new ArgumentNullException("Null HttpClient.", "client");
-
-			if (client.BaseAddress == null)
-				throw new ArgumentNullException("HttpClient has no BaseAddress", "client");
-
-			this.client = client;
-			this.jsonSerializerSettings = jsonSerializerSettings;
-		}
-		
-		/// <summary>
-		/// GET api/Statistics/distribution
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetDistributionAsync()
-		{
-			var requestUri = "api/Statistics/distribution";
-			using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri))
-			{
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using (JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream)))
-				{
-				var serializer = new JsonSerializer();
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-				}
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-			}
-		}
-		
-		/// <summary>
-		/// GET api/Statistics/distribution
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject GetDistribution()
-		{
-			var requestUri = "api/Statistics/distribution";
-			using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri))
-			{
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using (JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream)))
-				{
-				var serializer = new JsonSerializer();
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-				}
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-			}
-		}
 	}
 }
 namespace DemoCoreWeb.Controllers.Client
@@ -959,12 +869,8 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a person
-		/// so to know the person
 		/// GET api/Entities/getPerson/{id}
 		/// </summary>
-		/// <param name="id">unique id of that guy</param>
-		/// <returns>person in db</returns>
 		public async Task<DemoWebApi.DemoData.Client.Person> GetPersonAsync(long id)
 		{
 			var requestUri = "api/Entities/getPerson/"+id;
@@ -989,12 +895,8 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a person
-		/// so to know the person
 		/// GET api/Entities/getPerson/{id}
 		/// </summary>
-		/// <param name="id">unique id of that guy</param>
-		/// <returns>person in db</returns>
 		public DemoWebApi.DemoData.Client.Person GetPerson(long id)
 		{
 			var requestUri = "api/Entities/getPerson/"+id;
@@ -1197,7 +1099,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get all heroes.
 		/// GET api/Heroes
 		/// </summary>
 		public async Task<DemoWebApi.Controllers.Client.Hero[]> GetAsync()
@@ -1224,7 +1125,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get all heroes.
 		/// GET api/Heroes
 		/// </summary>
 		public DemoWebApi.Controllers.Client.Hero[] Get()
@@ -1251,7 +1151,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a hero.
 		/// GET api/Heroes/{id}
 		/// </summary>
 		public async Task<DemoWebApi.Controllers.Client.Hero> GetAsync(long id)
@@ -1278,7 +1177,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a hero.
 		/// GET api/Heroes/{id}
 		/// </summary>
 		public DemoWebApi.Controllers.Client.Hero Get(long id)
@@ -1371,7 +1269,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Add a hero
 		/// POST api/Heroes/q?name={name}
 		/// </summary>
 		public async Task<DemoWebApi.Controllers.Client.Hero> PostWithQueryAsync(string name)
@@ -1398,7 +1295,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Add a hero
 		/// POST api/Heroes/q?name={name}
 		/// </summary>
 		public DemoWebApi.Controllers.Client.Hero PostWithQuery(string name)
@@ -1425,7 +1321,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Update hero.
 		/// PUT api/Heroes
 		/// </summary>
 		public async Task<DemoWebApi.Controllers.Client.Hero> PutAsync(DemoWebApi.Controllers.Client.Hero hero)
@@ -1459,7 +1354,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Update hero.
 		/// PUT api/Heroes
 		/// </summary>
 		public DemoWebApi.Controllers.Client.Hero Put(DemoWebApi.Controllers.Client.Hero hero)
@@ -1493,11 +1387,8 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Search heroes
 		/// GET api/Heroes/search/{name}
 		/// </summary>
-		/// <param name="name">keyword contained in hero name.</param>
-		/// <returns>Hero array matching the keyword.</returns>
 		public async Task<DemoWebApi.Controllers.Client.Hero[]> SearchAsync(string name)
 		{
 			var requestUri = "api/Heroes/search/"+(name == null ? "" : Uri.EscapeDataString(name));
@@ -1522,11 +1413,8 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Search heroes
 		/// GET api/Heroes/search/{name}
 		/// </summary>
-		/// <param name="name">keyword contained in hero name.</param>
-		/// <returns>Hero array matching the keyword.</returns>
 		public DemoWebApi.Controllers.Client.Hero[] Search(string name)
 		{
 			var requestUri = "api/Heroes/search/"+(name == null ? "" : Uri.EscapeDataString(name));
@@ -2367,7 +2255,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Result of 0.1d + 0.2d - 0.3d
 		/// GET api/SuperDemo/DoubleZero
 		/// </summary>
 		public async Task<double> GetDoubleZeroAsync()
@@ -2393,7 +2280,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Result of 0.1d + 0.2d - 0.3d
 		/// GET api/SuperDemo/DoubleZero
 		/// </summary>
 		public double GetDoubleZero()
@@ -3957,7 +3843,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
 		/// POST api/SuperDemo/DateTimeOffset
 		/// </summary>
 		public async Task<bool> PostDateTimeOffsetAsync(System.DateTimeOffset d)
@@ -3990,7 +3875,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
 		/// POST api/SuperDemo/DateTimeOffset
 		/// </summary>
 		public bool PostDateTimeOffset(System.DateTimeOffset d)
@@ -6487,7 +6371,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a list of value
 		/// GET api/Values
 		/// </summary>
 		public async Task<string[]> GetAsync()
@@ -6514,7 +6397,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get a list of value
 		/// GET api/Values
 		/// </summary>
 		public string[] Get()
@@ -6541,7 +6423,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get by both Id and name
 		/// GET api/Values/{id}?name={name}
 		/// </summary>
 		public async Task<string> GetAsync(int id, string name)
@@ -6567,7 +6448,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Get by both Id and name
 		/// GET api/Values/{id}?name={name}
 		/// </summary>
 		public string Get(int id, string name)
@@ -6757,7 +6637,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Update with valjue
 		/// PUT api/Values/{id}
 		/// </summary>
 		public async Task PutAsync(int id, string value)
@@ -6785,7 +6664,6 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// Update with valjue
 		/// PUT api/Values/{id}
 		/// </summary>
 		public void Put(int id, string value)
@@ -6820,7 +6698,7 @@ namespace Fonlow.Net.Http
 
 	public class WebApiRequestException : HttpRequestException
 	{
-		public System.Net.HttpStatusCode StatusCode { get; private set; }
+		public new System.Net.HttpStatusCode StatusCode { get; private set; }
 
 		public string Response { get; private set; }
 

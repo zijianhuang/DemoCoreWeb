@@ -15,4 +15,4 @@ And this repository contains the following demo applications:
 **Remarks:** 
 
 * .NET Core 2.x had dependency on Newtonsoft.JSON, while .NET Core 3.0 had been decoupled from Neewtonsoft.JSON and the default serializer is working well in most scenarios except for Tuple, 2D array and anonymous object etc. If you would support these data types or would keep 100% compitability with the serialization of NewtonSoft.JSON, you should explicitly include package `Microsoft.AspNetCore.Mvc.NewtonsoftJson` and add add `AddNewtonsoftJson()` in `Startup.cs`.
-* All Projects are updated to .NET 5 as of 2020-11-14.
+* All Projects are updated to .NET 6 as of 2021-12-27.
