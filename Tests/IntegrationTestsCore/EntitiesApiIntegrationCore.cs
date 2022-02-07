@@ -30,6 +30,91 @@ namespace IntegrationTests
 		DemoWebApi.Controllers.Client.Entities api;
 
 		[Fact]
+		public void TestCreatePerson3()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal("Hey", a.GivenName);
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+		}
+
+		[Fact]
+		public void TestCreateCompany()
+		{
+			DateOnly regDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-1));
+			DateTimeOffset foundDate = DateTimeOffset.Now.Date.AddDays(-2);
+			Company c = new Company
+			{
+				Name = "Super Co",
+				FoundDate = foundDate,
+				RegisterDate = regDate,
+			};
+
+			var a = api.CreateCompany(c);
+			Assert.NotNull(a.Id);
+			Assert.Equal(regDate, a.RegisterDate);
+			Assert.Equal(foundDate, a.FoundDate);
+		}
+
+		[Fact]
+		public void TestCreateCompany2()
+		{
+			Company c = new Company
+			{
+				Name = "Super Co",
+			};
+
+			var a = api.CreateCompany(c);
+			Assert.NotNull(a.Id);
+			Assert.Equal(DateOnly.MinValue, a.RegisterDate);
+			Assert.Equal(DateTimeOffset.MinValue, a.FoundDate);
+		}
+
+		[Fact]
+		public void TestPatch()
+		{
+			var r = api.PatchPerson(new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+				}},
+			}
+			);
+
+			Assert.Equal("Some One", r);
+		}
+
+
+		[Fact]
 		public void TestCreatePerson()
 		{
 			Person person = new Person()
@@ -37,7 +122,8 @@ namespace IntegrationTests
 				Name = "Some One",
 				Surname = "One",
 				GivenName = "Some",
-				DOB = DateTime.Now.AddYears(-20),
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
 					State="QLD",
@@ -54,32 +140,6 @@ namespace IntegrationTests
 			Assert.True(id > 0);
 		}
 
-		//This one works for ASP.NET Web API, but .NET Core Web API is not chking the RequiredAttribute, as described at https://www.strathweb.com/2017/12/required-and-bindrequired-in-asp-net-core-mvc/
-		//[Fact]
-		//public void TestCreatePersonWithEmptyName()
-		//{
-		//	Person person = new Person()
-		//	{
-		//		Name = null,
-		//		Surname = "One",
-		//		GivenName = "Some",
-		//		DOB = DateTime.Now.AddYears(-20),
-		//		Addresses = new Address[]{new Address(){
-		//			City="Brisbane",
-		//			State="QLD",
-		//			Street1="Somewhere",
-		//			Street2="Over the rainbow",
-		//			PostalCode="4000",
-		//			Country="Australia",
-		//			Type= AddressType.Postal,
-		//			Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
-		//	  }},
-		//	};
-
-		//	var ex = Assert.Throws<System.Net.Http.HttpRequestException>(() => api.CreatePerson(person));
-		//	System.Diagnostics.Debug.WriteLine(ex.ToString());
-		//}
-
 		[Fact]
 		public void TestCreatePersonWithExceptionName()
 		{
@@ -88,7 +148,7 @@ namespace IntegrationTests
 				Name = "Exception",
 				Surname = "One",
 				GivenName = "Some",
-				DOB = DateTime.Now.AddYears(-20),
+				DOB = new DateOnly(1988, 11, 23),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
 					State="QLD",
@@ -114,12 +174,12 @@ namespace IntegrationTests
 		[Fact]
 		public void TestUpdate()
 		{
-			api.UpdatePerson(new Person()
+			var r = api.UpdatePerson(new Person()
 			{
 				Name = "Some One",
 				Surname = "One",
 				GivenName = "Some",
-				DOB = DateTime.Now.AddYears(-20),
+				DOB = new DateOnly(1988, 11, 23),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
 					State="QLD",
@@ -131,6 +191,8 @@ namespace IntegrationTests
 				}},
 			}
 			);
+
+			Assert.Equal("Some One", r);
 		}
 
 		[Fact]
@@ -140,44 +202,8 @@ namespace IntegrationTests
 			Assert.NotNull(person);
 			Assert.Equal("Huang", person.Surname);
 			Assert.True(person.DOB.HasValue);
-			Assert.Equal(DateTime.Now.Year - 20, person.DOB.Value.Year);
-		}
-
-		[Fact(Skip ="No need to run everytime")]
-		public void TestCreatePeopleConcurrently()
-		{
-			Person person = new Person()
-			{
-				Name = "Some One",
-				Surname = "One",
-				GivenName = "Some",
-				DOB = DateTime.Now.AddYears(-20),
-				Addresses = new Address[]{new Address(){
-					City="Brisbane",
-					State="QLD",
-					Street1="Somewhere",
-					Street2="Over the rainbow",
-					PostalCode="4000",
-					Country="Australia",
-					Type= AddressType.Postal,
-					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
-			   }},
-			};
-
-
-			List<Person> people = new List<Person>();
-			for (int i = 0; i < 100; i++)
-			{
-				people.Add(person);
-			}
-
-
-			var idTasks = people.Select(d => api.CreatePersonAsync(d)).ToArray();
-			Task.WaitAll(idTasks);
-			var ids = idTasks.Select(d => d.Result).ToArray();
-
-			Assert.True(ids[50] > 0);
-
+			Assert.Null(person.Baptised);
+			Assert.Equal(1988, person.DOB.Value.Year);
 		}
 
 		[Fact]
@@ -199,9 +225,10 @@ namespace IntegrationTests
 			var c = api.GetMims(new MimsPackage
 			{
 				Tag = "Hello",
+				KK = 99,
 				Result = new MimsResult<decimal>
 				{
-					Result = 123.45m
+					Result = 123.45m,
 				}
 			});
 

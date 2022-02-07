@@ -16,6 +16,9 @@
 		"StringAsString": true,
 		"CamelCase": true,
 		"UseEnsureSuccessStatusCodeEx": true,
+		"DataAnnotationsEnabled": true,
+		"DataAnnotationsToComments": true,
+		"HandleHttpRequestHeaders": true,
 
 		"Plugins": [
 			{

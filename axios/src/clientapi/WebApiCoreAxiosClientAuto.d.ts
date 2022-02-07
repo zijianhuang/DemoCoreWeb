@@ -33,6 +33,8 @@ export declare namespace DemoWebApi_DemoData_Client {
          */
         BusinessNum?: string;
         businessNumberType?: string;
+        foundDate?: Date;
+        registerDate?: any;
         textMatrix?: Array<Array<string>>;
         int2D?: number[][];
         int2DJagged?: Array<Array<number>>;
@@ -66,7 +68,26 @@ export declare namespace DemoWebApi_DemoData_Client {
         phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
         web?: string;
     }
+    enum MedicalContraindiationResponseTypeReason {
+        M = "Mm",
+        S = "Ss",
+        P = "Pp",
+        I = "I",
+        A = "A"
+    }
+    enum MedicalContraindiationResponseTypeTypeCode {
+        P = "P",
+        T = "Tt"
+    }
     interface MimsPackage {
+        kk?: number;
+        /**
+         * Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+         * and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+         */
+        kK2?: number;
+        optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType;
+        optionalInt?: number;
         result?: DemoWebApi_DemoData_Client.MimsResult<number>;
         tag?: string;
     }
@@ -75,6 +96,10 @@ export declare namespace DemoWebApi_DemoData_Client {
         message?: string;
         result?: T;
         success?: boolean;
+    }
+    enum MyEnumType {
+        First = 1,
+        Two = 2
     }
     interface MyGeneric<T, K, U> {
         myK?: K;
@@ -94,11 +119,12 @@ export declare namespace DemoWebApi_DemoData_Client {
         };
     }
     interface Person extends DemoWebApi_DemoData_Client.Entity {
+        baptised?: Date;
         /**
          * Date of Birth.
          * This is optional.
          */
-        dob?: Date;
+        dob?: any;
         givenName?: string;
         surname?: string;
     }
@@ -173,7 +199,9 @@ export declare namespace Core3WebApi_Controllers_Client {
         /**
          * GET api/Statistics/distribution
          */
-        getDistribution(): Promise<AxiosResponse>;
+        getDistribution(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
     }
 }
 export declare namespace DemoCoreWeb_Controllers_Client {
@@ -183,15 +211,21 @@ export declare namespace DemoCoreWeb_Controllers_Client {
         /**
          * GET api/SpecialTypes/AnonymousDynamic
          */
-        getAnonymousDynamic(): Promise<AxiosResponse>;
+        getAnonymousDynamic(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * GET api/SpecialTypes/AnonymousObject
          */
-        getAnonymousObject(): Promise<AxiosResponse>;
+        getAnonymousObject(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * POST api/SpecialTypes/AnonymousObject
          */
-        postAnonymousObject(obj: any): Promise<AxiosResponse>;
+        postAnonymousObject(obj: any, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
     }
 }
 export declare namespace DemoWebApi_Controllers_Client {
@@ -199,29 +233,59 @@ export declare namespace DemoWebApi_Controllers_Client {
         private baseUri;
         constructor(baseUri?: string);
         /**
+         * POST api/Entities/createCompany
+         */
+        createCompany(p: DemoWebApi_DemoData_Client.Company, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Company>;
+        /**
          * POST api/Entities/createPerson
          */
-        createPerson(p: DemoWebApi_DemoData_Client.Person): Promise<number>;
+        createPerson(p: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
+        /**
+         * POST api/Entities/createPerson2
+         */
+        createPerson2(p: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
+        /**
+         * POST api/Entities/createPerson3
+         */
+        createPerson3(p: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * DELETE api/Entities/{id}
          */
-        delete(id: number): Promise<AxiosResponse>;
+        delete(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * GET api/Entities/Company/{id}
          */
-        getCompany(id: number): Promise<DemoWebApi_DemoData_Client.Company>;
+        getCompany(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Company>;
         /**
          * POST api/Entities/Mims
          */
-        getMims(p: DemoWebApi_DemoData_Client.MimsPackage): Promise<DemoWebApi_DemoData_Client.MimsResult<string>>;
+        getMims(p: DemoWebApi_DemoData_Client.MimsPackage, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.MimsResult<string>>;
         /**
          * POST api/Entities/MyGeneric
          */
-        getMyGeneric(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, number>): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, number>>;
+        getMyGeneric(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, number>>;
         /**
          * POST api/Entities/MyGenericPerson
          */
-        getMyGenericPerson(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>>;
+        getMyGenericPerson(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>>;
         /**
          * Get a person
          * so to know the person
@@ -229,15 +293,33 @@ export declare namespace DemoWebApi_Controllers_Client {
          * @param {number} id unique id of that guy
          * @return {DemoWebApi_DemoData_Client.Person} person in db
          */
-        getPerson(id: number): Promise<DemoWebApi_DemoData_Client.Person>;
+        getPerson(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
+        /**
+         * GET api/Entities/getPerson2/{id}
+         */
+        getPerson2(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * PUT api/Entities/link?id={id}&relationship={relationship}
          */
-        linkPerson(id: number, relationship: string, person: DemoWebApi_DemoData_Client.Person): Promise<boolean>;
+        linkPerson(id: number, relationship: string, person: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<boolean>;
+        /**
+         * PATCH api/Entities/patchPerson
+         */
+        patchPerson(person: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * PUT api/Entities/updatePerson
          */
-        updatePerson(person: DemoWebApi_DemoData_Client.Person): Promise<AxiosResponse>;
+        updatePerson(person: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
     }
     class Heroes {
         private baseUri;
@@ -245,38 +327,52 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * DELETE api/Heroes/{id}
          */
-        delete(id: number): Promise<AxiosResponse>;
+        delete(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * Get all heroes.
          * GET api/Heroes
          */
-        get(): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
+        get(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
         /**
          * Get a hero.
          * GET api/Heroes/{id}
          */
-        getById(id: number): Promise<DemoWebApi_Controllers_Client.Hero>;
+        getById(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
          * POST api/Heroes
          */
-        post(name: string): Promise<DemoWebApi_Controllers_Client.Hero>;
+        post(name: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
          * Add a hero
          * POST api/Heroes/q?name={name}
          */
-        postWithQuery(name: string): Promise<DemoWebApi_Controllers_Client.Hero>;
+        postWithQuery(name: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
          * Update hero.
          * PUT api/Heroes
          */
-        put(hero: DemoWebApi_Controllers_Client.Hero): Promise<DemoWebApi_Controllers_Client.Hero>;
+        put(hero: DemoWebApi_Controllers_Client.Hero, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_Controllers_Client.Hero>;
         /**
          * Search heroes
          * GET api/Heroes/search/{name}
          * @param {string} name keyword contained in hero name.
          * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
          */
-        search(name: string): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
+        search(name: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
     }
     class Home {
         private baseUri;
@@ -284,163 +380,285 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Home
          */
-        index(): Promise<AxiosResponse<Blob>>;
+        index(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<Blob>>;
     }
     class SuperDemo {
         private baseUri;
         constructor(baseUri?: string);
         /**
+         * GET api/SuperDemo/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
+         */
+        athletheSearch(take: number, skip: number, order: string, sort: string, search: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
+        /**
          * GET api/SuperDemo/ActionResult
          */
-        getActionResult(): Promise<AxiosResponse<string>>;
+        getActionResult(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<string>>;
+        /**
+         * GET api/SuperDemo/ActionResult2
+         */
+        getActionResult2(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<string>>;
         /**
          * GET api/SuperDemo/ActionStringResult
          */
-        getActionStringResult(): Promise<string>;
+        getActionStringResult(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * GET api/SuperDemo/bool
          */
-        getBool(): Promise<boolean>;
+        getBool(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<boolean>;
         /**
          * GET api/SuperDemo/byte
          */
-        getbyte(): Promise<number>;
+        getbyte(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/ByteArray
          */
-        getByteArray(): Promise<Array<number>>;
+        getByteArray(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
         /**
          * GET api/SuperDemo/char
          */
-        getChar(): Promise<string>;
+        getChar(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * GET api/SuperDemo/Collection
          */
-        getCollection(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getCollection(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/NullableDatetime/{hasValue}
          */
-        getDateTime(hasValue: boolean): Promise<Date>;
+        getDateTime(hasValue: boolean, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * GET api/SuperDemo/DateTimeOffset
          */
-        getDateTimeOffset(): Promise<Date>;
+        getDateTimeOffset(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
+        /**
+         * GET api/SuperDemo/enumGet?d={d}
+         */
+        getDay(d: DemoWebApi_DemoData_Client.Days, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Days>;
         /**
          * GET api/SuperDemo/decimal
          */
-        getDecimal(): Promise<number>;
+        getDecimal(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
+        /**
+         * GET api/SuperDemo/decimalArrayQ?a={a}
+         */
+        getDecimalArrayQ(a: Array<number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
         /**
          * GET api/SuperDemo/decimal/{d}
          */
-        getDecimalSquare(d: number): Promise<number>;
+        getDecimalSquare(d: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/DecimalZero
          */
-        getDecimalZero(): Promise<number>;
+        getDecimalZero(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/StringStringDic
          */
-        getDictionary(): Promise<{
+        getDictionary(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             [id: string]: string;
         }>;
         /**
          * GET api/SuperDemo/StringPersonDic
          */
-        getDictionaryOfPeople(): Promise<{
+        getDictionaryOfPeople(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             [id: string]: DemoWebApi_DemoData_Client.Person;
         }>;
         /**
          * GET api/SuperDemo/doulbe
          */
-        getdouble(): Promise<number>;
+        getdouble(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * Result of 0.1d + 0.2d - 0.3d
          * GET api/SuperDemo/DoubleZero
          */
-        getDoubleZero(): Promise<number>;
+        getDoubleZero(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/EmptyString
          */
-        getEmptyString(): Promise<string>;
+        getEmptyString(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
+        /**
+         * GET api/SuperDemo/enumArrayDays?a={a}
+         */
+        getEnumArrayDays(a: Array<DemoWebApi_DemoData_Client.Days>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Days>>;
+        /**
+         * GET api/SuperDemo/enumArrayQ2?a={a}
+         */
+        getEnumArrayQ2(a: Array<number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
         /**
          * GET api/SuperDemo/FloatZero
          */
-        getFloatZero(): Promise<number>;
+        getFloatZero(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/ICollection
          */
-        getICollection(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getICollection(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/IList
          */
-        getIList(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getIList(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/int2d
          */
-        getInt2D(): Promise<number[][]>;
+        getInt2D(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number[][]>;
         /**
          * GET api/SuperDemo/int2dJagged
          */
-        getInt2DJagged(): Promise<Array<Array<number>>>;
+        getInt2DJagged(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<Array<number>>>;
         /**
          * GET api/SuperDemo/intArray
          */
-        getIntArray(): Promise<Array<number>>;
+        getIntArray(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
+        /**
+         * GET api/SuperDemo/intArrayQ?a={a}
+         */
+        getIntArrayQ(a: Array<number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
+        /**
+         * GET api/SuperDemo/intArrayQ2?a={a}
+         */
+        getIntArrayQ2(a: Array<number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<number>>;
         /**
          * GET api/SuperDemo/int/{d}
          */
-        getIntSquare(d: number): Promise<number>;
+        getIntSquare(d: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/IReadOnlyCollection
          */
-        getIReadOnlyCollection(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getIReadOnlyCollection(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/IReadOnlyList
          */
-        getIReadOnlyList(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getIReadOnlyList(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/KeyValuePair
          */
-        getKeyhValuePair(): Promise<{
+        getKeyhValuePair(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             key: string;
             value: DemoWebApi_DemoData_Client.Person;
         }>;
         /**
          * GET api/SuperDemo/List
          */
-        getList(): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
+        getList(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
          * GET api/SuperDemo/NextHour/{dt}
          */
-        getNextHour(dt: Date): Promise<Date>;
+        getNextHour(dt: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * GET api/SuperDemo/NextHourNullable?n={n}&dt={dt}
          */
-        getNextHourNullable(n: number, dt: Date): Promise<Date>;
+        getNextHourNullable(n: number, dt: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * GET api/SuperDemo/NextYear/{dt}
          */
-        getNextYear(dt: Date): Promise<Date>;
+        getNextYear(dt: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * GET api/SuperDemo/NextYearNullable?n={n}&dt={dt}
          */
-        getNextYearNullable(n: number, dt: Date): Promise<Date>;
+        getNextYearNullable(n: number, dt: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * GET api/SuperDemo/NullableDecimal/{hasValue}
          */
-        getNullableDecimal(hasValue: boolean): Promise<number>;
+        getNullableDecimal(hasValue: boolean, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/NullObject
          */
-        getNullPerson(): Promise<DemoWebApi_DemoData_Client.Person>;
+        getNullPerson(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * GET api/SuperDemo/NullString
          */
-        getNullString(): Promise<string>;
+        getNullString(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * GET api/SuperDemo/DoubleNullable?location={location}&dd={dd}&de={de}
          */
-        getPrimitiveNullable(location: string, dd: number, de: number): Promise<{
+        getPrimitiveNullable(location: string, dd: number, de: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: number;
             item3: number;
@@ -448,112 +666,198 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/SuperDemo/DoubleNullable2?dd={dd}&de={de}
          */
-        getPrimitiveNullable2(dd: number, de: number): Promise<{
+        getPrimitiveNullable2(dd: number, de: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: number;
             item2: number;
         }>;
         /**
          * GET api/SuperDemo/sbyte
          */
-        getsbyte(): Promise<number>;
+        getsbyte(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/short
          */
-        getShort(): Promise<number>;
+        getShort(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
+        /**
+         * GET api/SuperDemo/stringArrayQ?a={a}
+         */
+        getStringArrayQ(a: Array<string>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<string>>;
+        /**
+         * GET api/SuperDemo/stringArrayQ2?a={a}
+         */
+        getStringArrayQ2(a: Array<string>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<string>>;
         /**
          * GET api/SuperDemo/TextStream
          */
-        getTextStream(): Promise<AxiosResponse<Blob>>;
+        getTextStream(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<Blob>>;
         /**
          * GET api/SuperDemo/uint
          */
-        getUint(): Promise<number>;
+        getUint(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/ulong
          */
-        getulong(): Promise<number>;
+        getulong(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * GET api/SuperDemo/ushort
          */
-        getUShort(): Promise<number>;
+        getUShort(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/ActionResult
          */
-        postActionResult(): Promise<AxiosResponse<string>>;
+        postActionResult(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<string>>;
         /**
          * POST api/SuperDemo/PostActionResult2
          */
-        postActionResult2(s: string): Promise<AxiosResponse<string>>;
+        postActionResult2(s: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<Blob>>;
         /**
          * POST api/SuperDemo/PostActionResult3
          */
-        postActionResult3(person: DemoWebApi_DemoData_Client.Person): Promise<AxiosResponse<string>>;
+        postActionResult3(person: DemoWebApi_DemoData_Client.Person, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse<string>>;
         /**
          * POST api/SuperDemo/Collection
          */
-        postCollection(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postCollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
+        /**
+         * POST api/SuperDemo/DateOnly
+         */
+        postDateOnly(d: any, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
+        /**
+         * POST api/SuperDemo/DateOnlyNullable
+         */
+        postDateOnlyNullable(d: any, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
          * POST api/SuperDemo/DateTimeOffset
          */
-        postDateTimeOffset(d: Date): Promise<boolean>;
+        postDateTimeOffset(d: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * POST api/SuperDemo/DateTimeOffsetNullable
          */
-        postDateTimeOffsetNullable(d: Date): Promise<boolean>;
+        postDateTimeOffsetNullable(d: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
+        /**
+         * POST api/SuperDemo/enumPost?d={d}
+         */
+        postDay(d: DemoWebApi_DemoData_Client.Days, d2: DemoWebApi_DemoData_Client.Days, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_DemoData_Client.Days>>;
         /**
          * POST api/SuperDemo/StringPersonDic
          */
         postDictionary(dic: {
             [id: string]: DemoWebApi_DemoData_Client.Person;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<number>;
+        /**
+         * POST api/SuperDemo/Guids
+         */
+        postGuids(guids: Array<string>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<string>>;
         /**
          * POST api/SuperDemo/ICollection
          */
-        postICollection(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postICollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/IList
          */
-        postIList(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postIList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/int2d
          */
-        postInt2D(a: number[][]): Promise<boolean>;
+        postInt2D(a: number[][], headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<boolean>;
         /**
          * POST api/SuperDemo/int2djagged
          */
-        postInt2DJagged(a: Array<Array<number>>): Promise<boolean>;
+        postInt2DJagged(a: Array<Array<number>>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<boolean>;
         /**
          * POST api/SuperDemo/intArray
          */
-        postIntArray(a: Array<number>): Promise<boolean>;
+        postIntArray(a: Array<number>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<boolean>;
         /**
          * POST api/SuperDemo/IReadOnlyCollection
          */
-        postIReadOnlyCollection(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postIReadOnlyCollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/IReadOnlyList
          */
-        postIReadOnlyList(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postIReadOnlyList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/List
          */
-        postList(list: Array<DemoWebApi_DemoData_Client.Person>): Promise<number>;
+        postList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<number>;
         /**
          * POST api/SuperDemo/NextYear
          */
-        postNextYear(dt: Date): Promise<Date>;
+        postNextYear(dt: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Date>;
         /**
          * POST api/SuperDemo/PostEmpty/{i}
          */
-        postWithQueryButEmptyBody(s: string, i: number): Promise<{
+        postWithQueryButEmptyBody(s: string, i: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: number;
         }>;
         /**
          * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
          */
-        searchDateRange(startDate: Date, endDate: Date): Promise<{
+        searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: Date;
             item2: Date;
         }>;
@@ -564,7 +868,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/PeopleCompany4
          */
-        getPeopleCompany4(): Promise<{
+        getPeopleCompany4(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: DemoWebApi_DemoData_Client.Person;
             item2: DemoWebApi_DemoData_Client.Person;
             item3: DemoWebApi_DemoData_Client.Person;
@@ -573,7 +879,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/PeopleCompany5
          */
-        getPeopleCompany5(): Promise<{
+        getPeopleCompany5(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: DemoWebApi_DemoData_Client.Person;
             item2: DemoWebApi_DemoData_Client.Person;
             item3: DemoWebApi_DemoData_Client.Person;
@@ -583,20 +891,26 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple1
          */
-        getTuple1(): Promise<{
+        getTuple1(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: number;
         }>;
         /**
          * GET api/Tuple/Tuple2
          */
-        getTuple2(): Promise<{
+        getTuple2(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: number;
         }>;
         /**
          * GET api/Tuple/Tuple3
          */
-        getTuple3(): Promise<{
+        getTuple3(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: number;
@@ -604,7 +918,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple4
          */
-        getTuple4(): Promise<{
+        getTuple4(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: string;
@@ -613,7 +929,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple5
          */
-        getTuple5(): Promise<{
+        getTuple5(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: string;
@@ -623,7 +941,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple6
          */
-        getTuple6(): Promise<{
+        getTuple6(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: string;
@@ -634,7 +954,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple7
          */
-        getTuple7(): Promise<{
+        getTuple7(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: string;
@@ -646,7 +968,9 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * GET api/Tuple/Tuple8
          */
-        getTuple8(): Promise<{
+        getTuple8(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<{
             item1: string;
             item2: string;
             item3: string;
@@ -666,6 +990,8 @@ export declare namespace DemoWebApi_Controllers_Client {
         linkPeopleCompany2(peopleAndCompany: {
             item1: DemoWebApi_DemoData_Client.Person;
             item2: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany3
@@ -674,6 +1000,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item1: DemoWebApi_DemoData_Client.Person;
             item2: DemoWebApi_DemoData_Client.Person;
             item3: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany4
@@ -683,6 +1011,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item2: DemoWebApi_DemoData_Client.Person;
             item3: DemoWebApi_DemoData_Client.Person;
             item4: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany5
@@ -693,6 +1023,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item3: DemoWebApi_DemoData_Client.Person;
             item4: DemoWebApi_DemoData_Client.Person;
             item5: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany6
@@ -704,6 +1036,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item4: DemoWebApi_DemoData_Client.Person;
             item5: DemoWebApi_DemoData_Client.Person;
             item6: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany7
@@ -716,6 +1050,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item5: DemoWebApi_DemoData_Client.Person;
             item6: DemoWebApi_DemoData_Client.Person;
             item7: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PeopleCompany8
@@ -729,6 +1065,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item6: DemoWebApi_DemoData_Client.Person;
             item7: DemoWebApi_DemoData_Client.Person;
             rest: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/PersonCompany1
@@ -736,12 +1074,16 @@ export declare namespace DemoWebApi_Controllers_Client {
         linkPersonCompany1(peopleAndCompany: {
             item1: DemoWebApi_DemoData_Client.Person;
             item2: DemoWebApi_DemoData_Client.Company;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * POST api/Tuple/Tuple1
          */
         postTuple1(tuple: {
             item1: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<number>;
         /**
          * POST api/Tuple/Tuple2
@@ -749,6 +1091,8 @@ export declare namespace DemoWebApi_Controllers_Client {
         postTuple2(tuple: {
             item1: string;
             item2: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple3
@@ -757,6 +1101,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item1: string;
             item2: string;
             item3: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple4
@@ -766,6 +1112,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item2: string;
             item3: string;
             item4: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple5
@@ -776,6 +1124,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item3: string;
             item4: string;
             item5: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple6
@@ -787,6 +1137,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item4: string;
             item5: string;
             item6: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple7
@@ -799,6 +1151,8 @@ export declare namespace DemoWebApi_Controllers_Client {
             item5: string;
             item6: number;
             item7: number;
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
         /**
          * POST api/Tuple/Tuple8
@@ -816,6 +1170,8 @@ export declare namespace DemoWebApi_Controllers_Client {
                 item2: string;
                 item3: string;
             };
+        }, headersHandler?: () => {
+            [header: string]: string;
         }): Promise<string>;
     }
     class Values {
@@ -824,33 +1180,47 @@ export declare namespace DemoWebApi_Controllers_Client {
         /**
          * DELETE api/Values/{id}
          */
-        delete(id: number): Promise<AxiosResponse>;
+        delete(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
         /**
          * Get a list of value
          * GET api/Values
          */
-        get(): Promise<Array<string>>;
+        get(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<string>>;
         /**
          * Get by both Id and name
          * GET api/Values/{id}?name={name}
          */
-        getByIdAndName(id: number, name: string): Promise<string>;
+        getByIdAndName(id: number, name: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * GET api/Values?name={name}
          */
-        getByName(name: string): Promise<string>;
+        getByName(name: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * GET api/Values/{id}
          */
-        getById(id: number): Promise<string>;
+        getById(id: number, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * POST api/Values
          */
-        post(value: string): Promise<string>;
+        post(value: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<string>;
         /**
          * Update with valjue
          * PUT api/Values/{id}
          */
-        put(id: number, value: string): Promise<AxiosResponse>;
+        put(id: number, value: string, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
     }
 }

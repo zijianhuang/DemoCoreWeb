@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
 	// [EnableCors(origins: "*", headers:"*", methods:"*")] set globally in WebApiConfig.cs
 	//   [Authorize]
 	[Route("api/[controller]")]
-	public class EntitiesController : Controller
+	public class EntitiesController : ControllerBase
 	{
 		/// <summary>
 		/// Get a person
@@ -26,7 +27,21 @@ namespace DemoWebApi.Controllers
 				Surname = "Huang",
 				GivenName = "Z",
 				Name = "Z Huang",
-				DOB = DateTime.Now.AddYears(-20),
+				DOB = new DateOnly(1988,12, 31),
+			};
+		}
+
+		[HttpGet]
+		[Route("getPerson2/{id}")]
+		public async Task<Person> GetPerson2(long id)
+		{
+			return new Person()
+			{
+				Surname = "Huang",
+				GivenName = "Z",
+				Name = "Z Huang",
+				DOB = new DateOnly(2013, 11,24),
+				Baptised= DateTimeOffset.Parse("2014-11-23"),
 			};
 		}
 
@@ -43,11 +58,45 @@ namespace DemoWebApi.Controllers
 			return 1000;
 		}
 
+		[HttpPost]
+		[Route("createPerson2")]
+		public async Task<Person> CreatePerson2([FromBody] Person p)
+		{
+			Debug.WriteLine("CreatePerson: " + p.Name);
+
+			if (p.Name == "Exception")
+				throw new InvalidOperationException("It is exception");
+
+			Debug.WriteLine("Create " + p);
+			return p;
+		}
+
+		[HttpPost]
+		[Route("createPerson3")]
+		public async Task<Person> CreatePerson3([FromBody] Person p, [FromHeader] string middle)
+		{
+			p.GivenName = middle;
+			Debug.WriteLine("CreatePerson: " + p.Name);
+
+			if (p.Name == "Exception")
+				throw new InvalidOperationException("It is exception");
+
+			Debug.WriteLine("Create " + p);
+			return p;
+		}
+
 		[HttpPut]
 		[Route("updatePerson")]
-		public void UpdatePerson([FromBody] Person person)
+		public string UpdatePerson([FromBody] Person person)
 		{
-			Debug.WriteLine("Update " + person);
+			return person.Name;
+		}
+
+		[HttpPatch]
+		[Route("patchPerson")]
+		public string PatchPerson([FromBody] Person person)
+		{
+			return person.Name;
 		}
 
 		[HttpPut]
@@ -100,6 +149,14 @@ namespace DemoWebApi.Controllers
 
 			   
 			};
+		}
+
+		[HttpPost]
+		[Route("createCompany")]
+		public async Task<Company> CreateCompany([FromBody] Company p)
+		{
+			p.Id = Guid.NewGuid();
+			return p;
 		}
 
 

@@ -24,7 +24,7 @@ namespace DemoWebApi.Controllers
 		}
 
 		[HttpGet("decimal/{d}")]
-	//    [Route("decimal/{d}")]
+		//    [Route("decimal/{d}")]
 		public async Task<decimal> GetDecimalSquare(decimal d)
 		{
 			return await Task.Run(() => d * d);
@@ -88,16 +88,30 @@ namespace DemoWebApi.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("DateTimeOffset")]
-		public bool PostDateTimeOffset([FromBody] DateTimeOffset d)
+		public DateTimeOffset PostDateTimeOffset([FromBody] DateTimeOffset d)
 		{
-			return  (DateTimeOffset.Now- d)< TimeSpan.FromSeconds(2);
+			return d;
 		}
 
 		[HttpPost]
 		[Route("DateTimeOffsetNullable")]
-		public bool PostDateTimeOffsetNullable([FromBody] DateTimeOffset? d)
+		public DateTimeOffset? PostDateTimeOffsetNullable([FromBody] DateTimeOffset? d)
 		{
-			return d.HasValue;
+			return d;
+		}
+
+		[HttpPost]
+		[Route("DateOnly")]
+		public DateOnly PostDateOnly([FromBody] DateOnly d)
+		{
+			return d;
+		}
+
+		[HttpPost]
+		[Route("DateOnlyNullable")]
+		public DateOnly? PostDateOnlyNullable([FromBody] DateOnly? d)
+		{
+			return d;
 		}
 
 		[HttpGet]
@@ -124,7 +138,7 @@ namespace DemoWebApi.Controllers
 			var b = 0.2f;
 			var c = 0.3f;
 			return a + b - c;//in all version update to VS 2015, this is a non-zero result done by the runtime.
-		  //  return 0.1f + 0.2f - 0.3f;//in VS 2015 update 2. this is a zero result done by the compiler in IL code.
+							 //  return 0.1f + 0.2f - 0.3f;//in VS 2015 update 2. this is a zero result done by the compiler in IL code.
 		}
 
 		/// <summary>
@@ -170,9 +184,9 @@ namespace DemoWebApi.Controllers
 		[Route("TextStream")]
 		public ActionResult GetTextStream()
 		{
-			var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("abcdefg"));
+			var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("abcdefg"));// don't dispose this and the following disposable objects
 			{
-				var content = new StreamContent(stream);
+				//var content = new StreamContent(stream);
 				return new FileStreamResult(stream, new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream"));
 			}
 		}
@@ -191,16 +205,23 @@ namespace DemoWebApi.Controllers
 			return Ok("abcdefg");
 		}
 
+		[HttpGet]
+		[Route("ActionResult2")]
+		public async Task<IActionResult> GetActionResult2()
+		{
+			return Ok("abcdefg");
+		}
+
 		[HttpPost]
 		[Route("ActionResult")]
-		public IActionResult PostActionResult()
+		public async Task<IActionResult> PostActionResult()
 		{
 			return Ok("abcdefg");
 		}
 
 		[HttpPost]
 		[Route("PostActionResult2")]
-		public IActionResult PostActionResult2([FromBody] string s)
+		public async Task<ActionResult> PostActionResult2([FromBody] string s)
 		{
 			return Ok("abcdefg");
 		}
@@ -340,6 +361,76 @@ namespace DemoWebApi.Controllers
 		public int[] GetIntArray()
 		{
 			return new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+		}
+
+		[HttpGet]
+		[Route("intArrayQ")]
+		public int[] GetIntArrayQ([FromQuery] int[] a)
+		{
+			return a.ToArray();
+		}
+
+		[HttpGet]
+		[Route("intArrayQ2")]
+		public long[] GetIntArrayQ2([FromQuery] IEnumerable<long> a)
+		{
+			return a.ToArray();
+		}
+
+		[HttpGet]
+		[Route("decimalArrayQ")]
+		public decimal[] GetDecimalArrayQ([FromQuery] decimal[] a)
+		{
+			return a.ToArray();
+		}
+
+		[HttpGet]
+		[Route("stringArrayQ")]
+		public string[] GetStringArrayQ([FromQuery] string[] a)
+		{
+			return a;
+		}
+
+		[HttpGet]
+		[Route("stringArrayQ2")]
+		public string[] GetStringArrayQ2([FromQuery] List<string> a)
+		{
+			return a.ToArray();
+		}
+
+		//[HttpGet]
+		//[Route("enumArrayQ")]
+		//public DayOfWeek[] GetEnumArrayQ([FromQuery] DayOfWeek[] a)
+		//{
+		//	return a;
+		//}
+
+		[HttpGet]
+		[Route("enumArrayQ2")]
+		public DayOfWeek[] GetEnumArrayQ2([FromQuery] List<DayOfWeek> a)
+		{
+			return a.ToArray();
+		}
+
+		[HttpGet]
+		[Route("enumArrayDays")]
+		public DemoData.Days[] GetEnumArrayDays([FromQuery] IEnumerable<DemoData.Days> a)
+		{
+			return a.ToArray();
+		}
+
+		[HttpGet]
+		[Route("enumGet")]
+		public DemoData.Days GetDay([FromQuery] DemoData.Days d)
+		{
+			return d;
+		}
+
+		[HttpPost]
+		[Route("enumPost")]
+		public DemoData.Days[] PostDay([FromQuery] DemoData.Days d, [FromBody] DemoData.Days d2)
+		{
+			return new DemoData.Days[] { d, d2 };
 		}
 
 		[HttpGet]
@@ -596,5 +687,18 @@ namespace DemoWebApi.Controllers
 			return new Tuple<DateTime?, DateTime?>(startDate, endDate);
 		}
 
+		[HttpPost]
+		[Route("Guids")]
+		public Guid[] PostGuids([FromBody] Guid[] guids)
+		{
+			return guids;
+		}
+
+		[HttpGet]
+		[Route("AthletheSearch")]
+		public string AthletheSearch([FromQuery] int? take = 10, [FromQuery]int skip = 0, [FromQuery] string order = null, [FromQuery] string sort = null, [FromQuery] string search = null)
+		{
+			return (take.HasValue ? take.Value.ToString() : String.Empty) + skip.ToString() + (String.IsNullOrEmpty(order) ? "" : order) + (String.IsNullOrEmpty(sort) ? "" : sort) + (String.IsNullOrEmpty(search) ? "" : search);
+		}
 	}
 }
