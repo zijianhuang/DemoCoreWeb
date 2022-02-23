@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Fonlow.CodeDom.Web;
 using Microsoft.AspNetCore.Mvc;
-using Fonlow.CodeDom.Web;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
 	[Route("api/[controller]")]
-	public class ValuesController : Controller
+	public class ValuesController : ControllerBase
 	{
 		/// <summary>
 		/// Get a list of value
@@ -16,6 +14,12 @@ namespace DemoWebApi.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		public IEnumerable<string> Get()
+		{
+			return new string[] { "value1", "value2" };
+		}
+
+		[HttpGet("Get2")]
+		public async Task<IEnumerable<string>> Get2()
 		{
 			return new string[] { "value1", "value2" };
 		}

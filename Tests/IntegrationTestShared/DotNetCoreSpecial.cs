@@ -3,7 +3,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
-	[Collection("ServiceLaunch")]
+	[Collection(TestConstants.LaunchWebApiAndInit)]
 	public partial class DotNetCoreSpecial : IClassFixture<SuperDemoFixture>
 	{
 		public DotNetCoreSpecial(SuperDemoFixture fixture)
@@ -11,7 +11,7 @@ namespace IntegrationTests
 			api = fixture.Api;
 		}
 
-		DemoWebApi.Controllers.Client.SuperDemo api;
+		readonly DemoWebApi.Controllers.Client.SuperDemo api;
 
 		[Fact]
 		public void TestGetDictionary()
@@ -53,18 +53,5 @@ namespace IntegrationTests
 			Assert.Equal(0, api.GetDecimalZero());
 
 		}
-
-		[Fact]
-		public void TestSearcDateRangeWithStartDateNull()//asp.net web api won't accept such call.
-		{
-			var dtStart = DateTime.Today;
-			var dtEnd = dtStart.AddDays(5);
-			var r= api.SearchDateRange(null, dtEnd);
-			Assert.Null(r.Item1);
-			Assert.Equal(dtEnd, r.Item2);
-		}
-
-
-
 	}
 }

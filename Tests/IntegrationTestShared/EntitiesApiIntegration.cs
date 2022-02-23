@@ -1,25 +1,10 @@
 ﻿using DemoWebApi.DemoData.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests
 {
-	public class EntitiesFixture : Fonlow.Testing.DefaultHttpClient
-	{
-		public EntitiesFixture()
-		{
-			HttpClient.BaseAddress = BaseUri;
-			Api = new DemoWebApi.Controllers.Client.Entities(HttpClient);
-		}
-
-		public DemoWebApi.Controllers.Client.Entities Api { get; private set; }
-	}
-
-
-	[Collection("ServiceLaunch")]
+	[Collection(TestConstants.LaunchWebApiAndInit)]
 	public partial class EntitiesApiIntegration : IClassFixture<EntitiesFixture>
 	{
 		public EntitiesApiIntegration(EntitiesFixture fixture)
@@ -27,7 +12,8 @@ namespace IntegrationTests
 			api = fixture.Api;
 		}
 
-		DemoWebApi.Controllers.Client.Entities api;
+		readonly DemoWebApi.Controllers.Client.Entities api;
+
 
 		[Fact]
 		public void TestCreatePerson3()
@@ -38,6 +24,62 @@ namespace IntegrationTests
 				Surname = "One",
 				GivenName = "Some",
 				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal("Hey", a.GivenName);
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+		}
+
+		[Fact]
+		public void TestCreatePerson3DobNotDefined()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				//DOB = null,// new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal("Hey", a.GivenName);
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+		}
+
+		[Fact]
+		public void TestCreatePerson3DobAssignedNull()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = null,
 				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
@@ -86,6 +128,7 @@ namespace IntegrationTests
 			var a = api.CreateCompany(c);
 			Assert.NotNull(a.Id);
 			Assert.Equal(DateOnly.MinValue, a.RegisterDate);
+			Assert.Equal(c.FoundDate, a.FoundDate);
 			Assert.Equal(DateTimeOffset.MinValue, a.FoundDate);
 		}
 
@@ -123,7 +166,7 @@ namespace IntegrationTests
 				Surname = "One",
 				GivenName = "Some",
 				DOB = new DateOnly(1988, 11, 23),
-				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Baptised= DateTimeOffset.Now.Date.AddYears(-20),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
 					State="QLD",

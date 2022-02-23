@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29424.173
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi.ClientApi", "CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj", "{2C693CA1-CBE6-4674-9555-2B17B5939B5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWebApi.DemoDataCore", "DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj", "{CAD158E0-5120-4EF0-9892-79C2C184A27B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{39445712-FE9F-4406-A103-F181E9DC2233}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsCore", "Tests\IntegrationTestsCore\IntegrationTestsCore.csproj", "{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C32E2512-1839-4A94-B119-A33161C2EA92}"
 	ProjectSection(SolutionItems) = preProject
@@ -24,10 +22,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNG3", "CoreNG3\CoreNG3.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3Mvc", "Core3Mvc\Core3Mvc.csproj", "{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Tests\IntegrationTestShared\IntegrationTestShared.shproj", "{60B7393D-9285-4D0A-A368-877ED60C6C11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsCore", "Tests\IntegrationTestsCore\IntegrationTestsCore.csproj", "{15217096-CCD1-4C5F-BC90-891320E570B1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{15217096-ccd1-4c5f-bc90-891320e570b1}*SharedItemsImports = 5
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{2a8a1560-fc36-4328-a570-530e3001df31}*SharedItemsImports = 5
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{5c64d0fe-b283-4a4f-b235-49c5f6fd0229}*SharedItemsImports = 5
+		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{60b7393d-9285-4d0a-a368-877ed60c6c11}*SharedItemsImports = 13
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{d9b87bde-8771-49db-99d2-91f2d35a1d48}*SharedItemsImports = 5
 	EndGlobalSection
@@ -44,10 +48,6 @@ Global
 		{CAD158E0-5120-4EF0-9892-79C2C184A27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAD158E0-5120-4EF0-9892-79C2C184A27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAD158E0-5120-4EF0-9892-79C2C184A27B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,12 +60,17 @@ Global
 		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15217096-CCD1-4C5F-BC90-891320E570B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15217096-CCD1-4C5F-BC90-891320E570B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15217096-CCD1-4C5F-BC90-891320E570B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15217096-CCD1-4C5F-BC90-891320E570B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F2BE5539-DCAF-4C13-8682-654BA1D0CCDD} = {39445712-FE9F-4406-A103-F181E9DC2233}
+		{60B7393D-9285-4D0A-A368-877ED60C6C11} = {39445712-FE9F-4406-A103-F181E9DC2233}
+		{15217096-CCD1-4C5F-BC90-891320E570B1} = {39445712-FE9F-4406-A103-F181E9DC2233}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3EFB0EB-BFFA-4C16-B235-B121695229EF}

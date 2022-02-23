@@ -1,22 +1,9 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using Xunit;
-using System.Threading.Tasks;
 
 namespace IntegrationTests
 {
-	public class ValuesFixture : Fonlow.Testing.DefaultHttpClient
-	{
-		public ValuesFixture()
-		{
-			HttpClient.BaseAddress = BaseUri;
-			Api = new DemoWebApi.Controllers.Client.Values(HttpClient);
-		}
-
-		public DemoWebApi.Controllers.Client.Values Api { get; private set; }
-	}
-
-
-	[Collection("ServiceLaunch")]
+	[Collection(TestConstants.LaunchWebApiAndInit)]
 	public partial class ValuesApiIntegration : IClassFixture<ValuesFixture>
 	{
 		public ValuesApiIntegration(ValuesFixture fixture)
@@ -24,7 +11,7 @@ namespace IntegrationTests
 			api = fixture.Api;
 		}
 
-		DemoWebApi.Controllers.Client.Values api;
+		readonly DemoWebApi.Controllers.Client.Values api;
 
 		[Fact]
 		public void TestValuesGet()
@@ -32,8 +19,30 @@ namespace IntegrationTests
 			//var task = authorizedClient.GetStringAsync(new Uri(baseUri, "api/Values"));
 			//var text = task.Result;
 			//var array = JArray.Parse(text);
-			var array = api.Get().ToArray();
+			var array = api.Get();
 			Assert.Equal("value2", array[1]);
+		}
+
+		[Fact]
+		public void TestValuesGetId()
+		{
+			//UriBuilder builder = new UriBuilder(new Uri(baseUri, "api/Values"));
+			//var query = System.Web.HttpUtility.ParseQueryString(builder.Query);
+			//query.Add("id", "1");
+			//query.Add("name", "something to say");
+			//builder.Query = query.ToString();
+			//var task = authorizedClient.GetStringAsync(builder.ToString());
+			//var text = task.Result;
+			//var jObject = JValue.Parse(text);
+			var r = api.Get(1, "something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.';<>:\"");
+			Assert.Equal("something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.';<>:\"1", r);
+		}
+
+
+		[Fact]
+		public void TestGetName()
+		{
+			Assert.Equal("ABC", api.Get("Abc"));
 		}
 
 		[Fact]

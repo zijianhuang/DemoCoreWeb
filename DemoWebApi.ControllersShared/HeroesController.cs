@@ -4,13 +4,16 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Serialization;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
 	/// <summary>
 	/// Heroes operations
 	/// </summary>
+	//[ApiController] for opt-in without ApiExplorerVisibilityEnabledConvention
 	[Route("api/[controller]")]
+	[ApiExplorerSettings(IgnoreApi = false)]
 	public class HeroesController : ControllerBase
 	{
 		/// <summary>
@@ -18,6 +21,7 @@ namespace DemoWebApi.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[ActionName("GetHeros")]
 		public Hero[] Get()
 		{
 			return HeroesData.Instance.Dic.Values.ToArray();
@@ -29,18 +33,17 @@ namespace DemoWebApi.Controllers
 		/// <param name="id"></param>
 		/// <returns></returns>
 		[HttpGet("{id}")]
+		[ActionName("GetHero")]
 		public Hero Get(long id)
 		{
-			Hero r;
-			HeroesData.Instance.Dic.TryGetValue(id, out r);
+			_ = HeroesData.Instance.Dic.TryGetValue(id, out Hero r);
 			return r;
 		}
 
 		[HttpDelete("{id}")]
 		public void Delete(long id)
 		{
-			Hero r;
-			HeroesData.Instance.Dic.TryRemove(id, out r);
+			_ = HeroesData.Instance.Dic.TryRemove(id, out _);
 		}
 
 		/// <summary>
@@ -49,20 +52,20 @@ namespace DemoWebApi.Controllers
 		/// <param name="name"></param>
 		/// <returns></returns>
 		[HttpPost("q")]
-		public Hero PostWithQuery([FromQuery] string name)//.net core requires explicit decorattion. Also the path can not be identical to any existing one.
+		public Hero PostWithQuery([FromQuery] string name)//.net core difference: requires explicit decorattion. Also the path can not be identical to any existing one.
 		{
 			var max = HeroesData.Instance.Dic.Keys.Max();
 			var hero = new Hero { Id = max + 1, Name = name };
-			HeroesData.Instance.Dic.TryAdd(max + 1, hero);
+			_ = HeroesData.Instance.Dic.TryAdd(max + 1, hero);
 			return hero;
 		}
 
 		[HttpPost]
-		public Hero Post([FromBody] string name)//.net core requires explicit decorattion
+		public Hero Post([FromBody] string name)//.net core difference: requires explicit decorattion
 		{
 			var max = HeroesData.Instance.Dic.Keys.Max();
 			var hero = new Hero { Id = max + 1, Name = name };
-			HeroesData.Instance.Dic.TryAdd(max + 1, hero);
+			_ = HeroesData.Instance.Dic.TryAdd(max + 1, hero);
 			return hero;
 		}
 
@@ -86,19 +89,49 @@ namespace DemoWebApi.Controllers
 		[HttpGet("search/{name}")]
 		public Hero[] Search(string name)
 		{
-			return HeroesData.Instance.Dic.Values.Where(d => d.Name.Contains(name)).ToArray();
+			return HeroesData.Instance.Dic.Values
+				.Where(d => 
+				d.Name.Contains(name)).ToArray();
 		}
 
+		[HttpGet("asyncHeroes")]
+		public async IAsyncEnumerable<Hero> GetAsyncHeroes()
+		{
+			foreach (var item in HeroesData.Instance.Dic.Values)
+			{
+				await System.Threading.Tasks.Task.Delay(1);
+				yield return item;
+			}
+		}
+
+		///// <summary>
+		///// This should triger error: System.ArgumentException: Web API Heroes/GetSomethingInvalid is defined with invalid parameters: Not support ParameterBinder FromQuery or FromUri with a class parameter.
+		///// </summary>
+		///// <param name="h"></param>
+		///// <returns></returns>
+		//[HttpGet("invalid")]
+		//public IActionResult GetSomethingInvalid(DemoWebApi.DemoData.Person h)//Person is considered as ModelMetadata.IsComplexType
+		//{
+		//    return new StatusCodeResult(200);
+		//}
+
+		///// <summary>
+		///// This should triger error: System.ArgumentException: Web API Heroes/GetSomethingInvalid is defined with invalid parameters: Not support ParameterBinder FromQuery or FromUri with a class parameter.
+		///// </summary>
+		///// <param name="h"></param>
+		///// <returns></returns>
+		//[HttpGet("invalid")]
+		//public IActionResult GetSomethingInvalid(Hero h) //But Hero is NOT considered as ModelMetadata.IsComplexType
+		//{
+		//    return new StatusCodeResult(200);
+		//}
+
 	}
 
-	public sealed class Constants
-	{
-		public const string DataNamespace = "http://fonlow.com/DemoData/2014/02";
-	}
 	/// <summary>
 	/// Complex hero type
 	/// </summary>
-	[DataContract(Namespace = Constants.DataNamespace)]
+	[DataContract(Namespace = DemoWebApi.DemoData.Constants.DataNamespace)]
 	public class Hero
 	{
 		[DataMember]

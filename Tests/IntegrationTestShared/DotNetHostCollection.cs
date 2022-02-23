@@ -1,8 +1,13 @@
 ﻿using Xunit;
 
-namespace IntegrationTestsCore
+namespace IntegrationTests
 {
-	[CollectionDefinition("ServiceLaunch")]
+	public class TestConstants
+	{
+		public const string LaunchWebApiAndInit = "LaunchWebApi";
+	}
+
+	[CollectionDefinition(TestConstants.LaunchWebApiAndInit)]
 	public class DotNetHostCollection : ICollectionFixture<Fonlow.Testing.DotNetHostFixture>
 	{
 		// This class has no code, and is never created. Its purpose is simply

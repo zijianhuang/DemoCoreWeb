@@ -34,7 +34,7 @@ export declare namespace DemoWebApi_DemoData_Client {
         BusinessNum?: string;
         businessNumberType?: string;
         foundDate?: Date;
-        registerDate?: any;
+        registerDate?: Date;
         textMatrix?: Array<Array<string>>;
         int2D?: number[][];
         int2DJagged?: Array<Array<number>>;
@@ -124,7 +124,7 @@ export declare namespace DemoWebApi_DemoData_Client {
          * Date of Birth.
          * This is optional.
          */
-        dob?: any;
+        dob?: Date;
         givenName?: string;
         surname?: string;
     }
@@ -209,9 +209,17 @@ export declare namespace DemoCoreWeb_Controllers_Client {
         private baseUri;
         constructor(baseUri?: string);
         /**
+         * Anonymous Dynamic of C#
          * GET api/SpecialTypes/AnonymousDynamic
+         * @return {any} dyanmic things
          */
         getAnonymousDynamic(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
+        /**
+         * GET api/SpecialTypes/AnonymousDynamic2
+         */
+        getAnonymousDynamic2(headersHandler?: () => {
             [header: string]: string;
         }): Promise<AxiosResponse>;
         /**
@@ -221,9 +229,21 @@ export declare namespace DemoCoreWeb_Controllers_Client {
             [header: string]: string;
         }): Promise<AxiosResponse>;
         /**
+         * GET api/SpecialTypes/AnonymousObject2
+         */
+        getAnonymousObject2(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
+        /**
          * POST api/SpecialTypes/AnonymousObject
          */
         postAnonymousObject(obj: any, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<AxiosResponse>;
+        /**
+         * POST api/SpecialTypes/AnonymousObject2
+         */
+        postAnonymousObject2(obj: any, headersHandler?: () => {
             [header: string]: string;
         }): Promise<AxiosResponse>;
     }
@@ -331,19 +351,25 @@ export declare namespace DemoWebApi_Controllers_Client {
             [header: string]: string;
         }): Promise<AxiosResponse>;
         /**
-         * Get all heroes.
-         * GET api/Heroes
+         * GET api/Heroes/asyncHeroes
          */
-        get(headersHandler?: () => {
+        getAsyncHeroes(headersHandler?: () => {
             [header: string]: string;
         }): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
         /**
          * Get a hero.
          * GET api/Heroes/{id}
          */
-        getById(id: number, headersHandler?: () => {
+        getHero(id: number, headersHandler?: () => {
             [header: string]: string;
         }): Promise<DemoWebApi_Controllers_Client.Hero>;
+        /**
+         * Get all heroes.
+         * GET api/Heroes
+         */
+        getHeros(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<DemoWebApi_Controllers_Client.Hero>>;
         /**
          * POST api/Heroes
          */
@@ -441,18 +467,6 @@ export declare namespace DemoWebApi_Controllers_Client {
         getCollection(headersHandler?: () => {
             [header: string]: string;
         }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
-        /**
-         * GET api/SuperDemo/NullableDatetime/{hasValue}
-         */
-        getDateTime(hasValue: boolean, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
-         * GET api/SuperDemo/DateTimeOffset
-         */
-        getDateTimeOffset(headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
         /**
          * GET api/SuperDemo/enumGet?d={d}
          */
@@ -612,30 +626,6 @@ export declare namespace DemoWebApi_Controllers_Client {
             [header: string]: string;
         }): Promise<Array<DemoWebApi_DemoData_Client.Person>>;
         /**
-         * GET api/SuperDemo/NextHour/{dt}
-         */
-        getNextHour(dt: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
-         * GET api/SuperDemo/NextHourNullable?n={n}&dt={dt}
-         */
-        getNextHourNullable(n: number, dt: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
-         * GET api/SuperDemo/NextYear/{dt}
-         */
-        getNextYear(dt: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
-         * GET api/SuperDemo/NextYearNullable?n={n}&dt={dt}
-         */
-        getNextYearNullable(n: number, dt: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
          * GET api/SuperDemo/NullableDecimal/{hasValue}
          */
         getNullableDecimal(hasValue: boolean, headersHandler?: () => {
@@ -745,31 +735,6 @@ export declare namespace DemoWebApi_Controllers_Client {
             [header: string]: string;
         }): Promise<number>;
         /**
-         * POST api/SuperDemo/DateOnly
-         */
-        postDateOnly(d: any, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<AxiosResponse>;
-        /**
-         * POST api/SuperDemo/DateOnlyNullable
-         */
-        postDateOnlyNullable(d: any, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<AxiosResponse>;
-        /**
-         * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
-         * POST api/SuperDemo/DateTimeOffset
-         */
-        postDateTimeOffset(d: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
-         * POST api/SuperDemo/DateTimeOffsetNullable
-         */
-        postDateTimeOffsetNullable(d: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
          * POST api/SuperDemo/enumPost?d={d}
          */
         postDay(d: DemoWebApi_DemoData_Client.Days, d2: DemoWebApi_DemoData_Client.Days, headersHandler?: () => {
@@ -838,12 +803,6 @@ export declare namespace DemoWebApi_Controllers_Client {
             [header: string]: string;
         }): Promise<number>;
         /**
-         * POST api/SuperDemo/NextYear
-         */
-        postNextYear(dt: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<Date>;
-        /**
          * POST api/SuperDemo/PostEmpty/{i}
          */
         postWithQueryButEmptyBody(s: string, i: number, headersHandler?: () => {
@@ -852,19 +811,19 @@ export declare namespace DemoWebApi_Controllers_Client {
             item1: string;
             item2: number;
         }>;
-        /**
-         * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
-         */
-        searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {
-            [header: string]: string;
-        }): Promise<{
-            item1: Date;
-            item2: Date;
-        }>;
     }
     class Tuple {
         private baseUri;
         constructor(baseUri?: string);
+        /**
+         * POST api/Tuple/ChangeName
+         */
+        changeName(d: {
+            item1: string;
+            item2: DemoWebApi_DemoData_Client.Person;
+        }, headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<DemoWebApi_DemoData_Client.Person>;
         /**
          * GET api/Tuple/PeopleCompany4
          */
@@ -1209,6 +1168,12 @@ export declare namespace DemoWebApi_Controllers_Client {
         getById(id: number, headersHandler?: () => {
             [header: string]: string;
         }): Promise<string>;
+        /**
+         * GET api/Values/Get2
+         */
+        get2(headersHandler?: () => {
+            [header: string]: string;
+        }): Promise<Array<string>>;
         /**
          * POST api/Values
          */

@@ -82,10 +82,18 @@ var DemoCoreWeb_Controllers_Client;
             this.baseUri = baseUri;
         }
         /**
+         * Anonymous Dynamic of C#
          * GET api/SpecialTypes/AnonymousDynamic
+         * @return {any} dyanmic things
          */
         SpecialTypes.prototype.getAnonymousDynamic = function (headersHandler) {
             return axios_1["default"].get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined });
+        };
+        /**
+         * GET api/SpecialTypes/AnonymousDynamic2
+         */
+        SpecialTypes.prototype.getAnonymousDynamic2 = function (headersHandler) {
+            return axios_1["default"].get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined });
         };
         /**
          * GET api/SpecialTypes/AnonymousObject
@@ -94,10 +102,22 @@ var DemoCoreWeb_Controllers_Client;
             return axios_1["default"].get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { headers: headersHandler ? headersHandler() : undefined });
         };
         /**
+         * GET api/SpecialTypes/AnonymousObject2
+         */
+        SpecialTypes.prototype.getAnonymousObject2 = function (headersHandler) {
+            return axios_1["default"].get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined });
+        };
+        /**
          * POST api/SpecialTypes/AnonymousObject
          */
         SpecialTypes.prototype.postAnonymousObject = function (obj, headersHandler) {
             return axios_1["default"].post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
+        };
+        /**
+         * POST api/SpecialTypes/AnonymousObject2
+         */
+        SpecialTypes.prototype.postAnonymousObject2 = function (obj, headersHandler) {
+            return axios_1["default"].post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
         };
         return SpecialTypes;
     }());
@@ -213,18 +233,24 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"]["delete"](this.baseUri + 'api/Heroes/' + id, { headers: headersHandler ? headersHandler() : undefined });
         };
         /**
-         * Get all heroes.
-         * GET api/Heroes
+         * GET api/Heroes/asyncHeroes
          */
-        Heroes.prototype.get = function (headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/Heroes', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
+        Heroes.prototype.getAsyncHeroes = function (headersHandler) {
+            return axios_1["default"].get(this.baseUri + 'api/Heroes/asyncHeroes', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         /**
          * Get a hero.
          * GET api/Heroes/{id}
          */
-        Heroes.prototype.getById = function (id, headersHandler) {
+        Heroes.prototype.getHero = function (id, headersHandler) {
             return axios_1["default"].get(this.baseUri + 'api/Heroes/' + id, { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
+        };
+        /**
+         * Get all heroes.
+         * GET api/Heroes
+         */
+        Heroes.prototype.getHeros = function (headersHandler) {
+            return axios_1["default"].get(this.baseUri + 'api/Heroes', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Heroes
@@ -330,18 +356,6 @@ var DemoWebApi_Controllers_Client;
          */
         SuperDemo.prototype.getCollection = function (headersHandler) {
             return axios_1["default"].get(this.baseUri + 'api/SuperDemo/Collection', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/NullableDatetime/{hasValue}
-         */
-        SuperDemo.prototype.getDateTime = function (hasValue, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NullableDatetime/' + hasValue, { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/DateTimeOffset
-         */
-        SuperDemo.prototype.getDateTimeOffset = function (headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/DateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         /**
          * GET api/SuperDemo/enumGet?d={d}
@@ -495,30 +509,6 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].get(this.baseUri + 'api/SuperDemo/List', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         /**
-         * GET api/SuperDemo/NextHour/{dt}
-         */
-        SuperDemo.prototype.getNextHour = function (dt, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NextHour/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/NextHourNullable?n={n}&dt={dt}
-         */
-        SuperDemo.prototype.getNextHourNullable = function (n, dt, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NextHourNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/NextYear/{dt}
-         */
-        SuperDemo.prototype.getNextYear = function (dt, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NextYear/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/NextYearNullable?n={n}&dt={dt}
-         */
-        SuperDemo.prototype.getNextYearNullable = function (n, dt, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/NextYearNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
-        };
-        /**
          * GET api/SuperDemo/NullableDecimal/{hasValue}
          */
         SuperDemo.prototype.getNullableDecimal = function (hasValue, headersHandler) {
@@ -621,31 +611,6 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].post(this.baseUri + 'api/SuperDemo/Collection', JSON.stringify(list), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
-         * POST api/SuperDemo/DateOnly
-         */
-        SuperDemo.prototype.postDateOnly = function (d, headersHandler) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
-        };
-        /**
-         * POST api/SuperDemo/DateOnlyNullable
-         */
-        SuperDemo.prototype.postDateOnlyNullable = function (d, headersHandler) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateOnlyNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
-        };
-        /**
-         * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
-         * POST api/SuperDemo/DateTimeOffset
-         */
-        SuperDemo.prototype.postDateTimeOffset = function (d, headersHandler) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffset', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
-        };
-        /**
-         * POST api/SuperDemo/DateTimeOffsetNullable
-         */
-        SuperDemo.prototype.postDateTimeOffsetNullable = function (d, headersHandler) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/DateTimeOffsetNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
-        };
-        /**
          * POST api/SuperDemo/enumPost?d={d}
          */
         SuperDemo.prototype.postDay = function (d, d2, headersHandler) {
@@ -712,22 +677,10 @@ var DemoWebApi_Controllers_Client;
             return axios_1["default"].post(this.baseUri + 'api/SuperDemo/List', JSON.stringify(list), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
         };
         /**
-         * POST api/SuperDemo/NextYear
-         */
-        SuperDemo.prototype.postNextYear = function (dt, headersHandler) {
-            return axios_1["default"].post(this.baseUri + 'api/SuperDemo/NextYear', JSON.stringify(dt), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
-        };
-        /**
          * POST api/SuperDemo/PostEmpty/{i}
          */
         SuperDemo.prototype.postWithQueryButEmptyBody = function (s, i, headersHandler) {
             return axios_1["default"].post(this.baseUri + 'api/SuperDemo/PostEmpty/' + i, JSON.stringify(s), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
-        };
-        /**
-         * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
-         */
-        SuperDemo.prototype.searchDateRange = function (startDate, endDate, headersHandler) {
-            return axios_1["default"].get(this.baseUri + 'api/SuperDemo/SearchDateRange?' + (startDate ? 'startDate=' + startDate.toISOString() : '') + (endDate ? '&endDate=' + endDate.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         return SuperDemo;
     }());
@@ -737,6 +690,12 @@ var DemoWebApi_Controllers_Client;
             if (baseUri === void 0) { baseUri = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/'; }
             this.baseUri = baseUri;
         }
+        /**
+         * POST api/Tuple/ChangeName
+         */
+        Tuple.prototype.changeName = function (d, headersHandler) {
+            return axios_1["default"].post(this.baseUri + 'api/Tuple/ChangeName', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }) : { 'Content-Type': 'application/json;charset=UTF-8' } }).then(function (d) { return d.data; });
+        };
         /**
          * GET api/Tuple/PeopleCompany4
          */
@@ -932,6 +891,12 @@ var DemoWebApi_Controllers_Client;
          */
         Values.prototype.getById = function (id, headersHandler) {
             return axios_1["default"].get(this.baseUri + 'api/Values/' + id, { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(function (d) { return d.data; });
+        };
+        /**
+         * GET api/Values/Get2
+         */
+        Values.prototype.get2 = function (headersHandler) {
+            return axios_1["default"].get(this.baseUri + 'api/Values/Get2', { headers: headersHandler ? headersHandler() : undefined }).then(function (d) { return d.data; });
         };
         /**
          * POST api/Values

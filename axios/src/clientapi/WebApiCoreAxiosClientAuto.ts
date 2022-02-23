@@ -39,7 +39,7 @@ export namespace DemoWebApi_DemoData_Client {
 		BusinessNum?: string;
 		businessNumberType?: string;
 		foundDate?: Date;
-		registerDate?: any;
+		registerDate?: Date;
 		textMatrix?: Array<Array<string>>;
 		int2D?: number[][];
 		int2DJagged?: Array<Array<number>>;
@@ -127,7 +127,7 @@ export namespace DemoWebApi_DemoData_Client {
 		 * Date of Birth.
 		 * This is optional.
 		 */
-		dob?: any;
+		dob?: Date;
 		givenName?: string;
 		surname?: string;
 	}
@@ -235,10 +235,19 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
+		 * Anonymous Dynamic of C#
 		 * GET api/SpecialTypes/AnonymousDynamic
+		 * @return {any} dyanmic things
 		 */
 		getAnonymousDynamic(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
 			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousDynamic2
+		 */
+		getAnonymousDynamic2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -249,16 +258,155 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SpecialTypes/AnonymousObject2
+		 */
+		getAnonymousObject2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
 		 * POST api/SpecialTypes/AnonymousObject
 		 */
 		postAnonymousObject(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
 			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+
+		/**
+		 * POST api/SpecialTypes/AnonymousObject2
+		 */
+		postAnonymousObject2(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
 		}
 	}
 
 }
 
 export namespace DemoWebApi_Controllers_Client {
+	export class DateTypes {
+		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		}
+
+		/**
+		 * GET api/DateTypes/NullableDatetime/{hasValue}
+		 */
+		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/NullableDatetime/' + hasValue, { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/ForDateTimeOffset
+		 */
+		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/NextHour/{dt}
+		 */
+		getNextHour(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/NextHour/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/NextHourNullable?n={n}&dt={dt}
+		 */
+		getNextHourNullable(n: number, dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/NextHourNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/NextYear/{dt}
+		 */
+		getNextYear(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/NextYear/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/NextYearNullable?n={n}&dt={dt}
+		 */
+		getNextYearNullable(n: number, dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/NextYearNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * Client should send DateTime.Date
+		 * POST api/DateTypes/IsDateTimeDate
+		 */
+		isDateTimeDate(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
+			return Axios.post<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/IsDateTimeDate', JSON.stringify(dt), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/IsDateTimeOffsetDate
+		 */
+		isDateTimeOffsetDate(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
+			return Axios.post<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/IsDateTimeOffsetDate', JSON.stringify(dt), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateOnly
+		 */
+		postDateOnly(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/ForDateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/DateOnlyNullable
+		 */
+		postDateOnlyNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/DateOnlyNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTime
+		 */
+		postDateTime(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/ForDateTime', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffset
+		 */
+		postDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/DateTimeOffsetNullable
+		 */
+		postDateTimeOffsetNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/NextYear
+		 */
+		postNextYear(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/NextYear', JSON.stringify(dt), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/DateOnlyStringQuery?d={d}
+		 */
+		queryDateOnlyAsString(d: string, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/DateOnlyStringQuery?d=' + (d == null ? '' : encodeURIComponent(d)), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/RouteDateTimeOffset/{d}
+		 */
+		routeDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/RouteDateTimeOffset/' + d.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
+		 */
+		searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
+			return Axios.get<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate.toISOString() : '') + (endDate ? '&endDate=' + endDate.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+	}
+
 	export class Entities {
 		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
 		}
@@ -378,19 +526,26 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get all heroes.
-		 * GET api/Heroes
+		 * GET api/Heroes/asyncHeroes
 		 */
-		get(headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
-			return Axios.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		getAsyncHeroes(headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
+			return Axios.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/asyncHeroes', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**
 		 * Get a hero.
 		 * GET api/Heroes/{id}
 		 */
-		getById(id: number, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
+		getHero(id: number, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
 			return Axios.get<DemoWebApi_Controllers_Client.Hero>(this.baseUri + 'api/Heroes/' + id, { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * Get all heroes.
+		 * GET api/Heroes
+		 */
+		getHeros(headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
+			return Axios.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**
@@ -504,20 +659,6 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getCollection(headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_DemoData_Client.Person>> {
 			return Axios.get<Array<DemoWebApi_DemoData_Client.Person>>(this.baseUri + 'api/SuperDemo/Collection', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/SuperDemo/NullableDatetime/{hasValue}
-		 */
-		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/NullableDatetime/' + hasValue, { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/SuperDemo/DateTimeOffset
-		 */
-		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/DateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**
@@ -697,34 +838,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/SuperDemo/NextHour/{dt}
-		 */
-		getNextHour(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/NextHour/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/SuperDemo/NextHourNullable?n={n}&dt={dt}
-		 */
-		getNextHourNullable(n: number, dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/NextHourNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/SuperDemo/NextYear/{dt}
-		 */
-		getNextYear(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/NextYear/' + dt.toISOString(), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/SuperDemo/NextYearNullable?n={n}&dt={dt}
-		 */
-		getNextYearNullable(n: number, dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/SuperDemo/NextYearNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
 		 * GET api/SuperDemo/NullableDecimal/{hasValue}
 		 */
 		getNullableDecimal(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -844,35 +957,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * POST api/SuperDemo/DateOnly
-		 */
-		postDateOnly(d: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.post(this.baseUri + 'api/SuperDemo/DateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
-		}
-
-		/**
-		 * POST api/SuperDemo/DateOnlyNullable
-		 */
-		postDateOnlyNullable(d: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.post(this.baseUri + 'api/SuperDemo/DateOnlyNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
-		}
-
-		/**
-		 * DateTime and DateTimeOffset may not be represented well in URL, so must put them into the POST body.
-		 * POST api/SuperDemo/DateTimeOffset
-		 */
-		postDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.post<Date>(this.baseUri + 'api/SuperDemo/DateTimeOffset', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
-		}
-
-		/**
-		 * POST api/SuperDemo/DateTimeOffsetNullable
-		 */
-		postDateTimeOffsetNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.post<Date>(this.baseUri + 'api/SuperDemo/DateTimeOffsetNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
-		}
-
-		/**
 		 * POST api/SuperDemo/enumPost?d={d}
 		 */
 		postDay(d: DemoWebApi_DemoData_Client.Days, d2: DemoWebApi_DemoData_Client.Days, headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_DemoData_Client.Days>> {
@@ -950,29 +1034,22 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * POST api/SuperDemo/NextYear
-		 */
-		postNextYear(dt: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.post<Date>(this.baseUri + 'api/SuperDemo/NextYear', JSON.stringify(dt), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
-		}
-
-		/**
 		 * POST api/SuperDemo/PostEmpty/{i}
 		 */
 		postWithQueryButEmptyBody(s: string, i: number, headersHandler?: () => {[header: string]: string}): Promise<{item1: string, item2: number}> {
 			return Axios.post<{item1: string, item2: number}>(this.baseUri + 'api/SuperDemo/PostEmpty/' + i, JSON.stringify(s), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
 		}
-
-		/**
-		 * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
-		 */
-		searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
-			return Axios.get<{item1: Date, item2: Date}>(this.baseUri + 'api/SuperDemo/SearchDateRange?' + (startDate ? 'startDate=' + startDate.toISOString() : '') + (endDate ? '&endDate=' + endDate.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
 	}
 
 	export class Tuple {
 		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		}
+
+		/**
+		 * POST api/Tuple/ChangeName
+		 */
+		changeName(d: {item1: string, item2: DemoWebApi_DemoData_Client.Person}, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
+			return Axios.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Tuple/ChangeName', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
 		}
 
 		/**
@@ -1197,6 +1274,13 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getById(id: number, headersHandler?: () => {[header: string]: string}): Promise<string> {
 			return Axios.get(this.baseUri + 'api/Values/' + id, { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/Values/Get2
+		 */
+		get2(headersHandler?: () => {[header: string]: string}): Promise<Array<string>> {
+			return Axios.get<Array<string>>(this.baseUri + 'api/Values/Get2', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**

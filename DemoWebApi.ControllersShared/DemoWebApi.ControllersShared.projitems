@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CodeGenController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DateTypesController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitiesController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileUploadController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HeroesController.cs" />

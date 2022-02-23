@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Fonlow.DateOnlyExtensions;
 
 namespace Core3WebApi
 {
@@ -25,7 +26,17 @@ namespace Core3WebApi
 					options.Conventions.Add(new Fonlow.CodeDom.Web.ApiExplorerVisibilityEnabledConvention());//To make ApiExplorer be visible to WebApiClientGen
 #endif
 				}
-			).AddNewtonsoftJson();
+			).AddNewtonsoftJson(
+				options =>
+				{
+					options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+					options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
+					options.SerializerSettings.Converters.Add(new DateTimeOffsetJsonConverter());
+					options.SerializerSettings.Converters.Add(new DateTimeOffsetNullableJsonConverter());
+					options.SerializerSettings.Converters.Add(new DateTimeJsonConverter());
+					options.SerializerSettings.Converters.Add(new DateTimeNullableJsonConverter());
+				}
+			);
 
 			services.AddControllers();
 			services.AddCors();

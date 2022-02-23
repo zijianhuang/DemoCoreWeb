@@ -5,19 +5,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
-	public class SuperDemoFixture : Fonlow.Testing.DefaultHttpClient
-	{
-		public SuperDemoFixture()
-		{
-			HttpClient.BaseAddress = BaseUri;
-			Api = new DemoWebApi.Controllers.Client.SuperDemo(HttpClient);
-		}
-
-		public DemoWebApi.Controllers.Client.SuperDemo Api { get; private set; }
-	}
-
-
-	[Collection("ServiceLaunch")]
+	[Collection(TestConstants.LaunchWebApiAndInit)]
 	public partial class SuperDemoApiIntegration : IClassFixture<SuperDemoFixture>
 	{
 		public SuperDemoApiIntegration(SuperDemoFixture fixture)
@@ -25,7 +13,7 @@ namespace IntegrationTests
 			api = fixture.Api;
 		}
 
-		DemoWebApi.Controllers.Client.SuperDemo api;
+		readonly DemoWebApi.Controllers.Client.SuperDemo api;
 
 		[Fact]
 		public void TestGetIntArrayQ()
@@ -153,94 +141,6 @@ namespace IntegrationTests
 		}
 
 		[Fact]
-		public void TestGetDateTime()
-		{
-			var dt = api.GetDateTime(true);
-			Assert.True((DateTime.Now - dt.Value) < TimeSpan.FromSeconds(2));
-		}
-
-		[Fact]
-		public void TestGetNextYear()
-		{
-			var dtNow = DateTime.Now;
-			Assert.Equal(dtNow.AddYears(1).ToUniversalTime(), api.GetNextYear(dtNow));
-		}
-
-		[Fact]
-		public void TestGetUtcNowNextYear()
-		{
-			var dtNow = DateTime.UtcNow;
-			Assert.Equal(dtNow.AddYears(1), api.GetNextYear(dtNow).ToUniversalTime());
-		}
-
-		[Fact]
-		public void TestGetNextHour()
-		{
-			var dtNow = DateTimeOffset.Now;
-			Assert.Equal(dtNow.AddHours(1), api.GetNextHour(dtNow));
-		}
-
-		[Fact]
-		public void TestGetNextYearNullable()
-		{
-			var dtNow = DateTime.Now;
-			Assert.Equal(dtNow.AddYears(2).ToUniversalTime(), api.GetNextYearNullable(2, dtNow));
-		}
-
-
-		[Fact]
-		public void TestGetNextHourNullable()
-		{
-			var dtNow = DateTimeOffset.Now;
-			Assert.Equal(dtNow.AddHours(2), api.GetNextHourNullable(2, dtNow));
-		}
-
-		[Fact]
-		public void TestGetNextYearNullable2()
-		{
-			var dtNow = DateTime.Now;
-			Assert.Equal(dtNow.AddYears(2).Year, api.GetNextYearNullable(2, null).Year);
-		}
-
-
-		[Fact]
-		public void TestGetNextHourNullable2()
-		{
-			var dtNow = DateTimeOffset.Now;
-			Assert.Equal(dtNow.AddHours(2).Hour, api.GetNextHourNullable(2, null).Hour);
-		}
-
-		[Fact]
-		public void TestSearcDateRange()
-		{
-			var dtStart = DateTime.Today;
-			var dtEnd = dtStart.AddDays(5);
-			var t = api.SearchDateRange(dtStart, dtEnd);
-			Assert.Equal(dtStart.ToUniversalTime(), t.Item1);
-			Assert.Equal(dtEnd.ToUniversalTime(), t.Item2);
-		}
-
-		[Fact]
-		public void TestSearcDateRangeWithEndDateNull()
-		{
-			var dtStart = DateTime.Today;
-			//var dtEnd = dtStart.AddDays(5);
-			var t = api.SearchDateRange(dtStart, null);
-			Assert.Equal(dtStart.ToUniversalTime(), t.Item1);
-			Assert.False(t.Item2.HasValue);
-		}
-
-		[Fact]
-		public void TestSearcDateRangeWithBothNull()
-		{
-			//var dtStart = DateTime.Today;
-			//var dtEnd = dtStart.AddDays(5);
-			var t = api.SearchDateRange(null, null);
-			Assert.False(t.Item1.HasValue);
-			Assert.False(t.Item2.HasValue);
-		}
-
-		[Fact]
 		public void TestNullablePrimitive()
 		{
 			double dou = 1234.567;
@@ -274,80 +174,6 @@ namespace IntegrationTests
 			var t = api.GetPrimitiveNullable("abc", dou, null);
 			Assert.Equal(dou, t.Item2);
 			Assert.Null(t.Item3);
-		}
-
-		[Fact]
-		public void TestGetUtcNowNextHour()
-		{
-			var dtNow = DateTimeOffset.UtcNow;
-			Assert.Equal(dtNow.AddHours(1), api.GetNextHour(dtNow));
-		}
-
-		[Fact]
-		public void TestPostNextYear()
-		{
-			var dtNow = DateTime.Now;
-			Assert.Equal(dtNow.AddYears(1), api.PostNextYear(dtNow));
-		}
-
-		[Fact]
-		public void TestGetDateTimeNull()
-		{
-			var dt = api.GetDateTime(false);
-			Assert.False(dt.HasValue);
-		}
-
-		[Fact]
-		public void TestGetDateTimeOffset()
-		{
-			var dt = api.GetDateTimeOffset();
-			Assert.True((DateTime.Now - dt) < TimeSpan.FromSeconds(2));
-		}
-
-		[Fact]
-		public void TestPostDateTimeOffset()
-		{
-			var p = DateTimeOffset.Now;
-			var r = api.PostDateTimeOffset(p);
-			Assert.Equal(p, r);
-		}
-
-		[Fact]
-		public void TestPostDateTimeOffsetNullable()
-		{
-			var p = DateTimeOffset.Now;
-			var r = api.PostDateTimeOffsetNullable(p);
-			Assert.Equal(p, r);
-		}
-
-		[Fact]
-		public void TestPostDateTimeOffsetNullableWithNull()
-		{
-			var r = api.PostDateTimeOffsetNullable(null);
-			Assert.Null(r);
-		}
-
-		[Fact]
-		public void TestPostDateOnly()
-		{
-			var dateOnly = new DateOnly(1988, 12, 23);
-			var r = api.PostDateOnly(dateOnly);
-			Assert.Equal(dateOnly, r);
-		}
-
-		[Fact]
-		public void TestPostDateOnlyNullable()
-		{
-			var dateOnly = new DateOnly(1988, 12, 23);
-			var r = api.PostDateOnlyNullable(dateOnly);
-			Assert.Equal(dateOnly, r);
-		}
-
-		[Fact]
-		public void TestPostDateOnlyNullableWithNull()
-		{
-			var r = api.PostDateOnlyNullable(null);
-			Assert.Null(r);
 		}
 
 		[Fact]
