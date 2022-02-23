@@ -234,6 +234,22 @@ namespace IntegrationTests
 		}
 
 		[Fact]
+		public void TestGetDateTimeMin()
+		{
+			var p = DateTime.MinValue;
+			var r = api.GetDateTimeMin();
+			Assert.Equal(p, r);
+		}
+
+		[Fact]
+		public void TestGetDateTimeDefault()
+		{
+			var r = api.GetDateTimeDefault();
+			Assert.Equal(DateTime.MinValue, r.DefaultDateTime);
+			Assert.Equal(DateTimeOffset.MinValue, r.DefaultDateTimeOffset);
+		}
+
+		[Fact]
 		public void TestPostDateOnly()
 		{
 			var dateOnly = new DateOnly(1988, 12, 23);

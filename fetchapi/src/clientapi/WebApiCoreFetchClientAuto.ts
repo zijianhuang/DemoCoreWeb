@@ -44,6 +44,11 @@ export namespace DemoWebApi_DemoData_Client {
 		lines?: Array<string>;
 	}
 
+	export interface DateTimeHolder {
+		defaultDateTime?: Date;
+		defaultDateTimeOffset?: Date;
+	}
+
 	export enum Days {
 		Sat = 1,
 		Sun = 2,
@@ -289,6 +294,20 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return fetch(this.baseUri + 'api/DateTypes/NullableDatetime/' + hasValue, { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
+		 * GET api/DateTypes/DateTimeDefault
+		 */
+		getDateTimeDefault(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateTimeHolder> {
+			return fetch(this.baseUri + 'api/DateTypes/DateTimeDefault', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
+		 * GET api/DateTypes/DateTimeMin
+		 */
+		getDateTimeMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return fetch(this.baseUri + 'api/DateTypes/DateTimeMin', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**

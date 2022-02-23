@@ -171,6 +171,18 @@ namespace DemoWebApi.Controllers
 			return Tuple.Create(startDate, endDate);
 		}
 
+		[HttpGet("DateTimeMin")]
+		public DateTime GetDateTimeMin()
+		{
+			return DateTime.MinValue;
+		}
+
+		[HttpGet("DateTimeDefault")]
+		public DemoWebApi.DemoData.DateTimeHolder GetDateTimeDefault()
+		{
+			return new DemoData.DateTimeHolder();
+		}
+
 
 	}
 }

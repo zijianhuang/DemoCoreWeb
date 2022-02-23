@@ -242,6 +242,17 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
+	public class DateTimeHolder
+	{
+		[DataMember]
+		public DateTime DefaultDateTime { get; set; }
+
+		[DataMember]
+		public DateTimeOffset DefaultDateTimeOffset { get; set; }
+	}
+
+
+	[DataContract(Namespace = Constants.DataNamespace)]
 	public class MyPeopleDic 
 	{
 		[DataMember]

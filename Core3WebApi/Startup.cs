@@ -31,10 +31,10 @@ namespace Core3WebApi
 				{
 					options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
 					options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateTimeOffsetJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateTimeOffsetNullableJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateTimeJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateTimeNullableJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateTimeOffsetJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateTimeOffsetNullableJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateTimeJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateTimeNullableJsonConverter());
 				}
 			);
 
