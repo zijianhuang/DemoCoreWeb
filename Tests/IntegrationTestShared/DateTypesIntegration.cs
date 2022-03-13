@@ -63,14 +63,6 @@ namespace IntegrationTests
 			Assert.Equal(dtNow.AddYears(2).Year, api.GetNextYearNullable(2, null).Year);
 		}
 
-
-		[Fact]
-		public void TestGetNextHourNullable2()
-		{
-			var dtNow = DateTimeOffset.Now;
-			Assert.Equal(dtNow.AddHours(2).Hour, api.GetNextHourNullable(2, null).Hour);
-		}
-
 		[Fact]
 		public void TestIsDateTimeDate()
 		{
@@ -162,20 +154,92 @@ namespace IntegrationTests
 			Assert.True((DateTime.Now - dt) < TimeSpan.FromSeconds(2));
 		}
 
+		[Fact(Skip = "Used for Host in Hawaii")]
+		//[Fact]
+		public void TestGetDateTimeOffsetWithHawaiiHost()
+		{
+			var dt = api.GetDateTimeOffset(); // Now in Hawaii is with -10 offset.
+			Assert.True((DateTime.Now - dt) < TimeSpan.FromSeconds(2));
+			Assert.Equal(TimeSpan.FromHours(-10), dt.Offset); //my dev machine is in +10 timezone
+		}
+
+		/// <summary>
+		/// The .net run time may change back to local Offset even if the host is in Hawaii.
+		/// </summary>
 		[Fact]
 		public void TestPostDateTimeOffset()
 		{
 			var p = DateTimeOffset.Now;
 			var r = api.PostDateTimeOffset(p);
 			Assert.Equal(p, r);
+			Assert.Equal(p.Offset, r.Offset);
+		}
+
+		[Fact]
+		public void TestPostDateTimeOffsetWithSpecificOffset()
+		{
+			var span = TimeSpan.FromHours(5);
+			DateTimeOffset p = DateTimeOffset.Now;
+			p = p.ToOffset(span); //ToOffset does not change the value, but return a new object.
+			var r = api.PostDateTimeOffset(p);
+			Assert.Equal(p, r);
+			Assert.Equal(p.Offset, r.Offset);
+		}
+
+		/// <summary>
+		/// For client in +10 and server in -10,
+		/// </summary>
+		[Fact]
+		public void TestPostDateTimeOffsetForOffset()
+		{
+			var span = TimeSpan.FromHours(5);
+			DateTimeOffset p = DateTimeOffset.Now;
+			p = p.ToOffset(span); //ToOffset does not change the value, but return a new object.
+			Assert.Equal(span, p.Offset);
+			var r = api.PostDateTimeOffsetForOffset(p);
+			Assert.Equal(span, r); //this may fail when client and server on different timezones.
+		}
+
+		[Fact]
+		public void TestPostDateTimeOffsetStringForOffset()
+		{
+			var span = TimeSpan.FromHours(5);
+			DateTimeOffset p = DateTimeOffset.Now;
+			p = p.ToOffset(span); //ToOffset does not change the value, but return a new object.
+			Assert.Equal(span, p.Offset);
+			var r = api.PostDateTimeOffsetStringForOffset(p.ToString("O")); //the object returned is created in service through parsing.
+			Assert.Equal(p.Offset, r);
+			Assert.Equal(span, r);
+		}
+
+		[Fact]
+		public void TestPostDateTimeOffsetForO()
+		{
+			var p = DateTimeOffset.Now;
+			var r = api.PostDateTimeOffsetForO(p);
+			Assert.Equal(p.ToString("O"), r);
+		}
+
+		/// <summary>
+		/// So with Utc, the server return local DateTimeOffset of client timezone.
+		/// </summary>
+		[Fact]
+		public void TestPostDateTimeOffsetUtcNow()
+		{
+			var p = DateTimeOffset.UtcNow;
+			var r = api.PostDateTimeOffset(p);
+			Assert.Equal(p, r);
+			Assert.Equal(TimeSpan.Zero, p.Offset);
+			//Assert.Equal(TimeSpan.FromHours(10), r.Offset); //I am in Australia AEST.
 		}
 
 		[Fact]
 		public void TestPostDateTimeOffsetDate()
 		{
-			var p = DateTimeOffset.Now.Date;
+			DateTimeOffset p = DateTimeOffset.Now.Date;
 			var r = api.PostDateTimeOffset(p);
 			Assert.Equal(p, r);
+			Assert.Equal(p.Offset, r.Offset);
 		}
 
 		[Fact]
@@ -234,25 +298,17 @@ namespace IntegrationTests
 		}
 
 		[Fact]
-		public void TestGetDateTimeMin()
-		{
-			var p = DateTime.MinValue;
-			var r = api.GetDateTimeMin();
-			Assert.Equal(p, r);
-		}
-
-		[Fact]
-		public void TestGetDateTimeDefault()
-		{
-			var r = api.GetDateTimeDefault();
-			Assert.Equal(DateTime.MinValue, r.DefaultDateTime);
-			Assert.Equal(DateTimeOffset.MinValue, r.DefaultDateTimeOffset);
-		}
-
-		[Fact]
 		public void TestPostDateOnly()
 		{
 			var dateOnly = new DateOnly(1988, 12, 23);
+			var r = api.PostDateOnly(dateOnly);
+			Assert.Equal(dateOnly, r);
+		}
+
+		[Fact]
+		public void TestPostDateOnlyMin()
+		{
+			var dateOnly = DateOnly.MinValue;
 			var r = api.PostDateOnly(dateOnly);
 			Assert.Equal(dateOnly, r);
 		}

@@ -299,20 +299,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/DateTypes/DateTimeDefault
-		 */
-		getDateTimeDefault(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateTimeHolder> {
-			return Axios.get<DemoWebApi_DemoData_Client.DateTimeHolder>(this.baseUri + 'api/DateTypes/DateTimeDefault', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
-		 * GET api/DateTypes/DateTimeMin
-		 */
-		getDateTimeMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/DateTypes/DateTimeMin', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
-		}
-
-		/**
+		 * return DateTimeOffset.Now
 		 * GET api/DateTypes/ForDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -384,6 +371,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d;
 		 * POST api/DateTypes/ForDateTimeOffset
 		 */
 		postDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -391,10 +379,32 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d.ToString("O")
+		 * POST api/DateTypes/ForDateTimeOffsetForO
+		 */
+		postDateTimeOffsetForO(d: Date, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForO', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetForOffset
+		 */
+		postDateTimeOffsetForOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForOffset', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+
+		/**
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return Axios.post<Date>(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetStringForOffset
+		 */
+		postDateTimeOffsetStringForOffset(s: string, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetStringForOffset', JSON.stringify(s), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
 		}
 
 		/**

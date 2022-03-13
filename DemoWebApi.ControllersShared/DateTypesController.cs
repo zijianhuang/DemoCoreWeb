@@ -7,9 +7,8 @@ namespace DemoWebApi.Controllers
 	/// <summary>
 	/// For testing different commbinations of parameters and returns
 	/// </summary>
-	[Produces("application/json")]
 	[Route("api/[controller]")]
-	public class DateTypesController : Controller
+	public class DateTypesController : ControllerBase
 	{
 		[HttpGet]
 		[Route("NullableDatetime/{hasValue}")]
@@ -55,6 +54,10 @@ namespace DemoWebApi.Controllers
 			return dt.AddYears(1);
 		}
 
+		/// <summary>
+		/// return DateTimeOffset.Now
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("ForDateTimeOffset")]
 		public DateTimeOffset GetDateTimeOffset()
@@ -62,11 +65,43 @@ namespace DemoWebApi.Controllers
 			return DateTimeOffset.Now;
 		}
 
+		/// <summary>
+		/// return d;
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("ForDateTimeOffset")]
 		public DateTimeOffset PostDateTimeOffset([FromBody] DateTimeOffset d)
 		{
 			return d;
+		}
+
+		[HttpPost]
+		[Route("ForDateTimeOffsetStringForOffset")]
+		public TimeSpan PostDateTimeOffsetStringForOffset([FromBody] string s)
+		{
+			var dt = DateTimeOffset.Parse(s);
+			return dt.Offset;
+		}
+
+		/// <summary>
+		/// return d.ToString("O")
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Route("ForDateTimeOffsetForO")]
+		public string PostDateTimeOffsetForO([FromBody] DateTimeOffset d)
+		{
+			return d.ToString("O");
+		}
+
+		[HttpPost]
+		[Route("ForDateTimeOffsetForOffset")]
+		public TimeSpan PostDateTimeOffsetForOffset([FromBody] DateTimeOffset d)
+		{
+			return d.Offset;
 		}
 
 		[HttpPost]
@@ -171,18 +206,7 @@ namespace DemoWebApi.Controllers
 			return Tuple.Create(startDate, endDate);
 		}
 
-		[HttpGet("DateTimeMin")]
-		public DateTime GetDateTimeMin()
-		{
-			return DateTime.MinValue;
-		}
-
-		[HttpGet("DateTimeDefault")]
-		public DemoWebApi.DemoData.DateTimeHolder GetDateTimeDefault()
-		{
-			return new DemoData.DateTimeHolder();
-		}
-
 
 	}
+
 }

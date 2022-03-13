@@ -87,48 +87,6 @@ namespace IntegrationTests
 		}
 
 		[Fact]
-		public void TestAthletheSearch()
-		{
-			var s = api.AthletheSearch(32, 0, null, null, null);
-			Assert.Equal("\"320\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch2()
-		{
-			var s = api.AthletheSearch(32, 0, null, null, "Search");
-			Assert.Equal("\"320Search\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch3()
-		{
-			var s = api.AthletheSearch(32, 0, null, "Sort", "Search");
-			Assert.Equal("\"320SortSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch4()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", "Sort", "Search");
-			Assert.Equal("\"320OrderSortSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch5()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", null, "Search");
-			Assert.Equal("\"320OrderSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch6()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", "", "Search");
-			Assert.Equal("\"320OrderSearch\"", s);
-		}
-
-		[Fact]
 		public void TestGetIntSquare()
 		{
 			Assert.Equal(10000, api.GetIntSquare(100));
@@ -519,7 +477,7 @@ namespace IntegrationTests
 			var m = await api.PostActionResultAsync();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
 			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			Assert.Equal("abcdefg", s);
 		}
 
 		[Fact]
@@ -528,7 +486,7 @@ namespace IntegrationTests
 			var m = await api.GetActionResultAsync();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
 			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			Assert.Equal("abcdefg", s);
 
 		}
 
@@ -538,7 +496,7 @@ namespace IntegrationTests
 			var m = await api.GetActionResult2Async();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
 			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			Assert.Equal("abcdefg", s);
 
 		}
 
