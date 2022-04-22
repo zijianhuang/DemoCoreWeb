@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fonlow.DateOnlyExtensions" Version="1.2.0" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="6.4.0" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="6.5.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="3.0.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.4" />
