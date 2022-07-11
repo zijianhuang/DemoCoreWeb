@@ -35,6 +35,8 @@ export namespace DemoWebApi_DemoData_Client {
 		 */
 		BusinessNum?: string;
 		businessNumberType?: string;
+		foundDate?: Date;
+		registerDate?: Date;
 		textMatrix?: Array<Array<string>>;
 		int2D?: number[][];
 		int2DJagged?: Array<Array<number>>;
@@ -75,7 +77,32 @@ export namespace DemoWebApi_DemoData_Client {
 		web?: string;
 	}
 
+
+	/**
+	 * To test different serializations against Guid
+	 */
+	export interface IdMap {
+		id?: string;
+		idNotEmitDefaultValue?: string;
+		nullableId?: string;
+		requiredName: string;
+		text?: string;
+	}
+
+	export enum MedicalContraindiationResponseTypeReason { M = "Mm", S = "Ss", P = "Pp", I = "I", A = "A" }
+
+	export enum MedicalContraindiationResponseTypeTypeCode { P = "P", T = "Tt" }
+
 	export interface MimsPackage {
+		kk?: number;
+
+		/**
+		 * Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+		 * and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+		 */
+		kK2?: number;
+		optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType;
+		optionalInt?: number;
 		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
 		tag?: string;
 	}
@@ -86,6 +113,8 @@ export namespace DemoWebApi_DemoData_Client {
 		result?: T;
 		success?: boolean;
 	}
+
+	export enum MyEnumType { First = 1, Two = 2 }
 
 	export interface MyGeneric<T, K, U> {
 		myK?: K;
@@ -101,6 +130,7 @@ export namespace DemoWebApi_DemoData_Client {
 	}
 
 	export interface Person extends DemoWebApi_DemoData_Client.Entity {
+		baptised?: Date;
 
 		/**
 		 * Date of Birth.
@@ -223,10 +253,24 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SpecialTypes/AnonymousDynamic2
+		 */
+		getAnonymousDynamic2(): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { observe: 'response', responseType: 'text' });
+		}
+
+		/**
 		 * GET api/SpecialTypes/AnonymousObject
 		 */
 		getAnonymousObject(): Observable<HttpResponse<string>> {
 			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousObject2
+		 */
+		getAnonymousObject2(): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { observe: 'response', responseType: 'text' });
 		}
 
 		/**
@@ -235,14 +279,153 @@ export namespace DemoCoreWeb_Controllers_Client {
 		postAnonymousObject(obj: any): Observable<HttpResponse<string>> {
 			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
 		}
+
+		/**
+		 * POST api/SpecialTypes/AnonymousObject2
+		 */
+		postAnonymousObject2(obj: any): Observable<HttpResponse<string>> {
+			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
+		}
 	}
 
 }
 
 export namespace DemoWebApi_Controllers_Client {
 	@Injectable()
+	export class DateTypes {
+		constructor(@Inject('baseUri') private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/', private http: HttpClient) {
+		}
+
+		/**
+		 * GET api/DateTypes/NullableDatetime/{hasValue}
+		 */
+		getDateTime(hasValue: boolean): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/NullableDatetime/' + hasValue);
+		}
+
+		/**
+		 * GET api/DateTypes/ForDateTimeOffset
+		 */
+		getDateTimeOffset(): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset');
+		}
+
+		/**
+		 * GET api/DateTypes/NextHour/{dt}
+		 */
+		getNextHour(dt: Date): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/NextHour/' + dt?.toISOString());
+		}
+
+		/**
+		 * GET api/DateTypes/NextHourNullable?n={n}&dt={dt}
+		 */
+		getNextHourNullable(n: number, dt: Date): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/NextHourNullable?n=' + n + (dt ? '&dt=' + dt?.toISOString() : ''));
+		}
+
+		/**
+		 * GET api/DateTypes/NextYear/{dt}
+		 */
+		getNextYear(dt: Date): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/NextYear/' + dt?.toISOString());
+		}
+
+		/**
+		 * GET api/DateTypes/NextYearNullable?n={n}&dt={dt}
+		 */
+		getNextYearNullable(n: number, dt: Date): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/NextYearNullable?n=' + n + (dt ? '&dt=' + dt?.toISOString() : ''));
+		}
+
+		/**
+		 * POST api/DateTypes/IsDateTimeDate
+		 */
+		isDateTimeDate(dt: Date): Observable<{item1: Date, item2: Date}> {
+			return this.http.post<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/IsDateTimeDate', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/IsDateTimeOffsetDate
+		 */
+		isDateTimeOffsetDate(dt: Date): Observable<{item1: Date, item2: Date}> {
+			return this.http.post<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/IsDateTimeOffsetDate', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateOnly
+		 */
+		postDateOnly(d: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/ForDateOnly', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/DateOnlyNullable
+		 */
+		postDateOnlyNullable(d: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/DateOnlyNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTime
+		 */
+		postDateTime(d: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/ForDateTime', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffset
+		 */
+		postDateTimeOffset(d: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/DateTimeOffsetNullable
+		 */
+		postDateTimeOffsetNullable(d: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/NextYear
+		 */
+		postNextYear(dt: Date): Observable<Date> {
+			return this.http.post<Date>(this.baseUri + 'api/DateTypes/NextYear', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * GET api/DateTypes/DateOnlyStringQuery?d={d}
+		 */
+		queryDateOnlyAsString(d: string): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/DateOnlyStringQuery?d=' + (!d ? '' : encodeURIComponent(d)));
+		}
+
+		/**
+		 * GET api/DateTypes/RouteDateTimeOffset/{d}
+		 */
+		routeDateTimeOffset(d: Date): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/RouteDateTimeOffset/' + d?.toISOString());
+		}
+
+		/**
+		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
+		 */
+		searchDateRange(startDate: Date, endDate: Date): Observable<{item1: Date, item2: Date}> {
+			return this.http.get<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate?.toISOString() : '') + (endDate ? '&endDate=' + endDate?.toISOString() : ''));
+		}
+	}
+
+	@Injectable()
 	export class Entities {
 		constructor(@Inject('baseUri') private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/', private http: HttpClient) {
+		}
+
+		/**
+		 * POST api/Entities/createCompany
+		 */
+		createCompany(p: DemoWebApi_DemoData_Client.Company): Observable<DemoWebApi_DemoData_Client.Company> {
+			return this.http.post<DemoWebApi_DemoData_Client.Company>(this.baseUri + 'api/Entities/createCompany', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
@@ -250,6 +433,20 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		createPerson(p: DemoWebApi_DemoData_Client.Person): Observable<number> {
 			return this.http.post<number>(this.baseUri + 'api/Entities/createPerson', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/Entities/createPerson2
+		 */
+		createPerson2(p: DemoWebApi_DemoData_Client.Person): Observable<DemoWebApi_DemoData_Client.Person> {
+			return this.http.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPerson2', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/Entities/createPerson3
+		 */
+		createPerson3(p: DemoWebApi_DemoData_Client.Person): Observable<DemoWebApi_DemoData_Client.Person> {
+			return this.http.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPerson3', JSON.stringify(p), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
@@ -295,17 +492,38 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/Entities/getPerson2/{id}
+		 */
+		getPerson2(id: number): Observable<DemoWebApi_DemoData_Client.Person> {
+			return this.http.get<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/getPerson2/' + id);
+		}
+
+		/**
 		 * PUT api/Entities/link?id={id}&relationship={relationship}
 		 */
 		linkPerson(id: number, relationship: string, person: DemoWebApi_DemoData_Client.Person): Observable<boolean> {
-			return this.http.put<boolean>(this.baseUri + 'api/Entities/link?id=' + id + '&relationship=' + (relationship == null ? '' : encodeURIComponent(relationship)), JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.put<boolean>(this.baseUri + 'api/Entities/link?id=' + id + '&relationship=' + (!relationship ? '' : encodeURIComponent(relationship)), JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * PATCH api/Entities/patchPerson
+		 */
+		patchPerson(person: DemoWebApi_DemoData_Client.Person): Observable<string> {
+			return this.http.patch(this.baseUri + 'api/Entities/patchPerson', JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
+		}
+
+		/**
+		 * POST api/Entities/IdMap
+		 */
+		postIdMap(idMap: DemoWebApi_DemoData_Client.IdMap): Observable<DemoWebApi_DemoData_Client.IdMap> {
+			return this.http.post<DemoWebApi_DemoData_Client.IdMap>(this.baseUri + 'api/Entities/IdMap', JSON.stringify(idMap), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
 		 * PUT api/Entities/updatePerson
 		 */
-		updatePerson(person: DemoWebApi_DemoData_Client.Person): Observable<HttpResponse<string>> {
-			return this.http.put(this.baseUri + 'api/Entities/updatePerson', JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
+		updatePerson(person: DemoWebApi_DemoData_Client.Person): Observable<string> {
+			return this.http.put(this.baseUri + 'api/Entities/updatePerson', JSON.stringify(person), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 	}
 
@@ -322,17 +540,24 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/Heroes
+		 * GET api/Heroes/asyncHeroes
 		 */
-		get(): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
-			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes');
+		getAsyncHeroes(): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
+			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/asyncHeroes');
 		}
 
 		/**
 		 * GET api/Heroes/{id}
 		 */
-		getById(id: number): Observable<DemoWebApi_Controllers_Client.Hero> {
+		getHero(id: number): Observable<DemoWebApi_Controllers_Client.Hero> {
 			return this.http.get<DemoWebApi_Controllers_Client.Hero>(this.baseUri + 'api/Heroes/' + id);
+		}
+
+		/**
+		 * GET api/Heroes
+		 */
+		getHeros(): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
+			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes');
 		}
 
 		/**
@@ -346,7 +571,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * POST api/Heroes/q?name={name}
 		 */
 		postWithQuery(name: string): Observable<DemoWebApi_Controllers_Client.Hero> {
-			return this.http.post<DemoWebApi_Controllers_Client.Hero>(this.baseUri + 'api/Heroes/q?name=' + (name == null ? '' : encodeURIComponent(name)), null);
+			return this.http.post<DemoWebApi_Controllers_Client.Hero>(this.baseUri + 'api/Heroes/q?name=' + (!name ? '' : encodeURIComponent(name)), null);
 		}
 
 		/**
@@ -360,7 +585,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * GET api/Heroes/search/{name}
 		 */
 		search(name: string): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
-			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/search/' + (name == null ? '' : encodeURIComponent(name)));
+			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/search/' + (!name ? '' : encodeURIComponent(name)));
 		}
 	}
 
@@ -383,6 +608,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SuperDemo/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
+		 */
+		athletheSearch(take: number, skip: number, order: string, sort: string, search: string): Observable<string> {
+			return this.http.get(this.baseUri + 'api/SuperDemo/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { responseType: 'text' });
+		}
+
+		/**
 		 * GET api/SuperDemo/ActionResult
 		 */
 		getActionResult(): Observable<HttpResponse<string>> {
@@ -390,10 +622,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SuperDemo/ActionResult2
+		 */
+		getActionResult2(): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SuperDemo/ActionResult2', { observe: 'response', responseType: 'text' });
+		}
+
+		/**
 		 * GET api/SuperDemo/ActionStringResult
 		 */
 		getActionStringResult(): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/SuperDemo/ActionStringResult');
+			return this.http.get(this.baseUri + 'api/SuperDemo/ActionStringResult', { responseType: 'text' });
 		}
 
 		/**
@@ -432,17 +671,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/SuperDemo/NullableDatetime/{hasValue}
+		 * GET api/SuperDemo/enumGet?d={d}
 		 */
-		getDateTime(hasValue: boolean): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/NullableDatetime/' + hasValue);
-		}
-
-		/**
-		 * GET api/SuperDemo/DateTimeOffset
-		 */
-		getDateTimeOffset(): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/DateTimeOffset');
+		getDay(d: DemoWebApi_DemoData_Client.Days): Observable<DemoWebApi_DemoData_Client.Days> {
+			return this.http.get<DemoWebApi_DemoData_Client.Days>(this.baseUri + 'api/SuperDemo/enumGet?d=' + d);
 		}
 
 		/**
@@ -450,6 +682,13 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getDecimal(): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/SuperDemo/decimal');
+		}
+
+		/**
+		 * GET api/SuperDemo/decimalArrayQ?a={a}
+		 */
+		getDecimalArrayQ(a: Array<number>): Observable<Array<number>> {
+			return this.http.get<Array<number>>(this.baseUri + 'api/SuperDemo/decimalArrayQ?'+a?.map(z => `a=${encodeURIComponent(z)}`).join('&'));
 		}
 
 		/**
@@ -498,7 +737,21 @@ export namespace DemoWebApi_Controllers_Client {
 		 * GET api/SuperDemo/EmptyString
 		 */
 		getEmptyString(): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/SuperDemo/EmptyString');
+			return this.http.get(this.baseUri + 'api/SuperDemo/EmptyString', { responseType: 'text' });
+		}
+
+		/**
+		 * GET api/SuperDemo/enumArrayDays?a={a}
+		 */
+		getEnumArrayDays(a: Array<DemoWebApi_DemoData_Client.Days>): Observable<Array<DemoWebApi_DemoData_Client.Days>> {
+			return this.http.get<Array<DemoWebApi_DemoData_Client.Days>>(this.baseUri + 'api/SuperDemo/enumArrayDays?'+a?.map(z => `a=${z}`).join('&'));
+		}
+
+		/**
+		 * GET api/SuperDemo/enumArrayQ2?a={a}
+		 */
+		getEnumArrayQ2(a: Array<number>): Observable<Array<number>> {
+			return this.http.get<Array<number>>(this.baseUri + 'api/SuperDemo/enumArrayQ2?'+a?.map(z => `a=${z}`).join('&'));
 		}
 
 		/**
@@ -544,6 +797,20 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SuperDemo/intArrayQ?a={a}
+		 */
+		getIntArrayQ(a: Array<number>): Observable<Array<number>> {
+			return this.http.get<Array<number>>(this.baseUri + 'api/SuperDemo/intArrayQ?'+a?.map(z => `a=${encodeURIComponent(z)}`).join('&'));
+		}
+
+		/**
+		 * GET api/SuperDemo/intArrayQ2?a={a}
+		 */
+		getIntArrayQ2(a: Array<number>): Observable<Array<number>> {
+			return this.http.get<Array<number>>(this.baseUri + 'api/SuperDemo/intArrayQ2?'+a?.map(z => `a=${encodeURIComponent(z)}`).join('&'));
+		}
+
+		/**
 		 * GET api/SuperDemo/int/{d}
 		 */
 		getIntSquare(d: number): Observable<number> {
@@ -579,34 +846,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/SuperDemo/NextHour/{dt}
-		 */
-		getNextHour(dt: Date): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/NextHour/' + dt.toISOString());
-		}
-
-		/**
-		 * GET api/SuperDemo/NextHourNullable?n={n}&dt={dt}
-		 */
-		getNextHourNullable(n: number, dt: Date): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/NextHourNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''));
-		}
-
-		/**
-		 * GET api/SuperDemo/NextYear/{dt}
-		 */
-		getNextYear(dt: Date): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/NextYear/' + dt.toISOString());
-		}
-
-		/**
-		 * GET api/SuperDemo/NextYearNullable?n={n}&dt={dt}
-		 */
-		getNextYearNullable(n: number, dt: Date): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/SuperDemo/NextYearNullable?n=' + n + (dt ? '&dt=' + dt.toISOString() : ''));
-		}
-
-		/**
 		 * GET api/SuperDemo/NullableDecimal/{hasValue}
 		 */
 		getNullableDecimal(hasValue: boolean): Observable<number> {
@@ -624,14 +863,14 @@ export namespace DemoWebApi_Controllers_Client {
 		 * GET api/SuperDemo/NullString
 		 */
 		getNullString(): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/SuperDemo/NullString');
+			return this.http.get(this.baseUri + 'api/SuperDemo/NullString', { responseType: 'text' });
 		}
 
 		/**
 		 * GET api/SuperDemo/DoubleNullable?location={location}&dd={dd}&de={de}
 		 */
 		getPrimitiveNullable(location: string, dd: number, de: number): Observable<{item1: string, item2: number, item3: number}> {
-			return this.http.get<{item1: string, item2: number, item3: number}>(this.baseUri + 'api/SuperDemo/DoubleNullable?location=' + (location == null ? '' : encodeURIComponent(location)) + (dd ? '&dd=' + dd.toString() : '') + (de ? '&de=' + de.toString() : ''));
+			return this.http.get<{item1: string, item2: number, item3: number}>(this.baseUri + 'api/SuperDemo/DoubleNullable?location=' + (!location ? '' : encodeURIComponent(location)) + (dd ? '&dd=' + dd.toString() : '') + (de ? '&de=' + de.toString() : ''));
 		}
 
 		/**
@@ -653,6 +892,20 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getShort(): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/SuperDemo/short');
+		}
+
+		/**
+		 * GET api/SuperDemo/stringArrayQ?a={a}
+		 */
+		getStringArrayQ(a: Array<string>): Observable<Array<string>> {
+			return this.http.get<Array<string>>(this.baseUri + 'api/SuperDemo/stringArrayQ?'+a?.map(z => `a=${encodeURIComponent(z)}`).join('&'));
+		}
+
+		/**
+		 * GET api/SuperDemo/stringArrayQ2?a={a}
+		 */
+		getStringArrayQ2(a: Array<string>): Observable<Array<string>> {
+			return this.http.get<Array<string>>(this.baseUri + 'api/SuperDemo/stringArrayQ2?'+a?.map(z => `a=${encodeURIComponent(z)}`).join('&'));
 		}
 
 		/**
@@ -693,8 +946,8 @@ export namespace DemoWebApi_Controllers_Client {
 		/**
 		 * POST api/SuperDemo/PostActionResult2
 		 */
-		postActionResult2(s: string): Observable<HttpResponse<string>> {
-			return this.http.post(this.baseUri + 'api/SuperDemo/PostActionResult2', JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
+		postActionResult2(s: string): Observable<HttpResponse<Blob>> {
+			return this.http.post(this.baseUri + 'api/SuperDemo/PostActionResult2', JSON.stringify(s), { observe: 'response', responseType: 'blob' });
 		}
 
 		/**
@@ -712,17 +965,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * POST api/SuperDemo/DateTimeOffset
+		 * POST api/SuperDemo/enumPost?d={d}
 		 */
-		postDateTimeOffset(d: Date): Observable<boolean> {
-			return this.http.post<boolean>(this.baseUri + 'api/SuperDemo/DateTimeOffset', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
-		}
-
-		/**
-		 * POST api/SuperDemo/DateTimeOffsetNullable
-		 */
-		postDateTimeOffsetNullable(d: Date): Observable<boolean> {
-			return this.http.post<boolean>(this.baseUri + 'api/SuperDemo/DateTimeOffsetNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		postDay(d: DemoWebApi_DemoData_Client.Days, d2: DemoWebApi_DemoData_Client.Days): Observable<Array<DemoWebApi_DemoData_Client.Days>> {
+			return this.http.post<Array<DemoWebApi_DemoData_Client.Days>>(this.baseUri + 'api/SuperDemo/enumPost?d=' + d, JSON.stringify(d2), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
@@ -730,6 +976,13 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		postDictionary(dic: {[id: string]: DemoWebApi_DemoData_Client.Person }): Observable<number> {
 			return this.http.post<number>(this.baseUri + 'api/SuperDemo/StringPersonDic', JSON.stringify(dic), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/SuperDemo/Guids
+		 */
+		postGuids(guids: Array<string>): Observable<Array<string>> {
+			return this.http.post<Array<string>>(this.baseUri + 'api/SuperDemo/Guids', JSON.stringify(guids), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
@@ -789,30 +1042,23 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * POST api/SuperDemo/NextYear
-		 */
-		postNextYear(dt: Date): Observable<Date> {
-			return this.http.post<Date>(this.baseUri + 'api/SuperDemo/NextYear', JSON.stringify(dt), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
-		}
-
-		/**
 		 * POST api/SuperDemo/PostEmpty/{i}
 		 */
 		postWithQueryButEmptyBody(s: string, i: number): Observable<{item1: string, item2: number}> {
 			return this.http.post<{item1: string, item2: number}>(this.baseUri + 'api/SuperDemo/PostEmpty/' + i, JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
-		}
-
-		/**
-		 * GET api/SuperDemo/SearchDateRange?startDate={startDate}&endDate={endDate}
-		 */
-		searchDateRange(startDate: Date, endDate: Date): Observable<{item1: Date, item2: Date}> {
-			return this.http.get<{item1: Date, item2: Date}>(this.baseUri + 'api/SuperDemo/SearchDateRange?' + (startDate ? 'startDate=' + startDate.toISOString() : '') + (endDate ? '&endDate=' + endDate.toISOString() : ''));
 		}
 	}
 
 	@Injectable()
 	export class Tuple {
 		constructor(@Inject('baseUri') private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/', private http: HttpClient) {
+		}
+
+		/**
+		 * POST api/Tuple/ChangeName
+		 */
+		changeName(d: {item1: string, item2: DemoWebApi_DemoData_Client.Person}): Observable<DemoWebApi_DemoData_Client.Person> {
+			return this.http.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Tuple/ChangeName', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
@@ -952,49 +1198,49 @@ export namespace DemoWebApi_Controllers_Client {
 		 * POST api/Tuple/Tuple2
 		 */
 		postTuple2(tuple: {item1: string, item2: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple2', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple3
 		 */
 		postTuple3(tuple: {item1: string, item2: string, item3: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple3', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple4
 		 */
 		postTuple4(tuple: {item1: string, item2: string, item3: string, item4: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple4', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple5
 		 */
 		postTuple5(tuple: {item1: string, item2: string, item3: string, item4: string, item5: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple5', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple6
 		 */
 		postTuple6(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple6', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple7
 		 */
 		postTuple7(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: number, item7: number}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple7', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
 		 * POST api/Tuple/Tuple8
 		 */
 		postTuple8(tuple: {item1: string, item2: string, item3: string, item4: string, item5: string, item6: string, item7: string, rest: {item1: string, item2: string, item3: string}}): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Tuple/Tuple8', JSON.stringify(tuple), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 	}
 
@@ -1021,28 +1267,35 @@ export namespace DemoWebApi_Controllers_Client {
 		 * GET api/Values/{id}?name={name}
 		 */
 		getByIdAndName(id: number, name: string): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/Values/' + id + '?name=' + (name == null ? '' : encodeURIComponent(name)));
+			return this.http.get(this.baseUri + 'api/Values/' + id + '?name=' + (!name ? '' : encodeURIComponent(name)), { responseType: 'text' });
 		}
 
 		/**
 		 * GET api/Values?name={name}
 		 */
 		getByName(name: string): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/Values?name=' + (name == null ? '' : encodeURIComponent(name)));
+			return this.http.get(this.baseUri + 'api/Values?name=' + (!name ? '' : encodeURIComponent(name)), { responseType: 'text' });
 		}
 
 		/**
 		 * GET api/Values/{id}
 		 */
 		getById(id: number): Observable<string> {
-			return this.http.get<string>(this.baseUri + 'api/Values/' + id);
+			return this.http.get(this.baseUri + 'api/Values/' + id, { responseType: 'text' });
+		}
+
+		/**
+		 * GET api/Values/Get2
+		 */
+		get2(): Observable<Array<string>> {
+			return this.http.get<Array<string>>(this.baseUri + 'api/Values/Get2');
 		}
 
 		/**
 		 * POST api/Values
 		 */
 		post(value: string): Observable<string> {
-			return this.http.post<string>(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+			return this.http.post(this.baseUri + 'api/Values', JSON.stringify(value), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
 		}
 
 		/**
