@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="6.7.3" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="6.8.0" />
     <PackageReference Include="Fonlow.WebApiClientGenCore.NG2" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />

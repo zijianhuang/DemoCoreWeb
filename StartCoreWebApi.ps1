@@ -9,5 +9,6 @@ $procArgs = @{
 }
 $process = Start-Process @procArgs
 
-Invoke-RestMethod http://localhost:5000/api/values -Method GET
+Invoke-RestMethod http://localhost:5000/api/DateTypes/GetDateTimeOffset -Method GET
+Invoke-RestMethod http://localhost:5000/api/DateTypes/GetDateOnly -Method GET
 

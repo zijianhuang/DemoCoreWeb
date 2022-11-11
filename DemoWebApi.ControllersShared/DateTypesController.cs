@@ -7,9 +7,8 @@ namespace DemoWebApi.Controllers
 	/// <summary>
 	/// For testing different commbinations of parameters and returns
 	/// </summary>
-	[Produces("application/json")]
 	[Route("api/[controller]")]
-	public class DateTypesController : Controller
+	public class DateTypesController : ControllerBase
 	{
 		[HttpGet]
 		[Route("NullableDatetime/{hasValue}")]
@@ -55,18 +54,61 @@ namespace DemoWebApi.Controllers
 			return dt.AddYears(1);
 		}
 
+		/// <summary>
+		/// return DateTimeOffset.Now
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
-		[Route("ForDateTimeOffset")]
+		[Route("GetDateTimeOffset")]
 		public DateTimeOffset GetDateTimeOffset()
 		{
 			return DateTimeOffset.Now;
 		}
 
+		[HttpGet]
+		[Route("GetDateOnly")]
+		public DateOnly GetDateOnly()
+		{
+			return DateOnly.FromDateTime(DateTimeOffset.Now.DateTime);
+		}
+
+		/// <summary>
+		/// return d;
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("ForDateTimeOffset")]
 		public DateTimeOffset PostDateTimeOffset([FromBody] DateTimeOffset d)
 		{
 			return d;
+		}
+
+		[HttpPost]
+		[Route("ForDateTimeOffsetStringForOffset")]
+		public TimeSpan PostDateTimeOffsetStringForOffset([FromBody] string s)
+		{
+			var dt = DateTimeOffset.Parse(s);
+			return dt.Offset;
+		}
+
+		/// <summary>
+		/// return d.ToString("O")
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Route("ForDateTimeOffsetForO")]
+		public string PostDateTimeOffsetForO([FromBody] DateTimeOffset d)
+		{
+			return d.ToString("O");
+		}
+
+		[HttpPost]
+		[Route("ForDateTimeOffsetForOffset")]
+		public TimeSpan PostDateTimeOffsetForOffset([FromBody] DateTimeOffset d)
+		{
+			return d.Offset;
 		}
 
 		[HttpPost]
@@ -93,6 +135,11 @@ namespace DemoWebApi.Controllers
 			return Tuple.Create(DateOnly.FromDateTime(dt.DateTime), dt);
 		}
 
+		/// <summary>
+		/// Returned is DateTimeOffset?
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("DateTimeOffsetNullable")]
 		public DateTimeOffset? PostDateTimeOffsetNullable([FromBody] DateTimeOffset? d)
@@ -160,10 +207,10 @@ namespace DemoWebApi.Controllers
 		}
 
 		/// <summary>
-		/// 
+		/// Return Tuple DateTime?, DateTime?
 		/// </summary>
-		/// <param name="startDate"></param>
-		/// <param name="endDate"></param>
+		/// <param name="startDate"> DateTime? startDate = null</param>
+		/// <param name="endDate">DateTime? endDate = null</param>
 		/// <returns></returns>
 		[HttpGet("SearchDateRange")]
 		public Tuple<DateTime?, DateTime?> SearchDateRange([FromQuery] DateTime? startDate = null, [FromQuery] DateTime? endDate = null)
