@@ -29,8 +29,8 @@ namespace Core3WebApi
 			).AddNewtonsoftJson(
 				options =>
 				{
-					options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
 					options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore; //So when controller will ignore null fileds when returing data
 				}
 			);
