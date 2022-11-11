@@ -297,6 +297,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnly
+		 */
+		getDateOnly(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return fetch(this.baseUri + 'api/DateTypes/GetDateOnly', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
 		 * GET api/DateTypes/NullableDatetime/{hasValue}
 		 */
 		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -304,10 +311,11 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/DateTypes/ForDateTimeOffset
+		 * return DateTimeOffset.Now
+		 * GET api/DateTypes/GetDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return fetch(this.baseUri + 'api/DateTypes/ForDateTimeOffset', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+			return fetch(this.baseUri + 'api/DateTypes/GetDateTimeOffset', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -377,6 +385,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d;
 		 * POST api/DateTypes/ForDateTimeOffset
 		 */
 		postDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -384,10 +393,33 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d.ToString("O")
+		 * POST api/DateTypes/ForDateTimeOffsetForO
+		 */
+		postDateTimeOffsetForO(d: Date, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return fetch(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForO', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(d) }).then(d => d.status == 204 ? null : d.text());
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetForOffset
+		 */
+		postDateTimeOffsetForOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Response> {
+			return fetch(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForOffset', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(d) });
+		}
+
+		/**
+		 * Returned is DateTimeOffset?
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return fetch(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(d) }).then(d => d.json());
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetStringForOffset
+		 */
+		postDateTimeOffsetStringForOffset(s: string, headersHandler?: () => {[header: string]: string}): Promise<Response> {
+			return fetch(this.baseUri + 'api/DateTypes/ForDateTimeOffsetStringForOffset', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(s) });
 		}
 
 		/**
@@ -412,7 +444,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return Tuple DateTime?, DateTime?
 		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
+		 * @param {Date} startDate DateTime? startDate = null
+		 * @param {Date} endDate DateTime? endDate = null
 		 */
 		searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
 			return fetch(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate?.toISOString() : '') + (endDate ? '&endDate=' + endDate?.toISOString() : ''), { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());

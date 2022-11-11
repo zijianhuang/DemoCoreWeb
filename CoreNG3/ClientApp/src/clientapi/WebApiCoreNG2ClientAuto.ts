@@ -297,6 +297,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnly
+		 */
+		getDateOnly(): Observable<Date> {
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnly');
+		}
+
+		/**
 		 * GET api/DateTypes/NullableDatetime/{hasValue}
 		 */
 		getDateTime(hasValue: boolean): Observable<Date> {
@@ -304,10 +311,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/DateTypes/ForDateTimeOffset
+		 * GET api/DateTypes/GetDateTimeOffset
 		 */
 		getDateTimeOffset(): Observable<Date> {
-			return this.http.get<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset');
+			return this.http.get<Date>(this.baseUri + 'api/DateTypes/GetDateTimeOffset');
 		}
 
 		/**
@@ -381,10 +388,31 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * POST api/DateTypes/ForDateTimeOffsetForO
+		 */
+		postDateTimeOffsetForO(d: Date): Observable<string> {
+			return this.http.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForO', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, responseType: 'text' });
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetForOffset
+		 */
+		postDateTimeOffsetForOffset(d: Date): Observable<HttpResponse<string>> {
+			return this.http.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForOffset', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
+		}
+
+		/**
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d: Date): Observable<Date> {
 			return this.http.post<Date>(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', JSON.stringify(d), { headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetStringForOffset
+		 */
+		postDateTimeOffsetStringForOffset(s: string): Observable<HttpResponse<string>> {
+			return this.http.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetStringForOffset', JSON.stringify(s), { headers: { 'Content-Type': 'application/json;charset=UTF-8' }, observe: 'response', responseType: 'text' });
 		}
 
 		/**

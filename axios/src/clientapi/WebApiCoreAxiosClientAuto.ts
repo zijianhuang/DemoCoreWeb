@@ -299,6 +299,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnly
+		 */
+		getDateOnly(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnly', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
 		 * GET api/DateTypes/NullableDatetime/{hasValue}
 		 */
 		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -306,10 +313,11 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/DateTypes/ForDateTimeOffset
+		 * return DateTimeOffset.Now
+		 * GET api/DateTypes/GetDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**
@@ -379,6 +387,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d;
 		 * POST api/DateTypes/ForDateTimeOffset
 		 */
 		postDateTimeOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -386,10 +395,33 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d.ToString("O")
+		 * POST api/DateTypes/ForDateTimeOffsetForO
+		 */
+		postDateTimeOffsetForO(d: Date, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForO', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' }).then(d => d.status == 204 ? null : d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetForOffset
+		 */
+		postDateTimeOffsetForOffset(d: Date, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetForOffset', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+
+		/**
+		 * Returned is DateTimeOffset?
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return Axios.post<Date>(this.baseUri + 'api/DateTypes/DateTimeOffsetNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/ForDateTimeOffsetStringForOffset
+		 */
+		postDateTimeOffsetStringForOffset(s: string, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/DateTypes/ForDateTimeOffsetStringForOffset', JSON.stringify(s), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
 		}
 
 		/**
@@ -414,7 +446,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return Tuple DateTime?, DateTime?
 		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
+		 * @param {Date} startDate DateTime? startDate = null
+		 * @param {Date} endDate DateTime? endDate = null
 		 */
 		searchDateRange(startDate: Date, endDate: Date, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
 			return Axios.get<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate?.toISOString() : '') + (endDate ? '&endDate=' + endDate?.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
