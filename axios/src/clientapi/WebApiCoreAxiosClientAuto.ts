@@ -306,6 +306,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnlyMin
+		 */
+		getDateOnlyMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnlyMin', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
 		 * GET api/DateTypes/NullableDatetime/{hasValue}
 		 */
 		getDateTime(hasValue: boolean, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -366,10 +373,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * POST api/DateTypes/ForDateOnly
+		 * POST api/DateTypes/PostDateOnly
 		 */
 		postDateOnly(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.post<Date>(this.baseUri + 'api/DateTypes/ForDateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/PostDateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
 		}
 
 		/**

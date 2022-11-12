@@ -1,5 +1,4 @@
-﻿using Fonlow.DateOnlyExtensions;
-using Fonlow.Testing;
+﻿using Fonlow.Testing;
 using System;
 
 namespace IntegrationTests
@@ -20,15 +19,15 @@ namespace IntegrationTests
 	{
 		public EntitiesFixture()
 		{
-			var jsonSerializerSettings = new Newtonsoft.Json.JsonSerializerSettings() 
-			{
-				NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-			};
+			//var jsonSerializerSettings = new Newtonsoft.Json.JsonSerializerSettings() 
+			//{
+			//	NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+			//};
 
-			jsonSerializerSettings.Converters.Add(new DateOnlyJsonConverter());
-			jsonSerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
+			//jsonSerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+			//jsonSerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
 
-			Api = new DemoWebApi.Controllers.Client.Entities(HttpClient, jsonSerializerSettings);
+			Api = new DemoWebApi.Controllers.Client.Entities(HttpClient, null);
 		}
 
 		public DemoWebApi.Controllers.Client.Entities Api { get; private set; }

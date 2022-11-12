@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fonlow.DateOnlyExtensions" Version="1.2.0" />
     <PackageReference Include="Fonlow.Testing.ServiceCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />

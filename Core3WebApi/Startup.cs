@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Fonlow.DateOnlyExtensions;
+//using Fonlow.DateOnlyExtensions;
 
 namespace Core3WebApi
 {
@@ -29,8 +29,8 @@ namespace Core3WebApi
 			).AddNewtonsoftJson(
 				options =>
 				{
-					options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
-					options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+					//options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
 					options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore; //So when controller will ignore null fileds when returing data
 				}
 			);

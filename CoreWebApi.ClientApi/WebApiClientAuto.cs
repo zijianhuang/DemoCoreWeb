@@ -916,6 +916,52 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
+		/// GET api/DateTypes/GetDateOnlyMin
+		/// </summary>
+		public async Task<System.DateOnly> GetDateOnlyMinAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/DateTypes/GetDateOnlyMin";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<System.DateOnly>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/DateTypes/GetDateOnlyMin
+		/// </summary>
+		public System.DateOnly GetDateOnlyMin(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/DateTypes/GetDateOnlyMin";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<System.DateOnly>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
 		/// GET api/DateTypes/NullableDatetime/{hasValue}
 		/// </summary>
 		public async Task<System.Nullable<System.DateTime>> GetDateTimeAsync(bool hasValue, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
@@ -1312,11 +1358,11 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// POST api/DateTypes/ForDateOnly
+		/// POST api/DateTypes/PostDateOnly
 		/// </summary>
 		public async Task<System.DateOnly> PostDateOnlyAsync(System.DateOnly d, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
-			var requestUri = "api/DateTypes/ForDateOnly";
+			var requestUri = "api/DateTypes/PostDateOnly";
 			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
 			using var requestWriter = new System.IO.StringWriter();
 			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
@@ -1340,11 +1386,11 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
-		/// POST api/DateTypes/ForDateOnly
+		/// POST api/DateTypes/PostDateOnly
 		/// </summary>
 		public System.DateOnly PostDateOnly(System.DateOnly d, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
-			var requestUri = "api/DateTypes/ForDateOnly";
+			var requestUri = "api/DateTypes/PostDateOnly";
 			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
 			using var requestWriter = new System.IO.StringWriter();
 			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);

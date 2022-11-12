@@ -72,6 +72,13 @@ namespace DemoWebApi.Controllers
 			return DateOnly.FromDateTime(DateTimeOffset.Now.DateTime);
 		}
 
+		[HttpGet]
+		[Route("GetDateOnlyMin")]
+		public DateOnly GetDateOnlyMin()
+		{
+			return DateOnly.MinValue;
+		}
+
 		/// <summary>
 		/// return d;
 		/// </summary>
@@ -155,7 +162,7 @@ namespace DemoWebApi.Controllers
 		}
 
 		[HttpPost]
-		[Route("ForDateOnly")]
+		[Route("PostDateOnly")]
 		public DateOnly PostDateOnly([FromBody] DateOnly d)
 		{
 			return d;

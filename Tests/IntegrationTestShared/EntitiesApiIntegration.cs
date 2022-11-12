@@ -20,10 +20,10 @@ namespace IntegrationTests
 		{
 			Person person = new Person()
 			{
-				Name = "Some One",
+				Name = "Some OneNoDob",
 				Surname = "One",
 				GivenName = "Some",
-				DOB = new DateOnly(1988, 11, 23),
+				//DOB = new DateOnly(1988, 11, 23),
 				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",

@@ -1,5 +1,4 @@
-﻿using Fonlow.DateOnlyExtensions;
-using Fonlow.Testing;
+﻿using Fonlow.Testing;
 using System;
 
 namespace IntegrationTests
@@ -8,15 +7,15 @@ namespace IntegrationTests
 	{
 		public DateTypesFixture()
 		{
-			var jsonSerializerSettings = new Newtonsoft.Json.JsonSerializerSettings()
-			{
-				NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-			};
+			//var jsonSerializerSettings = new Newtonsoft.Json.JsonSerializerSettings()
+			//{
+			//	NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+			//};
 
-			jsonSerializerSettings.Converters.Add(new DateOnlyJsonConverter());
-			jsonSerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
+			//jsonSerializerSettings.Converters.Add(new DateOnlyJsonConverter());
+			//jsonSerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
 
-			Api = new DemoWebApi.Controllers.Client.DateTypes(HttpClient, jsonSerializerSettings);
+			Api = new DemoWebApi.Controllers.Client.DateTypes(HttpClient, null);
 		}
 
 		public DemoWebApi.Controllers.Client.DateTypes Api { get; private set; }
