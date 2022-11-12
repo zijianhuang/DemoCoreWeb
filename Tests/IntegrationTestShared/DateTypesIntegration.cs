@@ -244,8 +244,9 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostDateOnlyMin()
 		{
-			var r = api.PostDateOnly(DateOnly.MinValue);
-			Assert.Equal(DateOnly.MinValue, r);
+			var dateOnly = DateOnly.MinValue;
+			var r = api.PostDateOnly(dateOnly);
+			Assert.Equal(dateOnly, r);
 		}
 
 		[Fact]
@@ -253,6 +254,20 @@ namespace IntegrationTests
 		{
 			var r = api.GetDateOnlyMin();
 			Assert.Equal(DateOnly.MinValue, r);
+		}
+
+		[Fact]
+		public void TestGetDateOnlyMinContainer()
+		{
+			var r = api.GetDateOnlyMinContainer();
+			Assert.Equal(DateOnly.MinValue, r.RegisterDate);
+		}
+
+		[Fact]
+		public void TestPostDateOnlyMinContainer()
+		{
+			var r = api.PostDateOnlyContainer(new DemoWebApi.DemoData.Client.DateOnlyContainer() { Name = "abc", RegisterDate = DateOnly.MinValue });
+			Assert.Equal(DateOnly.MinValue, r.RegisterDate);
 		}
 
 		[Fact]

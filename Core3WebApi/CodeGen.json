@@ -15,6 +15,7 @@
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
 		"CamelCase": true,
+		"UseSystemTextJson": true,
 		"UseEnsureSuccessStatusCodeEx": true,
 		"DataAnnotationsEnabled": true,
 		"DataAnnotationsToComments": true,

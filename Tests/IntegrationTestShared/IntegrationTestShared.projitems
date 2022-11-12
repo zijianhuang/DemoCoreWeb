@@ -10,13 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DateTypesIntegration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DotNetCoreSpecial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DotNetHostCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitiesApiIntegration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HeroesApiIntegration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SpecialTypesApiIntegration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SuperDemoIntegration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TupleApiIntegration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValuesApiIntegration.cs" />
   </ItemGroup>
 </Project>

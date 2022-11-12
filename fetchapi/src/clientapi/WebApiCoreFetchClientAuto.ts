@@ -44,6 +44,11 @@ export namespace DemoWebApi_DemoData_Client {
 		lines?: Array<string>;
 	}
 
+	export interface DateOnlyContainer {
+		name?: string;
+		registerDate?: Date;
+	}
+
 	export enum Days {
 		Sat = 1,
 		Sun = 2,
@@ -304,10 +309,24 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnlyContainer
+		 */
+		getDateOnlyContainer(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return fetch(this.baseUri + 'api/DateTypes/GetDateOnlyContainer', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
 		 * GET api/DateTypes/GetDateOnlyMin
 		 */
 		getDateOnlyMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return fetch(this.baseUri + 'api/DateTypes/GetDateOnlyMin', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
+		 * GET api/DateTypes/GetDateOnlyMinContainer
+		 */
+		getDateOnlyMinContainer(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return fetch(this.baseUri + 'api/DateTypes/GetDateOnlyMinContainer', { method: 'get', headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -375,6 +394,13 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		postDateOnly(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return fetch(this.baseUri + 'api/DateTypes/PostDateOnly', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(d) }).then(d => d.json());
+		}
+
+		/**
+		 * POST api/DateTypes/PostDateOnlyContainer
+		 */
+		postDateOnlyContainer(d: DemoWebApi_DemoData_Client.DateOnlyContainer, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return fetch(this.baseUri + 'api/DateTypes/PostDateOnlyContainer', { method: 'post', headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' }, body: JSON.stringify(d) }).then(d => d.json());
 		}
 
 		/**

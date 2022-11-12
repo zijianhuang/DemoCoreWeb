@@ -46,6 +46,11 @@ export namespace DemoWebApi_DemoData_Client {
 		lines?: Array<string>;
 	}
 
+	export interface DateOnlyContainer {
+		name?: string;
+		registerDate?: Date;
+	}
+
 	export enum Days {
 		Sat = 1,
 		Sun = 2,
@@ -306,10 +311,24 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/DateTypes/GetDateOnlyContainer
+		 */
+		getDateOnlyContainer(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return Axios.get<DemoWebApi_DemoData_Client.DateOnlyContainer>(this.baseUri + 'api/DateTypes/GetDateOnlyContainer', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
 		 * GET api/DateTypes/GetDateOnlyMin
 		 */
 		getDateOnlyMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnlyMin', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
+		}
+
+		/**
+		 * GET api/DateTypes/GetDateOnlyMinContainer
+		 */
+		getDateOnlyMinContainer(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return Axios.get<DemoWebApi_DemoData_Client.DateOnlyContainer>(this.baseUri + 'api/DateTypes/GetDateOnlyMinContainer', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.data);
 		}
 
 		/**
@@ -377,6 +396,13 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		postDateOnly(d: Date, headersHandler?: () => {[header: string]: string}): Promise<Date> {
 			return Axios.post<Date>(this.baseUri + 'api/DateTypes/PostDateOnly', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
+		}
+
+		/**
+		 * POST api/DateTypes/PostDateOnlyContainer
+		 */
+		postDateOnlyContainer(d: DemoWebApi_DemoData_Client.DateOnlyContainer, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.DateOnlyContainer> {
+			return Axios.post<DemoWebApi_DemoData_Client.DateOnlyContainer>(this.baseUri + 'api/DateTypes/PostDateOnlyContainer', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.data);
 		}
 
 		/**

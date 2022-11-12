@@ -26,13 +26,6 @@ namespace Core3WebApi
 					options.Conventions.Add(new Fonlow.CodeDom.Web.ApiExplorerVisibilityEnabledConvention());//To make ApiExplorer be visible to WebApiClientGen
 #endif
 				}
-			).AddNewtonsoftJson(
-				options =>
-				{
-					//options.SerializerSettings.Converters.Add(new DateOnlyJsonConverter());
-					//options.SerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
-					options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore; //So when controller will ignore null fileds when returing data
-				}
 			);
 
 			services.AddControllers();

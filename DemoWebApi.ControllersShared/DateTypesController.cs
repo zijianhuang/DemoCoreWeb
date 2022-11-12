@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoWebApi.DemoData;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
@@ -77,6 +78,20 @@ namespace DemoWebApi.Controllers
 		public DateOnly GetDateOnlyMin()
 		{
 			return DateOnly.MinValue;
+		}
+
+		[HttpGet]
+		[Route("GetDateOnlyContainer")]
+		public DateOnlyContainer GetDateOnlyContainer()
+		{
+			return new DateOnlyContainer { RegisterDate = DateOnly.FromDateTime(DateTimeOffset.Now.DateTime) };
+		}
+
+		[HttpGet]
+		[Route("GetDateOnlyMinContainer")]
+		public DateOnlyContainer GetDateOnlyMinContainer()
+		{
+			return new DateOnlyContainer { Name="ABC" };
 		}
 
 		/// <summary>
@@ -164,6 +179,13 @@ namespace DemoWebApi.Controllers
 		[HttpPost]
 		[Route("PostDateOnly")]
 		public DateOnly PostDateOnly([FromBody] DateOnly d)
+		{
+			return d;
+		}
+
+		[HttpPost]
+		[Route("PostDateOnlyContainer")]
+		public DateOnlyContainer PostDateOnlyContainer([FromBody] DateOnlyContainer d)
 		{
 			return d;
 		}
