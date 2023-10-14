@@ -311,7 +311,7 @@ describe('Tuple API', () => {
 });
 
 
-describe('SuperDemo API', () => {
+describe('DateTypes API', () => {
   const service=new namespaces.DemoWebApi_Controllers_Client.DateTypes(baseUri);
 
   it('GetNextHour', (done) => {
