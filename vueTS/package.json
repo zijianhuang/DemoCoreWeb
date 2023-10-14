@@ -6,23 +6,28 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test": "vitest"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "vue": "^2.6.10",
-    "vue-class-component": "^7.0.2",
-    "vue-property-decorator": "^8.1.0",
-    "vuex": "^3.0.1"
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/compat": "3.3.4",
+    "axios": "^1.5.1",
+    "jest": "^29.7.0",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-typescript": "^3.8.0",
-    "@vue/cli-plugin-unit-jest": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "ts-jest": "^23.0.0",
-    "typescript": "^3.2.2",
-    "vue-template-compiler": "^2.6.10"
+    "@testing-library/vue": "^7.0.0",
+    "@types/jest": "^29.5.5",
+    "@vue/cli-plugin-typescript": "~5.0.8",
+    "@vue/cli-plugin-unit-jest": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "@vue/compiler-sfc": "3.3.4",
+    "@vue/test-utils": "2.4.1",
+    "@vue/vue3-jest": "29.2.6",
+    "happy-dom": "^12.9.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "~5.2.2",
+    "vitest": "^0.34.6"
   }
 }

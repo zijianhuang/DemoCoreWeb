@@ -5,7 +5,7 @@ To demo how generated client APIs could be compiled and run together with Vue TS
 0: npm install -g @vue/cli
 0.1: npm i
 1: start Web API
-2: npx jest
+2: npm test
 
 ## Project setup
 ```

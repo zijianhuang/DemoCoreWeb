@@ -7,6 +7,7 @@ module.exports = {
     'ts',
     'tsx'
   ],
+
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
@@ -14,7 +15,8 @@ module.exports = {
   },
   
   testEnvironmentOptions: {
-    url: 'http://localhost:4201'
+    url: 'http://localhost:4201',
+    customExportConditions: ["node", "node-addons"],
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
@@ -25,7 +27,10 @@ module.exports = {
   testMatch: [
     '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
   ],
-  
+  "compilerOptions": {
+    "types": ["vitest/globals"]
+  }, 
+
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
