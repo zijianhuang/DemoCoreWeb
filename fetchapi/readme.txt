@@ -1,3 +1,4 @@
 To test, run:
-karma start ./karma.conf.js
-along with .net core web api.
+0: Npm install
+1: start .net core web api
+2: karma start ./karma.conf.js
