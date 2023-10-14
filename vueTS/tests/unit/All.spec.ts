@@ -305,16 +305,8 @@ describe('SuperDemo API', () => {
   );
 
   it('getByteArray', async () => {
-    const data = await service.getByteArray().then(
-      data => {
-        expect(data.length).toBeGreaterThan(0);
-
-      },
-      error => {
-        fail(errorResponseToString(error));
-
-      }
-    );
+    const data = await service.getByteArray();
+    expect(data.length).toBeGreaterThan(0);
 
   }
   );

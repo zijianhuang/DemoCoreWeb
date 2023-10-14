@@ -34,802 +34,530 @@ export function errorResponseToString(error: AxiosError | any, ): string {
 	}
   }
 
-describe('Values API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.Values(apiBaseUri);
-
-  it('get', (done) => {
-    service.get().then(
-      data => {
-        console.debug(data.length);
-        expect(data[1]).toBe('value2');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  describe('Values API', () => {
+    const service = new namespaces.DemoWebApi_Controllers_Client.Values(apiBaseUri);
+  
+    it('get', async () => {
+      const data = await service.get();
+      expect(data[1]).toBe('value2');
+    }
     );
-  }
-  );
-
-  it('Post', (done) => {
-    service.post('Abc').then(
-      data => {
-        console.debug(data.length);
-        expect(data).toBe('ABC');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('Post', async () => {
+      const data = await service.post('Abc');
+      expect(data).toBe('ABC');
+    }
     );
-  }
-  );
-
-
-});
-
-
-describe('Heroes API', () => {
-  const service= new namespaces.DemoWebApi_Controllers_Client.Heroes(apiBaseUri);
-
-   it('getAll', (done) => {
-    service.getHeros().then(
-      data => {
-        console.debug(data.length);
-        expect(data.length).toBeGreaterThan(0);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+  });
+  
+  
+  describe('Heroes API', () => {
+    const service = new namespaces.DemoWebApi_Controllers_Client.Heroes(apiBaseUri);
+  
+    it('getAll', async () => {
+      const data = await service.getHeros();
+      expect(data.length).toBeGreaterThan(0);
+    }
     );
-
-  }
-  );
-
-  it('Add', (done) => {
-    service.post('somebody').then(
-      data => {
-        expect(data.name).toBe('somebody');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('Add', async () => {
+      const data = await service.post('somebody');
+      expect(data.name).toBe('somebody');
+    }
     );
-
-  }
-  );
-
-  it('PostWithQuery', (done) => {
-    service.postWithQuery('somebodyqqq').then(
-      data => {
-        expect(data.name).toBe('somebodyqqq');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('PostWithQuery', async () => {
+      const data = await service.postWithQuery('somebodyqqq');
+      expect(data.name).toBe('somebodyqqq');
+  
+    }
     );
-
-  }
-  );
-
-  it('search', (done) => {
-    service.search('Torna').then(
-      data => {
-        console.debug(data.length);
-        expect(data.length).toBe(1);
-        expect(data[0].name).toBe('Tornado');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('search', async () => {
+      const data = await service.search('Torna');
+      expect(data.length).toBe(1);
+      expect(data[0].name).toBe('Tornado');
+    }
     );
-
-  }
-  );
-
-});
-
-
-describe('entities API', () => {
-  const client = new namespaces.DemoWebApi_Controllers_Client.Entities(apiBaseUri);
-
-  //it('getPersonNotFound', (done) => {
-  //    client.getPersonNotFound(123)
-  //        .then(
-  //        data => {
-  //            fail('That is bad. Should be 404.');
-  //            done();
-  //        },
-  //        error => {
-  //            expect(errorResponseToString(error)).toContain('404');
-  //            done();
-  //        }
-  //        );
-  //}
-  //);
-
-  it('add', (done) => {
-    let id: number;
-    const newPerson: namespaces.DemoWebApi_DemoData_Client.Person = {
-      name: 'John Smith' + Date.now().toString(),
-      givenName: 'John',
-      surname: 'Smith',
-      dob: new Date('1977-12-28')
-    };
-
-    client.createPerson(newPerson)
-      .then(
-      data => {
-        id = data;
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
-      );
-
-  }
-  );
-
-});
-
-describe('DateTypes API', () => {
-  const service=new namespaces.DemoWebApi_Controllers_Client.DateTypes(apiBaseUri);
-
-  it('GetNextHour', (done) => {
-    const dt = new Date(Date.now());
-    const h = dt.getHours();
-    service.getNextHour(dt).then(
-      data => {
-        const dd = new Date(data);
-        expect(dd.getHours()).toBe(h + 1);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  });
+  
+  
+  describe('entities API', () => {
+    const client = new namespaces.DemoWebApi_Controllers_Client.Entities(apiBaseUri);
+  
+    //it('getPersonNotFound', async ()=> {
+    //    client.getPersonNotFound(123)
+    //        .then(
+    //        data => {
+    //            fail('That is bad. Should be 404.');
+    //            
+    //        },
+    //        error => {
+    //            expect(errorResponseToString(error)).toContain('404');
+    //            
+    //        }
+    //        );
+    //}
+    //);
+  
+    it('add', async () => {
+      let id: number;
+      const newPerson: namespaces.DemoWebApi_DemoData_Client.Person = {
+        name: 'John Smith' + Date.now().toString(),
+        givenName: 'John',
+        surname: 'Smith',
+        dob: new Date('1977-12-28')
+      };
+  
+      const data = client.createPerson(newPerson);
+      expect(data).toBeTruthy();
+  
+    }
     );
-
-  }
-  );
-
-  it('GetNextYear', (done) => {
-    const dt = new Date(Date.now());
-    const h = dt.getFullYear();
-    service.getNextYear(dt).then(
-      data => {
-        const dd = new Date(data);
-        expect(dd.getFullYear()).toBe(h + 1);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  });
+  
+  describe('DateTypes API', () => {
+    const service = new namespaces.DemoWebApi_Controllers_Client.DateTypes(apiBaseUri);
+  
+    it('GetNextHour', async () => {
+      const dt = new Date(Date.now());
+      const h = dt.getHours();
+      const data = await service.getNextHour(dt);
+      const dd = new Date(data);
+      expect(dd.getHours()).toBe(h + 1);
+  
+    }
     );
-
-  }
-  );
-
-  it('PostNextYear', (done) => {
-    const dt = new Date(Date.now());
-    const h = dt.getFullYear();
-    service.postNextYear(dt).then(
-      data => {
-        const dd = new Date(data);
-        expect(dd.getFullYear()).toBe(h + 1);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('GetNextYear', async () => {
+      const dt = new Date(Date.now());
+      const h = dt.getFullYear();
+      const data = await service.getNextYear(dt);
+      const dd = new Date(data);
+      expect(dd.getFullYear()).toBe(h + 1);
+  
+  
+    }
     );
-
-  }
-  );
-
-  it('getDateTime', (done) => {
-    service.getDateTime(true).then(
-      data => {
-        expect(data).toBeDefined();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('PostNextYear', async () => {
+      const dt = new Date(Date.now());
+      const h = dt.getFullYear();
+      const data = await service.postNextYear(dt);
+      const dd = new Date(data);
+      expect(dd.getFullYear()).toBe(h + 1);
+  
+  
+    }
     );
-
-  }
-  );
-
-  it('getDateTimeNull', (done) => {
-    service.getDateTime(false).then(
-      data => {
-      //  expect(data).toBeNull();
-		expect(data).toBe(''); // .net core return 204 nocontent empty body
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNextYearNullable', async () => {
+      let now = new Date(Date.now());
+      const data = await service.getNextYearNullable(2, now);
+      let dt = new Date(data);//data is actually string, NG HttpClient does not translate it to Date
+      expect(dt.getFullYear()).toEqual(now.getFullYear() + 2);
+  
+  
+    }
     );
-
-  }
-  );
-
-});
-
-describe('SuperDemo API', () => {
-  const service=new namespaces.DemoWebApi_Controllers_Client.SuperDemo(apiBaseUri);
-
-  it('getBool', (done) => {
-    service.getBool().then(
-      data => {
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNextHourNullable', async () => {
+      let now = new Date(Date.now());
+      const data = await service.getNextHourNullable(2, now);
+      let dt = new Date(data);
+      expect(dt.getHours() % 24).toEqual((now.getHours() + 2) % 24)
+  
+    }
     );
-
-  }
-  );
-
-
-  it('getFloatZero', (done) => {
-    service.getFloatZero().then(
-      data => {
-        expect(data).toBeLessThan(0.000001);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNextYearNullable2', async () => {
+      let now = new Date(Date.now());
+      const data = await service.getNextYearNullable(2, undefined!);
+      let dt = new Date(data);
+      expect(dt.getFullYear()).toEqual(now.getFullYear() + 2);
+    }
     );
-
-  }
-  );
-
-  it('getDoubleZero', (done) => {
-    service.getDoubleZero().then(
-      data => {
-        expect(data).not.toBe(0);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNextHourNullable2', async () => {
+      let now = new Date(Date.now());
+      const data = await service.getNextHourNullable(2, null!);
+      let dt = new Date(data);
+      expect(dt.getHours() % 24).toEqual((now.getHours() + 2) % 24)
+  
+    }
     );
-
-  }
-  );
-
-  it('getDecimalZero', (done) => {
-    service.getDecimalZero().then(
-      data => {
-        expect(data).toBe(0);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('searchDateRange', async () => {
+      let startDt = new Date(Date.now());
+      let endDt = new Date(Date.now() + 100000);
+      const data = await service.searchDateRange(startDt, endDt);
+      expect(new Date(data.item1)).toEqual(startDt);
+      expect(new Date(data.item2)).toEqual(endDt);
+  
+    }
     );
-
-  }
-  );
-
-  it('getIntSquare', (done) => {
-    service.getIntSquare(100).then(
-      data => {
-        expect(data).toBe(10000);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('searchDateRangeEndUndefined', async () => {
+      let startDt = new Date(Date.now());
+      let endDt = new Date(Date.now() + 100000);
+      const data = await service.searchDateRange(startDt, undefined!);
+      expect(new Date(data.item1)).toEqual(startDt);
+      expect(data.item2).toBeUndefined();
+    }
     );
-
-  }
-  );
-
-  it('getDecimalSquare', (done) => {
-    service.getDecimalSquare(100).then(
-      data => {
-        expect(data).toBe(10000);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('searchDateRangeStartUndefined', async () => {
+      let startDt = new Date(Date.now());
+      let endDt = new Date(Date.now() + 100000);
+      const data = await service.searchDateRange(undefined!, endDt);
+      expect(data.item1).toBeUndefined();
+      expect(new Date(data.item2)).toEqual(endDt);
+  
+    }
     );
-
-  }
-  );
-
-   it('getNullableDecimal', (done) => {
-    service.getNullableDecimal(true).then(
-      data => {
-        expect(data).toBeGreaterThan(10);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('searchDateRangeBeUndefined', async () => {
+      let startDt = new Date(Date.now());
+      let endDt = new Date(Date.now() + 100000);
+      const data = await service.searchDateRange(null!, undefined!);
+      expect(data.item1).toBeUndefined();
+      expect(data.item1).toBeUndefined();
+    }
     );
-
-  }
-  );
-
-  it('getNullableDecimalNull', (done) => {
-    service.getNullableDecimal(false).then(
-      data => {
-     //   expect(data).toBeNull();
-		  expect(data).toBe(''); // .net core return 204 nocontent empty body
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+  
+  });
+  
+  describe('SuperDemo API', () => {
+    const service = new namespaces.DemoWebApi_Controllers_Client.SuperDemo(apiBaseUri);
+  
+    it('getBool', async () => {
+      const data = await service.getBool();
+      expect(data).toBeTruthy();
+  
+    }
     );
-
-  }
-  );
-
-  it('getNullString', (done) => {
-    service.getNullString().then(
-      data => {
-        expect(data).toBeNull();
-            done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('getFloatZero', async () => {
+      const data = await service.getFloatZero();
+      expect(data).toBeLessThan(0.000001);
+  
+    }
     );
-
-  }
-  );
-
-  it('getNullPerson', (done) => {
-    service.getNullPerson().then(
-      data => {
-     //   expect(data).toBeNull();
-		expect(data).toBe(''); // .net core return 204 nocontent empty body
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getDoubleZero', async () => {
+      const data = await service.getDoubleZero();
+      expect(data).not.toBe(0);
+    }
     );
-
-  }
-  );
-
-  it('getByteArray', (done) => {
-    service.getByteArray().then(
-      data => {
-		expect(data.length).toBeGreaterThan(0);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getDecimalZero', async () => {
+      const data = await service.getDecimalZero();
+      expect(data).toBe(0);
+    }
     );
-
-  }
-  );
-
-  it('getTextStream', (done) => {
-    service.getTextStream().then(
-      data => {
-		  console.debug('getTextStream');
-		  console.debug(data); // abcdefg
-		  expect(data).toBe('abcdefg');
-
-
-		// const reader = new FileReader();//axios actually give string rather than a blob structure
-        // reader.onload = () => {
-	    //   expect(reader.result).toBe('abcdefg'); 
-        // };
-        // reader.readAsText(data.data);
-
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getIntSquare', async () => {
+      const data = await service.getIntSquare(100);
+      expect(data).toBe(10000);
+    }
     );
-
-  }
-  );
-
-  it('getActionResult', (done) => {
-    service.getActionResult().then(
-      response => {
-        expect(response.status).toBe(200);
-        expect(response.data).toBe('"abcdefg"');
-
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getDecimalSquare', async () => {
+      const data = await service.getDecimalSquare(100);
+      expect(data).toBe(10000);
+  
+    }
     );
-
-  }
-  );
-
-  it('getbyte', (done) => {
-    service.getbyte().then(
-      data => {
-        expect(data).toEqual(255);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNullableDecimal', async () => {
+      const data = await service.getNullableDecimal(true);
+      expect(data).toBeGreaterThan(10);
+    }
     );
-
-  }
-  );
-
-  it('getActionStringResult', (done) => {
-    service.getActionStringResult().then(
-      data => {
-        expect(data).toContain('abcdefg');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNullableDecimalNull', async () => {
+      const data = await service.getNullableDecimal(false);// .net core return 204 nocontent empty body
+      expect(data).toBe('');
+    }
     );
-
-  }
-  );
-
-
-  it('getChar', (done) => {
-    service.getChar().then(
-      data => {
-        expect(data).toBe('A');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNullString', async () => {
+      const data = await service.getNullString();
+      expect(data).toBeNull(); // .net core return 204 nocontent empty body
+    }
     );
-
-  }
-  );
-
-
-  it('getDecimal', (done) => {
-    service.getDecimal().then(
-      data => {
-        expect(data).toBe(79228162514264337593543950335);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getNullPerson', async () => {
+      const data = await service.getNullPerson();
+      expect(data).toBe(''); // .net core return 204 nocontent empty body
+  
+    }
     );
-
-  }
-  );
-
-
-  it('getdouble', (done) => {
-    service.getdouble().then(
-      data => {
-        expect(data).toBe(-1.7976931348623e308);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getByteArray', async () => {
+      const data = await service.getByteArray();
+      expect(data.length).toBeGreaterThan(0);
+  
+    }
     );
-
-  }
-  );
-
-  it('getUint', (done) => {
-    service.getUint().then(
-      data => {
-        expect(data).toBe(4294967295);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getTextStream', async () => {
+      const data = await service.getTextStream();
+      console.debug(data); // abcdefg
+      expect(data).toBe('abcdefg');
+  
+    }
     );
-
-  }
-  );
-
-  it('getulong', (done) => {
-    service.getulong().then(
-      data => {
-        expect(data).toBe(18446744073709551615);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getActionResult', async () => {
+      const data = await service.getActionResult();
+      console.debug(data);
+      expect(data.status).toBe(200);
+  
+  
+    }
     );
-
-  }
-  );
-
-  it('getInt2D', (done) => {
-    service.getInt2D().then(
-      data => {
-        expect(data[0][0]).toBe(1);
-        expect(data[0][3]).toBe(4);
-        expect(data[1][0]).toBe(5);
-        expect(data[1][3]).toBe(8);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getbyte', async () => {
+      const data = await service.getbyte();
+      expect(data).toEqual(255);
+    }
     );
-
-  }
-  );
-
-
-  it('getInt2DJagged', (done) => {
-    service.getInt2DJagged().then(
-      data => {
-        expect(data[0][0]).toBe(1);
-        expect(data[0][3]).toBe(4);
-        expect(data[1][0]).toBe(5);
-        expect(data[1][3]).toBe(8);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getActionStringResult', async () => {
+      const data = await service.getActionStringResult();
+      expect(data).toContain('abcdefg');
+  
+    }
     );
-
-  }
-  );
-
-
-  it('postInt2D', (done) => {
-    service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]).then(
-      data => {
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('getChar', async () => {
+      const data = await service.getChar();
+      expect(data).toBe('A');
+    }
     );
-
-  }
-  );
-
-  it('postIntArray', (done) => {
-    service.postIntArray([1, 2, 3, 4, 5, 6, 7, 8]).then(
-      data => {
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('getDecimal', async () => {
+      const data = await service.getDecimal();
+      expect(data).toBe(79228162514264337593543950335);
+  
+    }
     );
-
-  }
-  );
-
-  it('postWithQueryButEmptyBody', (done) => {
-    service.postWithQueryButEmptyBody('abc', 123).then(
-      data => {
-        expect(data.item1).toBe('abc');
-        expect(data.item2).toBe(123);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('getdouble', async () => {
+      const data = await service.getdouble();
+      expect(data).toBe(-1.7976931348623e308);
+    }
     );
-
-  }
-  );
-
-  it('getBool', (done) => {
-    service.getBool().then(
-      data => {
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getUint', async () => {
+      const data = await service.getUint();
+      expect(data).toBe(4294967295);
+    }
     );
-
-  }
-  );
-
-});
-
-describe('Tuple API', () => {
-  const service= new namespaces.DemoWebApi_Controllers_Client.Tuple(apiBaseUri);
-
- 
-  it('getTuple2', (done) => {
-    service.getTuple2().then(
-      data => {
-        expect(data.item1).toBe('Two');
-        expect(data.item2).toBe(2);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getulong', async () => {
+      const data = await service.getulong();
+      expect(data).toBe(18446744073709551615);
+  
+    }
     );
-  }
-  );
-
-  it('postTuple2', (done) => {
-    service.postTuple2({ item1: "One", item2: 2 }).then(
-      data => {
-        expect(data).toBe('One');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('getInt2D', async () => {
+      const data = await service.getInt2D();
+      expect(data[0][0]).toBe(1);
+      expect(data[0][3]).toBe(4);
+      expect(data[1][0]).toBe(5);
+      expect(data[1][3]).toBe(8);
+  
+    }
     );
-  }
-  );
-
-  it('getTuple7', (done) => {
-    service.getTuple7().then(
-      data => {
-        expect(data.item1).toBe('Seven');
-        expect(data.item7).toBe(7);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('getInt2DJagged', async () => {
+      const data = await service.getInt2DJagged();
+      expect(data[0][0]).toBe(1);
+      expect(data[0][3]).toBe(4);
+      expect(data[1][0]).toBe(5);
+      expect(data[1][3]).toBe(8);
+  
+  
+    }
     );
-  }
-  );
-
-  it('getTuple2', (done) => {
-    service.getTuple2().then(
-      data => {
-        expect(data.item1).toBe('Two');
-        expect(data.item2).toBe(2);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+  
+    it('postInt2D', async () => {
+      const data = await service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]);
+      expect(data).toBeTruthy();
+    }
     );
-  }
-  );
-
-  it('postTuple7', (done) => {
-    service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: 33333, item7: 9 }).then(
-      data => {
-        expect(data).toBe('One');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('postIntArray', async () => {
+      const data = await service.postIntArray([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(data).toBeTruthy();
+  
+    }
     );
-  }
-  );
-
-  it('getTuple8', (done) => {
-    service.getTuple8().then(
-      data => {
-        expect(data.item1).toBe('Nested');
-        expect(data.rest.item1).toBe('nine');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
+  
+    it('postWithQueryButEmptyBody', async () => {
+      const data = await service.postWithQueryButEmptyBody('abc', 123);
+      expect(data.item1).toBe('abc');
+      expect(data.item2).toBe(123);
+  
+    }
     );
-  }
-  );
-
-  it('postTuple8', (done) => {
-    service.postTuple8({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '', item7: '', rest: { item1: 'a', item2: 'b', item3: 'c' } }).then(
-      data => {
-        expect(data).toBe('a');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
+  
+    it('getDictionaryOfPeople', async () => {
+      const data = await service.getDictionaryOfPeople();
+      let p = data['spider Man']; //ASP.NET Web API with NewtonSoftJson made it camcel;
+      if (!p) {
+        p = data['Spider Man']; //.NET Core is OK
       }
+      expect(p.name).toBe('Peter Parker');
+      expect(p.addresses![0].city!).toBe('New York');
+  
+    }
     );
-  }
-  );
-
-  it('linkPersonCompany1', (done) => {
-    service.linkPersonCompany1({
-      item1: {
-        name: 'someone',
-        surname: 'my',
-        givenName: 'something',
-      },
-
-      item2: {
-        name: 'Super',
-        addresses: [{ city: 'New York', street1: 'Somewhere st' }]
-      }
-    }).then(
-      data => {
-        expect(data.name).toBe('someone');
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-        done();
-      }
-      );
-  }
-  );
-
-
-
-
-});
-
+  
+    it('PostDictionaryOfPeople', async () => {
+      const data = await service.postDictionary({
+        'Iron Man': {
+          'surname': 'Stark',
+          'givenName': 'Tony',
+          'dob': null!,
+          'id': '00000000-0000-0000-0000-000000000000',
+          'name': 'Tony Stark',
+          'addresses': []
+        },
+        'Spider Man': {
+          'name': 'Peter Parker',
+          'addresses': [
+            {
+  
+              'id': '00000000-0000-0000-0000-000000000000',
+              'city': 'New York',
+              state: 'Somewhere',
+              'postalCode': null!,
+              'country': null!,
+              'type': 0,
+              location: { x: 100, y: 200 }
+  
+            }
+          ]
+        }
+      });
+  
+      expect(data).toBe(2);
+  
+  
+    }
+    );
+  
+    it('getKeyhValuePair', async () => {
+      const data = await service.getKeyhValuePair();
+      expect(data.key).toBe('Spider Man'); 
+    }
+    );
+  
+    it('getBool', async () => {
+      const data = await service.getBool();
+      expect(data).toBeTruthy();
+    }
+    );
+  
+  });
+  
+  describe('Tuple API', () => {
+    const service = new namespaces.DemoWebApi_Controllers_Client.Tuple(apiBaseUri);
+  
+  
+    it('getTuple2', async () => {
+      const data = await service.getTuple2();
+      expect(data.item1).toBe('Two');
+      expect(data.item2).toBe(2);
+    }
+    );
+  
+    it('postTuple2', async () => {
+      const data = await service.postTuple2({ item1: "One", item2: 2 });
+      expect(data).toBe('One');
+  
+    }
+    );
+  
+    it('getTuple7', async () => {
+      const data = await service.getTuple7();
+      expect(data.item1).toBe('Seven');
+      expect(data.item7).toBe(7);
+  
+    }
+    );
+  
+    it('getTuple2', async () => {
+      const data = await service.getTuple2();
+      expect(data.item1).toBe('Two');
+      expect(data.item2).toBe(2);
+  
+    }
+    );
+  
+    it('postTuple7', async () => {
+      const data = await service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: 33333, item7: 9 });
+      expect(data).toBe('One');
+    }
+    );
+  
+    it('getTuple8', async () => {
+      const data = await service.getTuple8();
+      expect(data.item1).toBe('Nested');
+      expect(data.rest.item1).toBe('nine');
+  
+    }
+    );
+  
+    it('postTuple8', async () => {
+      const data = await service.postTuple8({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '', item7: '', rest: { item1: 'a', item2: 'b', item3: 'c' } });
+      expect(data).toBe('a');
+  
+    }
+    );
+  
+    it('linkPersonCompany1', async () => {
+      const data = await service.linkPersonCompany1({
+        item1: {
+          name: 'someone',
+          surname: 'my',
+          givenName: 'something',
+        },
+  
+        item2: {
+          name: 'Super',
+          addresses: [{ city: 'New York', street1: 'Somewhere st' }]
+        }
+      });
+  
+      expect(data.name).toBe('someone');
+  
+    }
+    );
+  
+  
+  
+  
+  });
+  
+  
