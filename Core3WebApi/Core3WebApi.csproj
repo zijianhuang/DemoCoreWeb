@@ -9,12 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fonlow.DateOnlyExtensions" Version="1.2.0" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="6.8.0" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="3.2.1" />
-    <PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="3.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.0" />
+    <PackageReference Include="Fonlow.DateOnlyExtensions" Version="1.3.0" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore" Version="7.0.0" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="3.3.0" />
+    <PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
   </ItemGroup>
 
   <ItemGroup>
