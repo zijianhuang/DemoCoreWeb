@@ -760,19 +760,9 @@ describe('SuperDemo API', () => {
   }
   );
 
-  it('getActionResult', (done) => {
-    service.getActionResult().then(
-      data => {
-
-        expect(data).toBe('abcdefg');
-
-        done();
-      },
-      error => {
-
-        done();
-      }
-    );
+  it('getActionResult', async () => {
+    const data = await service.getActionResult();
+    expect(data).toBe('abcdefg');
 
   }
   );
