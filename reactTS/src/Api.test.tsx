@@ -1,14 +1,19 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { AxiosAdapter, AxiosResponse, AxiosError } from 'axios';
-//import * as namespaces from '@/clientapi/WebApiAxiosClientAuto';
-import * as namespaces from './clientapi/WebApiCoreAxiosClientAuto';
 import App from './App';
+import { DemoCoreWeb_Controllers_Client, DemoWebApi_DemoData_Client, DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreAxiosClientAuto';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
 
 const apiBaseUri = 'http://localhost:5000/';
 
 describe('Values API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.Values(apiBaseUri);
+  const service = new DemoWebApi_Controllers_Client.Values(apiBaseUri);
 
   it('get', async () => {
     const data = await service.get();
@@ -27,7 +32,7 @@ describe('Values API', () => {
 
 
 describe('Heroes API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.Heroes(apiBaseUri);
+  const service = new DemoWebApi_Controllers_Client.Heroes(apiBaseUri);
 
   it('getAll', async () => {
     const data = await service.getHeros();
@@ -59,7 +64,7 @@ describe('Heroes API', () => {
 
 
 describe('entities API', () => {
-  const client = new namespaces.DemoWebApi_Controllers_Client.Entities(apiBaseUri);
+  const client = new DemoWebApi_Controllers_Client.Entities(apiBaseUri);
 
   //it('getPersonNotFound', async ()=> {
   //    client.getPersonNotFound(123)
@@ -78,7 +83,7 @@ describe('entities API', () => {
 
   it('add', async () => {
     let id: number;
-    const newPerson: namespaces.DemoWebApi_DemoData_Client.Person = {
+    const newPerson: DemoWebApi_DemoData_Client.Person = {
       name: 'John Smith' + Date.now().toString(),
       givenName: 'John',
       surname: 'Smith',
@@ -94,7 +99,7 @@ describe('entities API', () => {
 });
 
 describe('DateTypes API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.DateTypes(apiBaseUri);
+  const service = new DemoWebApi_Controllers_Client.DateTypes(apiBaseUri);
 
   it('GetNextHour', async () => {
     const dt = new Date(Date.now());
@@ -211,7 +216,7 @@ describe('DateTypes API', () => {
 });
 
 describe('SuperDemo API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.SuperDemo(apiBaseUri);
+  const service = new DemoWebApi_Controllers_Client.SuperDemo(apiBaseUri);
 
   it('getBool', async () => {
     const data = await service.getBool();
@@ -461,7 +466,7 @@ describe('SuperDemo API', () => {
 });
 
 describe('Tuple API', () => {
-  const service = new namespaces.DemoWebApi_Controllers_Client.Tuple(apiBaseUri);
+  const service = new DemoWebApi_Controllers_Client.Tuple(apiBaseUri);
 
 
   it('getTuple2', async () => {
