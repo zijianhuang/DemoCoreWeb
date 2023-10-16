@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:viewsNS="clr-namespace:Fonlow.Heroes.Views"
+             xmlns:vmNS="clr-namespace:Fonlow.Heroes.VM;assembly=Fonlow.Heroes.ViewModels"
+            x:Class="Fonlow.Heroes.Views.HeroSearch">
+    <ContentView.BindingContext>
+        <vmNS:HeroesVM/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <StackLayout>
+            <Entry Placeholder="Keyword" Completed="Entry_Completed"/>
+            <ListView x:Name="HeroesListView" ItemsSource="{Binding Items}" Header="Heroes Found" Footer="{Binding Count, StringFormat='Total: {0}'}" 
+                      ItemSelected="HeroesListView_ItemSelected"
+                      SelectedItem="{Binding Selected}"
+                      >
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Id}" Grid.Column="0" TextColor="Yellow" BackgroundColor="BlueViolet"/>
+                                <Label Text="{Binding Name}" Grid.Column="1"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

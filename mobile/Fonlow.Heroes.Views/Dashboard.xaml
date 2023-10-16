@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fonlow.Heroes.Views.Dashboard"
+             xmlns:viewsNS="clr-namespace:Fonlow.Heroes.Views"
+             xmlns:vmNS="clr-namespace:Fonlow.Heroes.VM;assembly=Fonlow.Heroes.ViewModels"
+>
+    <!--<ContentView.BindingContext>
+        <vmNS:HeroesVM/>//Parent component will inject the BindingContext
+    </ContentView.BindingContext>-->
+    <ContentView.Content>
+        <StackLayout>
+            <Label Text="Top Heroes"/>
+            <ListView x:Name="HeroesListView" ItemsSource="{Binding Top4}" 
+                      ItemSelected="HeroesListView_ItemSelected"
+                      SelectedItem="{Binding Selected}"
+                      >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Name}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <viewsNS:HeroSearch></viewsNS:HeroSearch>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"            
+             x:Class="Fonlow.Heroes.Views.MainPage"
+             xmlns:vmNS="clr-namespace:Fonlow.Heroes.VM;assembly=Fonlow.Heroes.ViewModels"
+             xmlns:viewsNS="clr-namespace:Fonlow.Heroes.Views"
+             x:Name="mainPage"
+             >
+    <ContentPage.BindingContext>
+        <vmNS:HeroesVM/>
+    </ContentPage.BindingContext>
+    <StackLayout>
+
+        <!-- Place new controls here -->
+        <Label Text="Welcome to Xamarin.Forms! ABC 中文" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+
+
+
+
+
+    </StackLayout>
+
+</ContentPage>
