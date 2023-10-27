@@ -3,6 +3,18 @@
 1. Launch Web API with StartCoreWebApi.ps1
 2. Run npm test
 
+# Test with React Heroes
+
+This is based on "Tour of the Heroes", the official Angular tutorial Demo. This demostrates how a real world React TS app talks to a real backend through generated client API.
+
+1. Launch Web API with StartCoreWebApi.ps1
+2. Run npm start
+
+**Remarks:**
+Eslint may give warning "Unexpected use of 'location'  no-restricted-globals" about the client API.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

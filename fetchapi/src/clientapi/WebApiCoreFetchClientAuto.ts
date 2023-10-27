@@ -226,7 +226,7 @@ export namespace DemoWebApi_Models_Client {
 
 export namespace Core3WebApi_Controllers_Client {
 	export class Statistics {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -241,7 +241,7 @@ export namespace Core3WebApi_Controllers_Client {
 
 export namespace DemoCoreWeb_Controllers_Client {
 	export class SpecialTypes {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -293,7 +293,7 @@ export namespace DemoCoreWeb_Controllers_Client {
 
 export namespace DemoWebApi_Controllers_Client {
 	export class DateTypes {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -455,7 +455,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Entities {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -569,7 +569,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Heroes {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -637,7 +637,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Home {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -649,7 +649,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class SuperDemo {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -1096,7 +1096,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Tuple {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -1290,7 +1290,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Values {
-		constructor(private baseUri: string = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**

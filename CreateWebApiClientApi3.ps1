@@ -9,21 +9,34 @@ $procArgs = @{
 }
 $process = Start-Process @procArgs
 
+#Step 2: Run CodeGen
 $restArgs = @{
     Uri         = 'http://localhost:5000/api/codegen'
     Method      = 'Post'
-    InFile      = "$PSScriptRoot\Core3WebApi\CodeGen.json"
+    InFile      = "$PSScriptRoot\Core3Webapi\CodeGen.json"
     ContentType = 'application/json'
 }
-Invoke-RestMethod @restArgs
+try {
+        $result = Invoke-RestMethod @restArgs
+        Write-Output $result
+}
+catch {
+        Write-Output $_.Exception.Response.StatusCode
+        $response = $_.Exception.Response.GetResponseStream()
+        $reader = New-Object System.IO.StreamReader($response)
+        $reader.BaseStream.Position = 0
+        $reader.DiscardBufferedData()
+        $responseBody = $reader.ReadToEnd()
+        Write-Output  $responseBody
+}
 
 #Step 3: Compile generated TS codes to JS if App is coded in JS.
-$procTscArgs = @{
-    FilePath         = "node"
-    ArgumentList     = "`"C:\Program Files (x86)\Microsoft SDKs\TypeScript\3.8\tsc.js`" $PSScriptRoot\axios\src\clientapi\WebApiCoreAxiosClientAuto.ts -d"
-    PassThru         = $true
+#$procTscArgs = @{
+#    FilePath         = "node"
+#    ArgumentList     = "`"C:\Program Files (x86)\Microsoft SDKs\TypeScript\3.8\tsc.js`" $PSScriptRoot\axios\src\clientapi\WebApiCoreAxiosClientAuto.ts -d"
+#   PassThru         = $true
     
-}
-$processTsc = Start-Process @procTscArgs
+#}
+#$processTsc = Start-Process @procTscArgs
 
 Stop-Process $process

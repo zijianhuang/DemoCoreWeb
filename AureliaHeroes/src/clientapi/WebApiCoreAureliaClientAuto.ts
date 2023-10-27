@@ -1,5 +1,17 @@
 import {HttpClient} from 'aurelia-fetch-client';
 import {autoinject} from 'aurelia-framework';
+export namespace DemoWebApi_Controllers_Client {
+
+	/**
+	 * Complex hero type
+	 */
+	export interface Hero {
+		id?: number;
+		name?: string;
+	}
+
+}
+
 export namespace DemoWebApi_DemoData_Client {
 	export interface Address {
 		city?: string;
@@ -212,52 +224,20 @@ export namespace DemoWebApi_Models_Client {
 		newPassword?: string;
 	}
 
-
-	/**
-	 * Auth token
-	 */
-	export interface TokenResponseModel {
-		access_token?: string;
-		expires?: string;
-		expires_in?: number;
-		issued?: string;
-		token_type?: string;
-		username?: string;
-	}
-
 }
 
-export namespace DemoWebApi_Controllers_Client {
-
-	/**
-	 * This class is used to carry the result of various file uploads.
-	 */
-	export interface FileResult {
-
-		/**
-		 * Gets or sets the local path of the file saved on the server.
-		 */
-		fileNames?: Array<string>;
+export namespace Core3WebApi_Controllers_Client {
+	@autoinject()
+	export class Statistics {
+		constructor(private http: HttpClient) {
+		}
 
 		/**
-		 * Gets or sets the submitter as indicated in the HTML form used to upload the data.
+		 * GET api/Statistics/distribution
 		 */
-		submitter?: string;
-	}
-
-
-	/**
-	 * Complex hero type
-	 */
-	export interface Hero {
-		death?: Date;
-		dob?: Date;
-		id?: number;
-		name?: string;
-	}
-
-	export interface SuperHero extends DemoWebApi_Controllers_Client.Hero {
-		super?: boolean;
+		getDistribution(headersHandler?: () => {[header: string]: string}): Promise<Response> {
+			return this.http.get('api/Statistics/distribution', { headers: headersHandler ? headersHandler() : undefined });
+		}
 	}
 
 }
@@ -278,7 +258,6 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
-		 * Async function returing dynamic
 		 * GET api/SpecialTypes/AnonymousDynamic2
 		 */
 		getAnonymousDynamic2(headersHandler?: () => {[header: string]: string}): Promise<Response> {
@@ -293,7 +272,6 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
-		 * Async function returning object
 		 * GET api/SpecialTypes/AnonymousObject2
 		 */
 		getAnonymousObject2(headersHandler?: () => {[header: string]: string}): Promise<Response> {
@@ -308,7 +286,6 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
-		 * Async returning object, Post dynamic
 		 * POST api/SpecialTypes/AnonymousObject2
 		 */
 		postAnonymousObject2(obj: any, headersHandler?: () => {[header: string]: string}): Promise<Response> {
@@ -325,10 +302,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/DateTypes/GetDateOnlyMin
+		 * GET api/DateTypes/GetDateOnly
 		 */
-		getDateOnlyMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return this.http.get('api/DateTypes/GetDateOnlyMin', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		getDateOnly(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return this.http.get('api/DateTypes/GetDateOnly', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -340,10 +317,10 @@ export namespace DemoWebApi_Controllers_Client {
 
 		/**
 		 * return DateTimeOffset.Now
-		 * GET api/DateTypes/ForDateTimeOffset
+		 * GET api/DateTypes/GetDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return this.http.get('api/DateTypes/ForDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+			return this.http.get('api/DateTypes/GetDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -537,7 +514,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post MyGeneric string, decimal, double
 		 * POST api/Entities/MyGeneric
 		 */
 		getMyGeneric(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, number>, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, number>> {
@@ -545,19 +521,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post MyGeneric string, decimal, Person
 		 * POST api/Entities/MyGenericPerson
 		 */
 		getMyGenericPerson(s: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>> {
 			return this.http.post('api/Entities/MyGenericPerson', JSON.stringify(s), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => d.json());
-		}
-
-		/**
-		 * Return empty body, status 204. MaybeNull
-		 * GET api/Entities/NullCompany
-		 */
-		getNullCompany(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Company> {
-			return this.http.get('api/Entities/NullCompany', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -627,7 +594,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get a hero. Nullable reference. MaybeNull
+		 * Get a hero.
 		 * GET api/Heroes/{id}
 		 */
 		getHero(id: number, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
@@ -643,14 +610,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * MaybeNull
-		 * GET api/Heroes/super?id={id}
-		 */
-		getSuperHero(id: number, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.SuperHero> {
-			return this.http.get('api/Heroes/super?id=' + id, { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
-		}
-
-		/**
 		 * POST api/Heroes
 		 */
 		post(name: string, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
@@ -658,9 +617,8 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Add a hero. The client will not expect null. NotNull
+		 * Add a hero
 		 * POST api/Heroes/q?name={name}
-		 * @return {DemoWebApi_Controllers_Client.Hero} Always object.
 		 */
 		postWithQuery(name: string, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
 			return this.http.post('api/Heroes/q?name=' + (!name ? '' : encodeURIComponent(name)), null, { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
@@ -686,48 +644,28 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	@autoinject()
-	export class StringData {
+	export class Home {
 		constructor(private http: HttpClient) {
 		}
 
 		/**
-		 * Athlethe Search
-		 * GET api/StringData/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
-		 * @param {number} take Generic optional parameter. Default 10
-		 * @param {number} skip Default 0
-		 * @param {string} order default null
+		 * GET api/Home
 		 */
-		athletheSearch(take: number, skip: number, order: string, sort: string, search: string, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/StringData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * GET api/StringData/String
-		 */
-		getABCDE(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/StringData/String', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * Return empty string JSON object. Status 200.
-		 * GET api/StringData/EmptyString
-		 */
-		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/StringData/EmptyString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * Return empty body with status 204 No Content, even though the default mime type is application/json. MaybeNull
-		 * GET api/StringData/NullString
-		 */
-		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/StringData/NullString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
+		index(headersHandler?: () => {[header: string]: string}): Promise<Blob> {
+			return this.http.get('api/Home', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.blob());
 		}
 	}
 
 	@autoinject()
 	export class SuperDemo {
 		constructor(private http: HttpClient) {
+		}
+
+		/**
+		 * GET api/SuperDemo/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
+		 */
+		athletheSearch(take: number, skip: number, order: string, sort: string, search: string, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return this.http.get('api/SuperDemo/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
 		}
 
 		/**
@@ -749,20 +687,6 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getActionStringResult(headersHandler?: () => {[header: string]: string}): Promise<string> {
 			return this.http.get('api/SuperDemo/ActionStringResult', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * GET api/SuperDemo/BadRequest
-		 */
-		getBadRequest(headersHandler?: () => {[header: string]: string}): Promise<Blob> {
-			return this.http.get('api/SuperDemo/BadRequest', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.blob());
-		}
-
-		/**
-		 * GET api/SuperDemo/BadRequest2
-		 */
-		getBadRequest2(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/SuperDemo/BadRequest2', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
 		}
 
 		/**
@@ -815,7 +739,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo
 		 * GET api/SuperDemo/decimalArrayQ?a={a}
 		 */
 		getDecimalArrayQ(a: Array<number>, headersHandler?: () => {[header: string]: string}): Promise<Array<number>> {
@@ -851,13 +774,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * GET api/SuperDemo/StringPersonDic2
-		 */
-		getDictionaryOfPeople2(headersHandler?: () => {[header: string]: string}): Promise<{[id: string]: DemoWebApi_DemoData_Client.Person }> {
-			return this.http.get('api/SuperDemo/StringPersonDic2', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
-		}
-
-		/**
 		 * GET api/SuperDemo/doulbe
 		 */
 		getdouble(headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -873,7 +789,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo IEnumerable Days
+		 * GET api/SuperDemo/EmptyString
+		 */
+		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return this.http.get('api/SuperDemo/EmptyString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
+		}
+
+		/**
 		 * GET api/SuperDemo/enumArrayDays?a={a}
 		 */
 		getEnumArrayDays(a: Array<DemoWebApi_DemoData_Client.Days>, headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_DemoData_Client.Days>> {
@@ -930,7 +852,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo int[];
 		 * GET api/SuperDemo/intArrayQ?a={a}
 		 */
 		getIntArrayQ(a: Array<number>, headersHandler?: () => {[header: string]: string}): Promise<Array<number>> {
@@ -938,7 +859,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo IEnumerable long
 		 * GET api/SuperDemo/intArrayQ2?a={a}
 		 */
 		getIntArrayQ2(a: Array<number>, headersHandler?: () => {[header: string]: string}): Promise<Array<number>> {
@@ -988,11 +908,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * MaybeNull
 		 * GET api/SuperDemo/NullObject
 		 */
 		getNullPerson(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
 			return this.http.get('api/SuperDemo/NullObject', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.json());
+		}
+
+		/**
+		 * GET api/SuperDemo/NullString
+		 */
+		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return this.http.get('api/SuperDemo/NullString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
 		}
 
 		/**
@@ -1024,7 +950,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo string array
 		 * GET api/SuperDemo/stringArrayQ?a={a}
 		 */
 		getStringArrayQ(a: Array<string>, headersHandler?: () => {[header: string]: string}): Promise<Array<string>> {
@@ -1032,7 +957,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo List string
 		 * GET api/SuperDemo/stringArrayQ2?a={a}
 		 */
 		getStringArrayQ2(a: Array<string>, headersHandler?: () => {[header: string]: string}): Promise<Array<string>> {
@@ -1040,7 +964,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * ActionResult with FileStreamResult
 		 * GET api/SuperDemo/TextStream
 		 */
 		getTextStream(headersHandler?: () => {[header: string]: string}): Promise<Blob> {
@@ -1090,7 +1013,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post a collection of person
 		 * POST api/SuperDemo/Collection
 		 */
 		postCollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1105,7 +1027,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo Dic string and person
 		 * POST api/SuperDemo/StringPersonDic
 		 */
 		postDictionary(dic: {[id: string]: DemoWebApi_DemoData_Client.Person }, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1120,7 +1041,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post ICollection of person
 		 * POST api/SuperDemo/ICollection
 		 */
 		postICollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1128,7 +1048,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post IList of person
 		 * POST api/SuperDemo/IList
 		 */
 		postIList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1143,7 +1062,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo int[][]
 		 * POST api/SuperDemo/int2djagged
 		 */
 		postInt2DJagged(a: Array<Array<number>>, headersHandler?: () => {[header: string]: string}): Promise<boolean> {
@@ -1151,7 +1069,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Demo int[]
 		 * POST api/SuperDemo/intArray
 		 */
 		postIntArray(a: Array<number>, headersHandler?: () => {[header: string]: string}): Promise<boolean> {
@@ -1159,7 +1076,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post IReadOnlyCollection of person
 		 * POST api/SuperDemo/IReadOnlyCollection
 		 */
 		postIReadOnlyCollection(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1167,7 +1083,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post e of person
 		 * POST api/SuperDemo/IReadOnlyList
 		 */
 		postIReadOnlyList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1175,7 +1090,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post a list of person
 		 * POST api/SuperDemo/List
 		 */
 		postList(list: Array<DemoWebApi_DemoData_Client.Person>, headersHandler?: () => {[header: string]: string}): Promise<number> {
@@ -1191,72 +1105,11 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	@autoinject()
-	export class TextData {
-		constructor(private http: HttpClient) {
-		}
-
-		/**
-		 * GET api/TextData/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
-		 */
-		athletheSearch(take: number, skip: number, order: string, sort: string, search: string, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/TextData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * GET api/TextData/String
-		 */
-		getABCDE(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/TextData/String', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * Return empty body with status 200.
-		 * GET api/TextData/EmptyString
-		 */
-		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/TextData/EmptyString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * MaybeNull
-		 * GET api/TextData/NullableString
-		 */
-		getNullableString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/TextData/NullableString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-
-		/**
-		 * Return empty body with status 204 No Content.
-		 * GET api/TextData/NullString
-		 */
-		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return this.http.get('api/TextData/NullString', { headers: headersHandler ? headersHandler() : undefined }).then(d => d.status == 204 ? null : d.text());
-		}
-	}
-
-	@autoinject()
 	export class Tuple {
 		constructor(private http: HttpClient) {
 		}
 
 		/**
-		 * Update in a transaction
-		 * PUT api/Tuple/A1TupleArray
-		 */
-		a1TupleArray(idAndOrderArray: Array<{item1: string, item2: number}>, headersHandler?: () => {[header: string]: string}): Promise<Response> {
-			return this.http.put('api/Tuple/A1TupleArray', JSON.stringify(idAndOrderArray), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } });
-		}
-
-		/**
-		 * Update IEnumerable Tuple in a transaction
-		 * PUT api/Tuple/A1TupleArray
-		 */
-		a2TupleIEnumerable(idAndOrderArray: Array<{item1: string, item2: number}>, headersHandler?: () => {[header: string]: string}): Promise<Response> {
-			return this.http.put('api/Tuple/A1TupleArray', JSON.stringify(idAndOrderArray), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } });
-		}
-
-		/**
-		 * Post tuple
 		 * POST api/Tuple/ChangeName
 		 */
 		changeName(d: {item1: string, item2: DemoWebApi_DemoData_Client.Person}, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
@@ -1264,7 +1117,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get Tuple in return. MaybeNull
 		 * GET api/Tuple/PeopleCompany4
 		 */
 		getPeopleCompany4(headersHandler?: () => {[header: string]: string}): Promise<{item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Company}> {
@@ -1272,7 +1124,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * MaybeNull
 		 * GET api/Tuple/PeopleCompany5
 		 */
 		getPeopleCompany5(headersHandler?: () => {[header: string]: string}): Promise<{item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Person, item5: DemoWebApi_DemoData_Client.Company}> {
@@ -1329,7 +1180,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post nested tuple
 		 * GET api/Tuple/Tuple8
 		 */
 		getTuple8(headersHandler?: () => {[header: string]: string}): Promise<{item1: string, item2: string, item3: string, item4: string, item5: string, item6: string, item7: number, rest: {item1: string, item2: string, item3: string}}> {
@@ -1372,7 +1222,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post long tuple
 		 * POST api/Tuple/PeopleCompany7
 		 */
 		linkPeopleCompany7(peopleAndCompany: {item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Person, item5: DemoWebApi_DemoData_Client.Person, item6: DemoWebApi_DemoData_Client.Person, item7: DemoWebApi_DemoData_Client.Company}, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
@@ -1401,7 +1250,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Post tuple string int
 		 * POST api/Tuple/Tuple2
 		 */
 		postTuple2(tuple: {item1: string, item2: number}, headersHandler?: () => {[header: string]: string}): Promise<string> {

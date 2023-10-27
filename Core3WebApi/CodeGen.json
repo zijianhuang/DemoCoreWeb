@@ -23,8 +23,16 @@
 		"Plugins": [
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Axios",
-				"TargetDir": "..\\..\\..\\..\\axios\\src\\clientapi",
+				"TargetDir": "..\\..\\..\\..\\ReactHeroes\\src\\clientapi",
 				"TSFile": "WebApiCoreAxiosClientAuto.ts",
+				"AsModule": true,
+				"ContentType": "application/json;charset=UTF-8"
+			},
+
+			{
+				"AssemblyName": "Fonlow.WebApiClientGenCore.Aurelia",
+				"TargetDir": "..\\..\\..\\..\\AureliaHeroes\\src\\clientapi",
+				"TSFile": "WebApiCoreAureliaClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8"
 			},
