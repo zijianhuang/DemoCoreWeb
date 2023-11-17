@@ -38,6 +38,14 @@
 			},
 
 			{
+				"AssemblyName": "Fonlow.WebApiClientGenCore.NG2",
+				"TargetDir": "..\\..\\..\\..\\AngularHeroes\\src\\clientapi",
+				"TSFile": "WebApiCoreNg2ClientAuto.ts",
+				"AsModule": true,
+				"ContentType": "application/json;charset=UTF-8"
+			},
+
+			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Fetch",
 				"TargetDir": "..\\..\\..\\..\\fetchapi\\src\\clientapi",
 				"TSFile": "WebApiCoreFetchClientAuto.ts",
