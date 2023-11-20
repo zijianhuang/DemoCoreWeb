@@ -29,7 +29,6 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
     return <div>AAA</div>;
   }
 
-
   function save(): void {
     service.put(hero!).then(
       d => {
@@ -42,14 +41,18 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
     navigate(-1);
   }
 
-  //console.debug('Hero: ' + JSON.stringify(hero!)); //this run a few times per second.
+  function handleChange(e: React.FormEvent<HTMLInputElement>){
+    hero!.name=e.currentTarget.value;
+    setHero(hero);
+  }
+
   return (
     <div className="hero-detail">
       <h2>{hero.name} Details</h2>
-      <div><span>id: </span>${hero!.id}</div>
+      <div><span>id: </span>{hero!.id}</div>
       <div>
         <label htmlFor="hero-name">Hero name: </label>
-        <input id="hero-name" defaultValue={hero.name} placeholder="Name" />
+        <input id="hero-name" defaultValue={hero.name!} placeholder="Name" onChange={handleChange}/>
       </div>
 
       <button type="button" onClick={goBack}>go back</button>
