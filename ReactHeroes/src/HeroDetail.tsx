@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './HeroDetail.css';
 import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreAxiosClientAuto';
@@ -7,11 +7,10 @@ import { HeroesApi } from './HeroesApi';
 export default function HeroDetail() { //https://stackoverflow.com/questions/47561848/property-value-does-not-exist-on-type-readonly
   const service = HeroesApi
   const { id } = useParams();
-  //const [loading, setLoading] = useState(true);
   const [hero, setHero] = useState<DemoWebApi_Controllers_Client.Hero | undefined>(undefined);
-
   const heroId: any = id;
   const navigate = useNavigate();
+  const nameInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     console.debug('getHero...');
@@ -19,7 +18,6 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
       h => {
         if (h) {
           setHero(h);
-          //setLoading(false);
         }
       }
     ).catch(error => alert(error));
@@ -32,6 +30,7 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
   function save(): void {
     service.put(hero!).then(
       d => {
+        setHero({...hero})
         console.debug('response: ' + JSON.stringify(d));
       }
     ).catch(error => alert(error));
@@ -41,9 +40,9 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
     navigate(-1);
   }
 
-  function handleChange(e: React.FormEvent<HTMLInputElement>){
-    hero!.name=e.currentTarget.value;
-    setHero(hero);
+  function handleChange(e: React.FormEvent<HTMLInputElement>) {
+    hero!.name = e.currentTarget.value;
+    setHero({...hero});
   }
 
   return (
@@ -52,13 +51,12 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
       <div><span>id: </span>{hero!.id}</div>
       <div>
         <label htmlFor="hero-name">Hero name: </label>
-        <input id="hero-name" defaultValue={hero.name!} placeholder="Name" onChange={handleChange}/>
+        <input id="hero-name" value={hero.name!} placeholder="Name" onChange={handleChange} ref={nameInput} />
       </div>
 
       <button type="button" onClick={goBack}>go back</button>
       <button type="button" onClick={save}>save</button>
     </div>
   );
-
 }
 
