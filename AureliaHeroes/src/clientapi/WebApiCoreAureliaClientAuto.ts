@@ -26,7 +26,7 @@ export namespace DemoWebApi_DemoData_Client {
 		/**
 		 * It is a field
 		 */
-		location?: DemoWebApi_DemoData_Another_Client.MyPoint | null;
+		location?: DemoWebApi_DemoData_Another_Client.MyPoint;
 	}
 
 	export enum AddressType { Postal, Residential }
@@ -40,10 +40,10 @@ export namespace DemoWebApi_DemoData_Client {
 		businessNumberType?: string | null;
 		foundDate?: Date | null;
 		registerDate?: Date | null;
-		textMatrix?: Array<Array<string>> | null;
-		int2D?: number[][] | null;
-		int2DJagged?: Array<Array<number>> | null;
-		lines?: Array<string> | null;
+		textMatrix?: Array<Array<string>>;
+		int2D?: number[][];
+		int2DJagged?: Array<Array<number>>;
+		lines?: Array<string>;
 	}
 
 	export enum Days {
@@ -69,14 +69,14 @@ export namespace DemoWebApi_DemoData_Client {
 		/**
 		 * Multiple addresses
 		 */
-		addresses?: Array<DemoWebApi_DemoData_Client.Address> | null;
+		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
 		id?: string | null;
 
 		/**
 		 * Name of the entity.
 		 */
 		name: string;
-		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber> | null;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
 		web?: string | null;
 	}
 
@@ -106,23 +106,23 @@ export namespace DemoWebApi_DemoData_Client {
 		kK2?: number | null;
 		optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType | null;
 		optionalInt?: number | null;
-		result?: DemoWebApi_DemoData_Client.MimsResult<number> | null;
+		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
 		tag?: string | null;
 	}
 
 	export interface MimsResult<T> {
 		generatedAt?: Date | null;
 		message?: string | null;
-		result?: T | null;
+		result?: T;
 		success?: boolean | null;
 	}
 
 	export enum MyEnumType { First = 1, Two = 2 }
 
 	export interface MyGeneric<T, K, U> {
-		myK?: K | null;
-		myT?: T | null;
-		myU?: U | null;
+		myK?: K;
+		myT?: T;
+		myU?: U;
 		status?: string | null;
 	}
 
@@ -281,14 +281,14 @@ export namespace DemoCoreWeb_Controllers_Client {
 		/**
 		 * POST api/SpecialTypes/AnonymousObject
 		 */
-		postAnonymousObject(obj: any | null, headersHandler?: () => {[header: string]: string}): Promise<Response> {
+		postAnonymousObject(obj: any, headersHandler?: () => {[header: string]: string}): Promise<Response> {
 			return this.http.post('api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 
 		/**
 		 * POST api/SpecialTypes/AnonymousObject2
 		 */
-		postAnonymousObject2(obj: any | null, headersHandler?: () => {[header: string]: string}): Promise<Response> {
+		postAnonymousObject2(obj: any, headersHandler?: () => {[header: string]: string}): Promise<Response> {
 			return this.http.post('api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } });
 		}
 	}
