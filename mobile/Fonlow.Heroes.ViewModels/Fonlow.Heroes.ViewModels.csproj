@@ -21,4 +21,12 @@
 	  <ProjectReference Include="..\..\CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
+	</ItemGroup>
+
 </Project>
