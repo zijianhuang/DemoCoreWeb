@@ -459,7 +459,7 @@ describe('Tuple API', () => {
 
 
   it('postTuple7', async () => {
-	const data = await service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: 33333, item7: 9 });
+	const data = await service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '33333', item7: 9 });
 	expect(data).toBe('One');
   }
   );

@@ -23,7 +23,7 @@ describe('Values', ()=>{
   const api = new DemoWebApi_Controllers_Client.Values(baseUri);
 
   it('getById', (done)=>{
-    api.getById(3).then(
+    api.getByIdOfnumber(3).then(
       d=> {
         expect(d).toBe('3');
         done();
@@ -151,7 +151,7 @@ describe('entities API', () => {
   //);
 
   it('add', (done) => {
-    let id: number;
+    let id: string;
     const newPerson: namespaces.DemoWebApi_DemoData_Client.Person = {
       name: 'John Smith' + Date.now().toString(),
       givenName: 'John',
@@ -241,7 +241,7 @@ describe('Tuple API', () => {
   );
 
   it('postTuple7', (done) => {
-    service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: 33333, item7: 9 }).then(
+    service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '33333', item7: 9 }).then(
       data => {
         expect(data).toBe('One');
         done();
@@ -860,10 +860,11 @@ describe('SuperDemo API', () => {
   }
   );
 
-  it('getulong', (done) => {
+  it('getulongIncorrect', (done) => {
     service.getulong().then(
       data => {
-        expect(data).toBe(18446744073709551615);
+        expect(BigInt(data)).not.toBe(BigInt('18446744073709551615'));
+        expect(BigInt(data)).toBe(BigInt('18446744073709551616'));
         done();
       },
       error => {

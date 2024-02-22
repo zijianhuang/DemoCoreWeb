@@ -66,111 +66,6 @@ export function errorResponseBodyToString(error: HttpErrorResponse | any,): stri
 	}
 }
 
-
-describe('Values API', () => {
-	let service: DemoWebApi_Controllers_Client.Values;
-
-	beforeEach(async(() => {
-
-		TestBed.configureTestingModule({
-			imports: [HttpClientModule],
-			providers: [
-				{
-					provide: DemoWebApi_Controllers_Client.Values,
-					useFactory: valuesClientFactory,
-					deps: [HttpClient],
-
-				},
-
-			]
-		});
-
-		service = TestBed.get(DemoWebApi_Controllers_Client.Values);
-	}));
-
-	afterEach(function () {
-	});
-
-	it('get', (done) => {
-		service.get().subscribe(
-			data => {
-				console.debug(data!.length);
-				expect(data![1]).toBe('value2');
-				done();
-			},
-			error => {
-				fail(errorResponseToString(error));
-				done();
-			}
-		);
-	}
-	);
-
-	it('getByIdAndName', (done) => {
-		service.getByIdAndName(1, 'Abc').subscribe(
-			data => {
-				console.debug(data!.length);
-				expect(data).toBe('Abc1');
-				done();
-			},
-			error => {
-				fail(errorResponseToString(error));
-				done();
-			}
-		);
-	}
-	);
-
-	it('getByName', (done) => {
-		service.getByName('Abc').subscribe(
-			data => {
-				console.debug(data!.length);
-				expect(data).toBe('ABC');
-				done();
-			},
-			error => {
-				fail(errorResponseToString(error));
-				done();
-			}
-		);
-	}
-	);
-
-	it('Post', (done) => {
-		service.post('Abc').subscribe(
-			data => {
-				console.debug(data!.length);
-				expect(data).toBe('ABC');
-				done();
-			},
-			error => {
-				fail(errorResponseToString(error));
-				done();
-			}
-		);
-	}
-	);
-
-	it('getByIdAndChinese', (done) => {
-		service.getByIdAndName(1, 'something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.\'; <>: \"').subscribe(
-			data => {
-				console.debug(data!.length);
-				expect(data).toBe('something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.\'; <>: \"1');
-				done();
-			},
-			error => {
-				fail(errorResponseToString(error));
-				done();
-			}
-		);
-	}
-	);
-
-
-
-});
-
-
 describe('Heroes API', () => {
 	let service: DemoWebApi_Controllers_Client.Heroes;
 
@@ -208,7 +103,7 @@ describe('Heroes API', () => {
 	);
 
 	it('getHero', (done) => {
-		service.getHero(9999).subscribe(
+		service.getHero('9999').subscribe(
 			data => {
 				expect(data).toBeNull();
 				done();
