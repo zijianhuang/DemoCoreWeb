@@ -43,6 +43,8 @@ export namespace DemoWebApi_DemoData_Client {
 		 */
 		BusinessNum?: string | null;
 		businessNumberType?: string | null;
+
+		/** Data type: Date */
 		foundDate?: Date | null;
 
 		/** Type: DateOnly */
@@ -111,7 +113,10 @@ export namespace DemoWebApi_DemoData_Client {
 
 	export interface MimsPackage {
 
-		/** Type: int, -2,147,483,648 to 2,147,483,647 */
+		/**
+		 * Type: int
+		 * Range: inclusive between 10 and 100
+		 */
 		kk?: number | null;
 
 		/**
@@ -148,6 +153,8 @@ export namespace DemoWebApi_DemoData_Client {
 	}
 
 	export interface Person extends DemoWebApi_DemoData_Client.Entity {
+
+		/** Data type: Date */
 		baptised?: Date | null;
 
 		/**
@@ -210,32 +217,71 @@ export namespace DemoWebApi_DemoData_Another_Client {
 
 export namespace DemoWebApi_Models_Client {
 	export interface AddExternalLoginBindingModel {
+
+		/** Required */
 		externalAccessToken?: string | null;
 	}
 
 	export interface ChangePasswordBindingModel {
+
+		/** Data type: Password */
 		confirmPassword?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
 		newPassword?: string | null;
+
+		/**
+		 * Required
+		 * Data type: Password
+		 */
 		OldPwd: string;
 	}
 
 	export interface RegisterBindingModel {
+
+		/** Data type: Password */
 		confirmPassword?: string | null;
+
+		/** Required */
 		email?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
 		password?: string | null;
 	}
 
 	export interface RegisterExternalBindingModel {
+
+		/** Required */
 		email?: string | null;
 	}
 
 	export interface RemoveLoginBindingModel {
+
+		/** Required */
 		loginProvider?: string | null;
+
+		/** Required */
 		providerKey?: string | null;
 	}
 
 	export interface SetPasswordBindingModel {
+
+		/** Data type: Password */
 		confirmPassword?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
 		newPassword?: string | null;
 	}
 

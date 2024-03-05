@@ -42,6 +42,7 @@
 				"TargetDir": "..\\..\\..\\..\\AngularHeroes\\src\\clientapi",
 				"TSFile": "WebApiCoreNg2ClientAuto.ts",
 				"AsModule": true,
+				"DataAnnotationsToComments": true,
 				"ContentType": "application/json;charset=UTF-8"
 			},
 
