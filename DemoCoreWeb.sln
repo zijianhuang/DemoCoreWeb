@@ -18,8 +18,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DemoWebApi.ControllersShare
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3WebApi", "Core3WebApi\Core3WebApi.csproj", "{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3Mvc", "Core3Mvc\Core3Mvc.csproj", "{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Tests\IntegrationTestShared\IntegrationTestShared.shproj", "{60B7393D-9285-4D0A-A368-877ED60C6C11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsCore", "Tests\IntegrationTestsCore\IntegrationTestsCore.csproj", "{15217096-CCD1-4C5F-BC90-891320E570B1}"
@@ -33,6 +31,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonlow.Heroes.Maui", "mobile\Fonlow.Heroes.Maui\Fonlow.Heroes.Maui.csproj", "{04E499CA-4D8B-4449-AA54-26A9ED5AF65F}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "HeroesDemo", "AngularHeroes\HeroesDemo.esproj", "{5017AFAD-D277-4863-9280-3916E0821185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.WebApp.Security", "Fonlow.WebApp.Security\Fonlow.WebApp.Security.csproj", "{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.WebApp.Accounts", "Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj", "{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthDbCreator", "AuthDbCreator\AuthDbCreator.csproj", "{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.AuthDbCreator", "Fonlow.AuthDbCreator\Fonlow.AuthDbCreator.csproj", "{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{03B8AB6F-9686-44AF-9AF1-6DCC6E742808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Accounts", "DemoApp.Accounts\DemoApp.Accounts.csproj", "{A524EEE4-DE5A-4412-9E79-E9903F2A143D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,10 +62,6 @@ Global
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9B87BDE-8771-49DB-99D2-91F2D35A1D48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15217096-CCD1-4C5F-BC90-891320E570B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15217096-CCD1-4C5F-BC90-891320E570B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15217096-CCD1-4C5F-BC90-891320E570B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,6 +86,26 @@ Global
 		{5017AFAD-D277-4863-9280-3916E0821185}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5017AFAD-D277-4863-9280-3916E0821185}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5017AFAD-D277-4863-9280-3916E0821185}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A524EEE4-DE5A-4412-9E79-E9903F2A143D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A524EEE4-DE5A-4412-9E79-E9903F2A143D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A524EEE4-DE5A-4412-9E79-E9903F2A143D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A524EEE4-DE5A-4412-9E79-E9903F2A143D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +116,9 @@ Global
 		{B84A1718-88A6-4717-8BFA-5894533E4934} = {CCF8CF05-5B88-4A83-82D3-B81478DB8E41}
 		{4FE9E0A0-048B-4E0B-A6EB-415351C869FF} = {CCF8CF05-5B88-4A83-82D3-B81478DB8E41}
 		{04E499CA-4D8B-4449-AA54-26A9ED5AF65F} = {CCF8CF05-5B88-4A83-82D3-B81478DB8E41}
+		{62A2FF01-BECD-4B4F-BCF6-FD56A015E830} = {03B8AB6F-9686-44AF-9AF1-6DCC6E742808}
+		{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E} = {03B8AB6F-9686-44AF-9AF1-6DCC6E742808}
+		{87BFDA71-1DA5-4743-9E36-C10B7CE2D497} = {03B8AB6F-9686-44AF-9AF1-6DCC6E742808}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3EFB0EB-BFFA-4C16-B235-B121695229EF}
@@ -99,6 +128,5 @@ Global
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{5c64d0fe-b283-4a4f-b235-49c5f6fd0229}*SharedItemsImports = 5
 		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{60b7393d-9285-4d0a-a368-877ed60c6c11}*SharedItemsImports = 13
 		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
-		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{d9b87bde-8771-49db-99d2-91f2d35a1d48}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

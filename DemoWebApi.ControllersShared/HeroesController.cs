@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Serialization;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Fonlow.DemoApp;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DemoWebApi.Controllers
 {
@@ -14,6 +16,7 @@ namespace DemoWebApi.Controllers
 	//[ApiController] for opt-in without ApiExplorerVisibilityEnabledConvention
 	[Route("api/[controller]")]
 	[ApiExplorerSettings(IgnoreApi = false)]
+	[Authorize(AuthenticationSchemes = ApiConstants.DefaultAuthenticationScheme)]
 	public class HeroesController : ControllerBase
 	{
 		/// <summary>
@@ -22,6 +25,7 @@ namespace DemoWebApi.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[ActionName("GetHeros")]
+		[AllowAnonymous]
 		public Hero[] Get()
 		{
 			return HeroesData.Instance.Dic.Values.ToArray();
@@ -34,6 +38,7 @@ namespace DemoWebApi.Controllers
 		/// <returns></returns>
 		[HttpGet("{id}")]
 		[ActionName("GetHero")]
+		[AllowAnonymous]
 		public Hero Get(long id)
 		{
 			_ = HeroesData.Instance.Dic.TryGetValue(id, out Hero r);
@@ -87,6 +92,7 @@ namespace DemoWebApi.Controllers
 		/// <param name="name">keyword contained in hero name.</param>
 		/// <returns>Hero array matching the keyword.</returns>
 		[HttpGet("search/{name}")]
+		[AllowAnonymous]
 		public Hero[] Search(string name)
 		{
 			return HeroesData.Instance.Dic.Values
@@ -95,6 +101,7 @@ namespace DemoWebApi.Controllers
 		}
 
 		[HttpGet("asyncHeroes")]
+		[AllowAnonymous]
 		public async IAsyncEnumerable<Hero> GetAsyncHeroes()
 		{
 			foreach (var item in HeroesData.Instance.Dic.Values)
