@@ -5,8 +5,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Fonlow.WebApp.Security\Fonlow.WebApp.Security.csproj" />
-  </ItemGroup>
-
 </Project>

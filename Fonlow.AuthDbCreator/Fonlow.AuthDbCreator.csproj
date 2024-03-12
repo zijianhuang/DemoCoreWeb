@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj" />
+		<ProjectReference Include="..\Fonlow.WebApp.Identity\Fonlow.WebApp.Identity.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

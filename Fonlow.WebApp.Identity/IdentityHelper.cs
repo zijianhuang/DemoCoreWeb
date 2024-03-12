@@ -7,9 +7,9 @@ namespace Fonlow.WebApp.Accounts
 	/// <summary>
 	/// Common functions with ApplicationDbContext.
 	/// </summary>
-	public class AccountHelper
+	public class IdentityHelper
 	{
-		public AccountHelper(DbContextOptions<ApplicationDbContext> options)
+		public IdentityHelper(DbContextOptions<ApplicationDbContext> options)
 		{
 			this.options = options;
 		}
