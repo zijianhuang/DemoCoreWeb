@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DemoWebApi.ControllersShared", "DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.shproj", "{A30A256B-C0E7-410E-A002-7A5590D1E9A4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core3WebApi", "Core3WebApi\Core3WebApi.csproj", "{5C64D0FE-B283-4A4F-B235-49C5F6FD0229}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Tests\IntegrationTestShared\IntegrationTestShared.shproj", "{60B7393D-9285-4D0A-A368-877ED60C6C11}"
@@ -32,17 +30,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonlow.Heroes.Maui", "mobil
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "HeroesDemo", "AngularHeroes\HeroesDemo.esproj", "{5017AFAD-D277-4863-9280-3916E0821185}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.WebApp.Security", "Fonlow.WebApp.Security\Fonlow.WebApp.Security.csproj", "{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonlow.WebApp.Security", "Fonlow.WebApp.Security\Fonlow.WebApp.Security.csproj", "{62A2FF01-BECD-4B4F-BCF6-FD56A015E830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.WebApp.Accounts", "Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj", "{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonlow.WebApp.Accounts", "Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj", "{42FA39E6-1A9F-49E7-800D-5ADF8A0EFD9E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthDbCreator", "AuthDbCreator\AuthDbCreator.csproj", "{FD9639DD-7BE9-4CA5-8CA2-EF9FF5E5ACC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonlow.AuthDbCreator", "Fonlow.AuthDbCreator\Fonlow.AuthDbCreator.csproj", "{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonlow.AuthDbCreator", "Fonlow.AuthDbCreator\Fonlow.AuthDbCreator.csproj", "{87BFDA71-1DA5-4743-9E36-C10B7CE2D497}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{03B8AB6F-9686-44AF-9AF1-6DCC6E742808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Accounts", "DemoApp.Accounts\DemoApp.Accounts.csproj", "{A524EEE4-DE5A-4412-9E79-E9903F2A143D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Accounts", "DemoApp.Accounts\DemoApp.Accounts.csproj", "{A524EEE4-DE5A-4412-9E79-E9903F2A143D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,8 +123,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{15217096-ccd1-4c5f-bc90-891320e570b1}*SharedItemsImports = 5
-		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{5c64d0fe-b283-4a4f-b235-49c5f6fd0229}*SharedItemsImports = 5
 		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{60b7393d-9285-4d0a-a368-877ed60c6c11}*SharedItemsImports = 13
-		DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems*{a30a256b-c0e7-410e-a002-7a5590d1e9a4}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

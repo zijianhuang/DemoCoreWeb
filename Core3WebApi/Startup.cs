@@ -38,26 +38,26 @@ namespace Core3WebApi
 
 			//services.AddControllers();
 			services.AddCors();
-			//services.AddAuthentication(
-			//	options =>
-			//	{
-			//		options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-			//		options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			//		options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-			//	}
-			//	).AddJwtBearer(options =>
-			//	{
-			//		options.SaveToken = true;
-			//		options.RequireHttpsMetadata = false;
-			//		options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-			//		{
-			//			ValidateIssuer = false,
-			//			ValidateAudience = false,
-			//			ValidAudience = "http://fonlow.com/demoapp",
-			//			ValidIssuer = "http://fonlow.com/demoapp",
-			//			IssuerSigningKey = Fonlow.DemoApp.ApiConstants.SymmetricSecurityKey
-			//		}; // Thanks to https://dotnetdetail.net/asp-net-core-3-0-web-api-token-based-authentication-example-using-jwt-in-vs2019/
-			//	});
+			services.AddAuthentication(
+				options =>
+				{
+					options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+					options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+					options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+				}
+				).AddJwtBearer(options =>
+				{
+					options.SaveToken = true;
+					options.RequireHttpsMetadata = false;
+					options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+					{
+						ValidateIssuer = false,
+						ValidateAudience = false,
+						ValidAudience = "http://fonlow.com/demoapp",
+						ValidIssuer = "http://fonlow.com/demoapp",
+						IssuerSigningKey = Fonlow.DemoApp.ApiConstants.SymmetricSecurityKey
+					}; // Thanks to https://dotnetdetail.net/asp-net-core-3-0-web-api-token-based-authentication-example-using-jwt-in-vs2019/
+				});
 
 		}
 
