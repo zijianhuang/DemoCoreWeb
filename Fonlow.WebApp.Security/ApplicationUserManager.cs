@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Fonlow.WebApp.Security
+namespace Fonlow.AspNetCore.Identity
 {
 	public class ApplicationUserManager : UserManager<ApplicationUser>
     {

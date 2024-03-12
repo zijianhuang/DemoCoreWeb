@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Fonlow.WebApp.Security
+namespace Fonlow.AspNetCore.Identity.EntityFrameworkCore
 {
 	public class ApplicationRoleStore : RoleStore<ApplicationIdentityRole, ApplicationDbContext, Guid>
 	{

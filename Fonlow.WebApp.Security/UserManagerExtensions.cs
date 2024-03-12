@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace Fonlow.WebApp.Security
+namespace Fonlow.AspNetCore.Identity
 {
 	public static class UserManagerExtensions
 	{

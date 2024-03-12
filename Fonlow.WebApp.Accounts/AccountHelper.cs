@@ -1,7 +1,7 @@
-﻿using Fonlow.WebApp.Security;
+﻿using Fonlow.AspNetCore.Identity;
+using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System;
+
 namespace Fonlow.WebApp.Accounts
 {
 	/// <summary>

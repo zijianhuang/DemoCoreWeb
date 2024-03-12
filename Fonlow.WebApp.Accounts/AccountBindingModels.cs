@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Fonlow.WebApp.Accounts
 {
-    // Models used as parameters to AccountController actions.
+	// Models used as parameters to AccountController actions.
 
-    [DataContract]
+	[DataContract]
     public class AddExternalLoginBindingModel
     {
         [Required]

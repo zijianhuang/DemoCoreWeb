@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fonlow.WebApp.Security
+namespace Fonlow.AspNetCore.Identity
 {
 	public class ApplicationIdentityRole : IdentityRole<Guid>
 	{

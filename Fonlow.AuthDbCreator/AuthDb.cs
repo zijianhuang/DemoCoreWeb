@@ -1,4 +1,5 @@
-﻿using Fonlow.WebApp.Security;
+﻿using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
+using Fonlow.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
