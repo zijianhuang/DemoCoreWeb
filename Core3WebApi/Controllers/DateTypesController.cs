@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Fonlow.DemoApp;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
@@ -8,6 +10,7 @@ namespace DemoWebApi.Controllers
 	/// For testing different commbinations of parameters and returns
 	/// </summary>
 	[Route("api/[controller]")]
+	[Authorize(AuthenticationSchemes = ApiConstants.DefaultAuthenticationScheme)]
 	public class DateTypesController : ControllerBase
 	{
 		[HttpGet]

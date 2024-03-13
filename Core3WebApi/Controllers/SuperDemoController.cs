@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Fonlow.DemoApp;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +14,7 @@ namespace DemoWebApi.Controllers
 	/// </summary>
 	[Produces("application/json")]
 	[Route("api/[controller]")]
+	[Authorize(AuthenticationSchemes = ApiConstants.DefaultAuthenticationScheme)]
 	public class SuperDemoController : Controller
 	{
 		[HttpGet]

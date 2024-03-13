@@ -19,7 +19,7 @@ string dirOfAppAssembly = System.IO.Path.GetDirectoryName(appAssembly.Location);
 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(System.IO.Path.Combine(dirOfAppAssembly, "appsettings.json")).Build();
 var appSettings = config.GetSection("appSettings");
 var environment = appSettings.GetValue<string>("environment");
-IAuthSetupSecrets authSetupSettings=null;
+IAuthSetupSecrets authSetupSettings = null;
 IAuthSettings authSettings = null;
 if (environment == "test")
 {
@@ -34,7 +34,8 @@ else
 	// fill authSetupSettings with data from a secured storage
 }
 
-if (authSetupSettings==null || string.IsNullOrEmpty(authSetupSettings.SymmetricSecurityKeyString)){
+if (authSetupSettings == null || string.IsNullOrEmpty(authSetupSettings.SymmetricSecurityKeyString))
+{
 	throw new ArgumentException("Need SymmetricSecurityKeyString"); // or throw whatever app specific exception
 }
 
@@ -77,12 +78,12 @@ builder.Services.AddControllers(configure =>
 });
 
 builder.Services.AddAuthentication(
-options =>
-{
-	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-	options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}
+	options =>
+	{
+		options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+		options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+		options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+	}
 ).AddJwtBearer(options =>
 {
 	options.SaveToken = true;
@@ -111,8 +112,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 });
 
 //For usage not with DI
-DbContextOptionsBuilder<ApplicationDbContext> dcobApplication = new();
-ConfigApplicationDbContext(dcobApplication);
+//DbContextOptionsBuilder<ApplicationDbContext> dcobApplication = new();
+//ConfigApplicationDbContext(dcobApplication);
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationIdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()

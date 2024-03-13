@@ -4,7 +4,7 @@ using System;
 
 namespace IntegrationTests
 {
-	public class DateTypesFixture : DefaultHttpClient
+	public class DateTypesFixture : DefaultHttpClientWithUsername
 	{
 		public DateTypesFixture()
 		{
@@ -16,7 +16,7 @@ namespace IntegrationTests
 			jsonSerializerSettings.Converters.Add(new DateOnlyJsonConverter());
 			jsonSerializerSettings.Converters.Add(new DateOnlyNullableJsonConverter());
 
-			Api = new DemoWebApi.Controllers.Client.DateTypes(HttpClient, jsonSerializerSettings);
+			Api = new DemoWebApi.Controllers.Client.DateTypes(AuthorizedClient, jsonSerializerSettings);
 		}
 
 		public DemoWebApi.Controllers.Client.DateTypes Api { get; private set; }
