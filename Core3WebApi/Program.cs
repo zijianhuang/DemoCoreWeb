@@ -20,6 +20,7 @@ IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(System.IO.Pat
 var appSettings = config.GetSection("appSettings");
 var environment = appSettings.GetValue<string>("environment");
 var dbEngine = appSettings.GetValue<string>("dbEngine");
+var identityConnectionString = config.GetConnectionString("IdentityConnection");
 IAuthSetupSecrets authSetupSettings = null;
 IAuthSettings authSettings = null;
 if (environment == "test")
@@ -109,7 +110,8 @@ builder.Services.AddCors(options => options.AddPolicy("All", builder =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 {
-	ConnectToDatabase(dcob);
+	//string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+	ConnectDatabase(dcob, dbEngine, identityConnectionString);
 });
 
 //For usage not with DI
@@ -146,7 +148,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("All");
 
-
 app.MapControllers();
 
 if (args.Length > 1)
@@ -160,16 +161,31 @@ app.UseStaticFiles(); //This may cause IIS rewrite rule to fail during login. So
 app.Run();
 Console.WriteLine("Run Done.");
 
-void ConnectToDatabase(DbContextOptionsBuilder dcob)
+//void ConnectToDatabase(DbContextOptionsBuilder dcob)
+//{
+//	string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+//	switch (dbEngine)
+//	{
+//		case "sqlite":
+//			dcob.UseSqlite(identityConnectionString);
+//			break;
+//		case "mysql":
+//			dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
+//			break;
+//		default:
+//			throw new ArgumentException("Must define dbEngine like sqlite or mysql");
+//	}
+//}
+
+static void ConnectDatabase(DbContextOptionsBuilder dcob, string dbEngine, string connectionString)
 {
-	string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
 	switch (dbEngine)
 	{
 		case "sqlite":
-			dcob.UseSqlite(identityConnectionString);
+			dcob.UseSqlite(connectionString);
 			break;
 		case "mysql":
-			dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
+			dcob.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 			break;
 		default:
 			throw new ArgumentException("Must define dbEngine like sqlite or mysql");
