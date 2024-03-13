@@ -1,5 +1,6 @@
 ﻿using Fonlow.AspNetCore.Identity;
 using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
+using Fonlow.WebApp.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ namespace Fonlow.AuthDbCreator
 		string[] roleNames = [];
 
 		readonly IConfiguration appConfig;
+		readonly IdentitySeeding identitySeeding;
 
 		string dbEngine;
 		string basicConnectionString;
@@ -20,12 +22,14 @@ namespace Fonlow.AuthDbCreator
 		public AuthDb(IConfiguration config)
 		{
 			appConfig = config;
-			var webAppSecurity = appConfig.GetSection("WebAppSecurity");
+			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
+			identitySeeding = new IdentitySeeding();
+			IdentitySeedingSection.Bind(identitySeeding);
 			var appSettings = appConfig.GetSection("appSettings");
 			dbEngine = appSettings.GetValue<string>("dbEngine");
-			if (webAppSecurity != null)
+			if (IdentitySeedingSection != null)
 			{
-				roleNames = webAppSecurity.GetSection("Roles").Get<string[]>();
+				roleNames = identitySeeding.Roles;
 			}
 
 			basicConnectionString = appConfig.GetConnectionString("IdentityConnection");
@@ -76,7 +80,7 @@ namespace Fonlow.AuthDbCreator
 			Console.WriteLine(String.Format("Database is initialized, created,  or altered through connection string: {0}", context.Database.GetDbConnection().ConnectionString));
 		}
 
-		public async Task UserManagerDoes(Func<ApplicationUserManager, Task> userManagerAction)
+		public async Task SeedDb()
 		{
 			using ApplicationDbContext context = new(options);
 			using var roleStore = new ApplicationRoleStore(context);
@@ -94,13 +98,22 @@ namespace Fonlow.AuthDbCreator
 				).ToArray();
 			}
 
-			Console.WriteLine("Now App seed the database using ASP .NET Web security and relevant providers...");
+			Console.ReadLine();
 
-			using var userStore = new ApplicationUserStore(context);
-			ApplicationUserManager userManager = new(userStore, null, new PasswordHasher<ApplicationUser>(), null, null,
-				new UpperInvariantLookupNormalizer(), // Web API will by default inject this one, so I had better use it, SearchByEmail looks up normalizedEmail.
-				null, null, null);
-			await userManagerAction(userManager);
+			if (identitySeeding?.Users?.Length > 0)
+			{
+				Console.WriteLine("Now App seed the database using ASP .NET Web security and relevant providers for some users...");
+
+				using var userStore = new ApplicationUserStore(context);
+				ApplicationUserManager userManager = new(userStore, null, new PasswordHasher<ApplicationUser>(), null, null,
+					new UpperInvariantLookupNormalizer(), // Web API will by default inject this one, so I had better use it, SearchByEmail looks up normalizedEmail.
+					null, null, null);
+				foreach (var item in identitySeeding.Users)
+				{
+					await userManager.CreateUser(item.Username, item.Email, item.FullName, item.Password, item.Role);
+					Console.WriteLine($"Added user {item.Username} as {item.Role}");
+				}
+			}
 		}
 
 	}

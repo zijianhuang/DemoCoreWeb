@@ -34,10 +34,7 @@ namespace AuthDbCreator
 				await authDb.DropAndCreate();
 			}
 
-			await authDb.UserManagerDoes(async (userManager) =>
-			{
-				await userManager.CreateUser("admin", "someone@somewhere.com.au", null, "Pppppp*8", RoleConstants.Admin);
-			});
+			await authDb.SeedDb();
 		}
 	}
 
