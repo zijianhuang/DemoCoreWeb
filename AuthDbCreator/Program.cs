@@ -35,6 +35,7 @@ namespace AuthDbCreator
 			}
 
 			await authDb.SeedDb();
+			Console.WriteLine("Done.");
 		}
 	}
 

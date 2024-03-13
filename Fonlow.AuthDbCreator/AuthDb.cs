@@ -88,17 +88,15 @@ namespace Fonlow.AuthDbCreator
 			if (!roleManager.Roles.Any())
 			{
 				Console.WriteLine("Creating roles...");
-				Task<IdentityResult>[] results = roleNames.Select(async d =>
+				var results = roleNames.Select(async d =>
 				{
 					IdentityResult r = await roleManager.CreateAsync(new ApplicationIdentityRole(d));
 					Console.WriteLine(r.Succeeded ? String.Format("Role {0} created.", d)
 						: String.Join("; ", r.Errors));
 					return r;
 				}
-				).ToArray();
+				).Select(t=>t.Result).ToArray();
 			}
-
-			Console.ReadLine();
 
 			if (identitySeeding?.Users?.Length > 0)
 			{
