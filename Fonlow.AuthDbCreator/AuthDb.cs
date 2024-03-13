@@ -3,6 +3,7 @@ using Fonlow.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Fonlow.AuthDbCreator
 {
@@ -55,22 +56,24 @@ namespace Fonlow.AuthDbCreator
 
 		public DbContextOptions<ApplicationDbContext> GetOptions()
 		{
-			DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = null;
+			var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+			ConnectToDatabase(optionsBuilder);
+			return optionsBuilder.Options;
+		}
+
+		void ConnectToDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob){
 			if (dbEngine == "sqlite")
 			{
 				Console.WriteLine($"Ready to create {dbEngine} ...");
-				optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(basicConnectionString);
+				dcob.UseSqlite(basicConnectionString);
 			}
 			else //
 			{
 				string newConnectionString = String.IsNullOrEmpty(DbNameInInitialConnectionString) ?
 					basicConnectionString :
 					basicConnectionString.Replace(DbNameInInitialConnectionString, DbName.ToLower(), StringComparison.CurrentCultureIgnoreCase);
-				optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>().UseMySql(newConnectionString, ServerVersion.AutoDetect(basicConnectionString));
+				dcob.UseMySql(newConnectionString, ServerVersion.AutoDetect(basicConnectionString));
 			}
-
-			var options = optionsBuilder.Options;
-			return options;
 		}
 
 		public async Task DropAndCreate()
