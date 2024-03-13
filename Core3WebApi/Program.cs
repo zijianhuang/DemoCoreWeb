@@ -19,6 +19,7 @@ string dirOfAppAssembly = System.IO.Path.GetDirectoryName(appAssembly.Location);
 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(System.IO.Path.Combine(dirOfAppAssembly, "appsettings.json")).Build();
 var appSettings = config.GetSection("appSettings");
 var environment = appSettings.GetValue<string>("environment");
+var dbEngine = appSettings.GetValue<string>("dbEngine");
 IAuthSetupSecrets authSetupSettings = null;
 IAuthSettings authSettings = null;
 if (environment == "test")
@@ -40,7 +41,6 @@ if (authSetupSettings == null || string.IsNullOrEmpty(authSetupSettings.Symmetri
 }
 
 string webRootPath = "./";
-bool useSqlite = false;
 string dataDirectory = "./DemoApp_Data";
 
 
@@ -57,6 +57,7 @@ var options = new WebApplicationOptions
 
 var builder = WebApplication.CreateBuilder(options);
 builder.Configuration.AddConfiguration(config);
+Console.WriteLine($"Start at contentRootPath: {builder.Environment.ContentRootPath}; WebRootPath: {builder.Environment.WebRootPath}");
 
 var issuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(authSetupSettings.SymmetricSecurityKeyString));
 builder.Services.AddSingleton(issuerSigningKey);
@@ -161,7 +162,7 @@ Console.WriteLine("Run Done.");
 
 void ConfigApplicationDbContext(DbContextOptionsBuilder dcob)
 {
-	if (useSqlite)
+	if (dbEngine=="sqlite")
 	{
 		var dbFilePath = Path.Combine(builder.Environment.ContentRootPath, dataDirectory, "auth.db");
 		dcob.UseSqlite($"Data Source={dbFilePath}");

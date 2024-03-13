@@ -1,7 +1,8 @@
 {
   "profiles": {
     "AuthDbCreatorCore": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "sqlite \"Data Source=c:\\temp\\demoAuthBB.db\" admin,manager,staff,user,api "
     }
   }
 }

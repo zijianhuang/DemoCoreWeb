@@ -16,38 +16,53 @@ namespace Fonlow.AuthDbCreator
 
 		public string DbName => String.IsNullOrEmpty(DbInstanceSuffix) ? $"{DbNamePrefix}Auth" : $"{DbNamePrefix}Auth_{DbInstanceSuffix}";
 
-		public string SqliteDbPath { get; }
+		//public string SqliteDbPath { get; }
 
-		readonly string sqliteDbPath;
+		//readonly string sqliteDbPath;
 
 		readonly DbContextOptions<ApplicationDbContext> options;
 
 		string[] roleNames = [];
 
-		public AuthDb(string sqliteDbPath)
+		readonly IConfiguration appConfig;
+
+		string dbEngine;
+		string basicConnectionString;
+
+		public AuthDb(IConfiguration config)
 		{
-			this.sqliteDbPath = sqliteDbPath;
+			appConfig = config;
+			var webAppSecurity = appConfig.GetSection("WebAppSecurity");
+			var appSettings = appConfig.GetSection("appSettings");
+			dbEngine = appSettings.GetValue<string>("dbEngine");
+			if (webAppSecurity != null)
+			{
+				roleNames = webAppSecurity.GetSection("Roles").Get<string[]>();
+			}
+
+			basicConnectionString = appConfig.GetConnectionString("IdentityConnection");
+
+			this.options = GetOptions();
+		}
+
+		public AuthDb(string dbEngine, string connectionString, string[] roleNames)
+		{
+			this.dbEngine = dbEngine;
+			this.basicConnectionString = connectionString;
+			this.roleNames = roleNames;
 			this.options = GetOptions();
 		}
 
 		public DbContextOptions<ApplicationDbContext> GetOptions()
 		{
 			DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = null;
-			IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-			var webAppSecurity = config.GetSection("WebAppSecurity");
-			if (webAppSecurity != null)
+			if (dbEngine == "sqlite")
 			{
-				roleNames = webAppSecurity.GetSection("Roles").Get<string[]>();
+				Console.WriteLine($"Ready to create {dbEngine} ...");
+				optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(basicConnectionString);
 			}
-
-			if (!String.IsNullOrEmpty(sqliteDbPath))
+			else //
 			{
-				Console.WriteLine($"Ready to create {sqliteDbPath} ...");
-				optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite($"Data Source={sqliteDbPath}");
-			}
-			else
-			{
-				string basicConnectionString = config.GetConnectionString("IdentityConnection");
 				string newConnectionString = String.IsNullOrEmpty(DbNameInInitialConnectionString) ?
 					basicConnectionString :
 					basicConnectionString.Replace(DbNameInInitialConnectionString, DbName.ToLower(), StringComparison.CurrentCultureIgnoreCase);
@@ -92,7 +107,7 @@ namespace Fonlow.AuthDbCreator
 
 			using var userStore = new ApplicationUserStore(context);
 			ApplicationUserManager userManager = new(userStore, null, new PasswordHasher<ApplicationUser>(), null, null,
-				new UpperInvariantLookupNormalizer(), // Web API will by default inject this one, so I have better to use it, SearchByEmail looks up normalizedEmail.
+				new UpperInvariantLookupNormalizer(), // Web API will by default inject this one, so I had better use it, SearchByEmail looks up normalizedEmail.
 				null, null, null);
 			await userManagerAction(userManager);
 		}

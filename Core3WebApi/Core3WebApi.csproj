@@ -30,4 +30,14 @@
     <ProjectReference Include="..\Fonlow.WebApp.Identity\Fonlow.WebApp.Identity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DemoApp_Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DemoApp_Data\auth.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
