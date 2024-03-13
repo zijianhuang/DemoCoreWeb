@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Fonlow.AuthDbCreator;
 using DemoApp.Accounts;
 using Microsoft.Extensions.Configuration;
+using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthDbCreator
 {
@@ -21,7 +23,7 @@ namespace AuthDbCreator
 			if (args.Length == 0)//for internal development
 			{
 				Console.WriteLine("Create database with connection string in appsetings.json ...");
-				authDb = new AuthDb(config);
+				authDb = new AuthDb(config, ConnectDatabase);
 				await authDb.DropAndCreate();
 			}
 			else
@@ -30,12 +32,27 @@ namespace AuthDbCreator
 				var connectionString = args[1];
 				var roleNames = args[2].Split(',');
 				Console.WriteLine("Create database with arguments ...");
-				authDb = new AuthDb(dbEngine, connectionString, roleNames);
+				authDb = new AuthDb(dbEngine, connectionString, roleNames, ConnectDatabase);
 				await authDb.DropAndCreate();
 			}
 
 			await authDb.SeedDb();
 			Console.WriteLine("Done.");
+		}
+
+		static void ConnectDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob, string dbEngine, string connectionString)
+		{
+			switch (dbEngine)
+			{
+				case "sqlite":
+					dcob.UseSqlite(connectionString);
+					break;
+				case "mysql":
+					dcob.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+					break;
+				default:
+					throw new ArgumentException("Must define dbEngine like sqlite or mysql");
+			}
 		}
 	}
 

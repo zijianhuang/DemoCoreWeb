@@ -18,10 +18,12 @@ namespace Fonlow.AuthDbCreator
 
 		string dbEngine;
 		string basicConnectionString;
+		readonly Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase;
 
-		public AuthDb(IConfiguration config)
+		public AuthDb(IConfiguration config, Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase)
 		{
 			appConfig = config;
+			this.connectDatabase= connectDatabase;
 			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
 			identitySeeding = new IdentitySeeding();
 			IdentitySeedingSection.Bind(identitySeeding);
@@ -37,11 +39,12 @@ namespace Fonlow.AuthDbCreator
 			this.options = GetOptions();
 		}
 
-		public AuthDb(string dbEngine, string connectionString, string[] roleNames)
+		public AuthDb(string dbEngine, string connectionString, string[] roleNames, Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase)
 		{
 			this.dbEngine = dbEngine;
 			this.basicConnectionString = connectionString;
 			this.roleNames = roleNames;
+			this.connectDatabase = connectDatabase;
 			this.options = GetOptions();
 		}
 
@@ -49,23 +52,8 @@ namespace Fonlow.AuthDbCreator
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 			Console.WriteLine($"Ready to create {dbEngine} db with {basicConnectionString} ...");
-			ConnectToDatabase(optionsBuilder);
+			connectDatabase(optionsBuilder, dbEngine, basicConnectionString);
 			return optionsBuilder.Options;
-		}
-
-		void ConnectToDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob)
-		{
-			switch (dbEngine)
-			{
-				case "sqlite":
-					dcob.UseSqlite(basicConnectionString);
-					break;
-				case "mysql":
-					dcob.UseMySql(basicConnectionString, ServerVersion.AutoDetect(basicConnectionString)); 
-					break;
-				default:
-					throw new ArgumentException("Must define dbEngine like sqlite or mysql");
-			}
 		}
 
 		public async Task DropAndCreate()
