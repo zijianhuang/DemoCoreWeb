@@ -110,7 +110,6 @@ builder.Services.AddCors(options => options.AddPolicy("All", builder =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 {
-	//string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
 	ConnectDatabase(dcob, dbEngine, identityConnectionString);
 });
 

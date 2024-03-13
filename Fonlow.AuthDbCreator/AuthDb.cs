@@ -18,9 +18,9 @@ namespace Fonlow.AuthDbCreator
 
 		string dbEngine;
 		string basicConnectionString;
-		readonly Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase;
+		readonly Action<DbContextOptionsBuilder, string, string> connectDatabase;
 
-		public AuthDb(IConfiguration config, Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase)
+		public AuthDb(IConfiguration config, Action<DbContextOptionsBuilder, string, string> connectDatabase)
 		{
 			appConfig = config;
 			this.connectDatabase= connectDatabase;
@@ -39,7 +39,7 @@ namespace Fonlow.AuthDbCreator
 			this.options = GetOptions();
 		}
 
-		public AuthDb(string dbEngine, string connectionString, string[] roleNames, Action<DbContextOptionsBuilder<ApplicationDbContext>, string, string> connectDatabase)
+		public AuthDb(string dbEngine, string connectionString, string[] roleNames, Action<DbContextOptionsBuilder, string, string> connectDatabase)
 		{
 			this.dbEngine = dbEngine;
 			this.basicConnectionString = connectionString;

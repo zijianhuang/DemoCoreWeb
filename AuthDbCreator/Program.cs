@@ -1,11 +1,8 @@
-﻿using Fonlow.AspNetCore.Identity;
+﻿using Fonlow.AuthDbCreator;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-using Fonlow.AuthDbCreator;
-using DemoApp.Accounts;
-using Microsoft.Extensions.Configuration;
-using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace AuthDbCreator
 {
@@ -40,7 +37,7 @@ namespace AuthDbCreator
 			Console.WriteLine("Done.");
 		}
 
-		static void ConnectDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob, string dbEngine, string connectionString)
+		static void ConnectDatabase(DbContextOptionsBuilder dcob, string dbEngine, string connectionString)
 		{
 			switch (dbEngine)
 			{
