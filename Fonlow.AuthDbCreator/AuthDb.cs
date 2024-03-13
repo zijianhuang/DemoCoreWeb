@@ -1,26 +1,13 @@
-﻿using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
-using Fonlow.AspNetCore.Identity;
+﻿using Fonlow.AspNetCore.Identity;
+using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Fonlow.AuthDbCreator
 {
 	public class AuthDb
 	{
-		public string DbNamePrefix { get; init; }
-
-		public string DbInstanceSuffix { get; init; }
-
-		public string DbNameInInitialConnectionString { get; init; }
-
-		public string DbName => String.IsNullOrEmpty(DbInstanceSuffix) ? $"{DbNamePrefix}Auth" : $"{DbNamePrefix}Auth_{DbInstanceSuffix}";
-
-		//public string SqliteDbPath { get; }
-
-		//readonly string sqliteDbPath;
-
 		readonly DbContextOptions<ApplicationDbContext> options;
 
 		string[] roleNames = [];
@@ -57,6 +44,7 @@ namespace Fonlow.AuthDbCreator
 		public DbContextOptions<ApplicationDbContext> GetOptions()
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+			Console.WriteLine($"Ready to create {dbEngine} db with {basicConnectionString} ...");
 			ConnectToDatabase(optionsBuilder);
 			return optionsBuilder.Options;
 		}
@@ -64,15 +52,11 @@ namespace Fonlow.AuthDbCreator
 		void ConnectToDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob){
 			if (dbEngine == "sqlite")
 			{
-				Console.WriteLine($"Ready to create {dbEngine} ...");
 				dcob.UseSqlite(basicConnectionString);
 			}
-			else //
+			else
 			{
-				string newConnectionString = String.IsNullOrEmpty(DbNameInInitialConnectionString) ?
-					basicConnectionString :
-					basicConnectionString.Replace(DbNameInInitialConnectionString, DbName.ToLower(), StringComparison.CurrentCultureIgnoreCase);
-				dcob.UseMySql(newConnectionString, ServerVersion.AutoDetect(basicConnectionString));
+				dcob.UseMySql(basicConnectionString, ServerVersion.AutoDetect(basicConnectionString));
 			}
 		}
 

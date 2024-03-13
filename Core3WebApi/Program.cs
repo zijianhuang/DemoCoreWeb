@@ -109,7 +109,7 @@ builder.Services.AddCors(options => options.AddPolicy("All", builder =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 {
-	ConfigApplicationDbContext(dcob);
+	ConnectToDatabase(dcob);
 });
 
 //For usage not with DI
@@ -160,16 +160,29 @@ app.UseStaticFiles(); //This may cause IIS rewrite rule to fail during login. So
 app.Run();
 Console.WriteLine("Run Done.");
 
-void ConfigApplicationDbContext(DbContextOptionsBuilder dcob)
+//void ConfigApplicationDbContext(DbContextOptionsBuilder dcob)
+//{
+//	if (dbEngine=="sqlite")
+//	{
+//		var dbFilePath = Path.Combine(builder.Environment.ContentRootPath, dataDirectory, "auth.db");
+//		dcob.UseSqlite($"Data Source={dbFilePath}");
+//	}
+//	else
+//	{
+//		string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+//		dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
+//	}
+//}
+
+void ConnectToDatabase(DbContextOptionsBuilder dcob)
 {
-	if (dbEngine=="sqlite")
+	string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+	if (dbEngine == "sqlite")
 	{
-		var dbFilePath = Path.Combine(builder.Environment.ContentRootPath, dataDirectory, "auth.db");
-		dcob.UseSqlite($"Data Source={dbFilePath}");
+		dcob.UseSqlite(identityConnectionString);
 	}
 	else
 	{
-		string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
 		dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
 	}
 }
