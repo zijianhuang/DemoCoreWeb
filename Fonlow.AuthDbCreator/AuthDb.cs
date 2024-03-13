@@ -20,6 +20,11 @@ namespace Fonlow.AuthDbCreator
 		string basicConnectionString;
 		readonly Action<DbContextOptionsBuilder, string, string> connectDatabase;
 
+		/// <summary>
+		/// Connect to database and get DB options
+		/// </summary>
+		/// <param name="config"></param>
+		/// <param name="connectDatabase"></param>
 		public AuthDb(IConfiguration config, Action<DbContextOptionsBuilder, string, string> connectDatabase)
 		{
 			appConfig = config;
@@ -48,6 +53,10 @@ namespace Fonlow.AuthDbCreator
 			this.options = GetOptions();
 		}
 
+		/// <summary>
+		/// Make initial connection and get DbContextOptions.
+		/// </summary>
+		/// <returns></returns>
 		public DbContextOptions<ApplicationDbContext> GetOptions()
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -68,6 +77,10 @@ namespace Fonlow.AuthDbCreator
 			Console.WriteLine(String.Format("Database is initialized, created,  or altered through connection string: {0}", context.Database.GetDbConnection().ConnectionString));
 		}
 
+		/// <summary>
+		/// Seed the DB with predefined roles and some initial users. Both sets of info are declared in config.
+		/// </summary>
+		/// <returns></returns>
 		public async Task SeedDb()
 		{
 			using ApplicationDbContext context = new(options);

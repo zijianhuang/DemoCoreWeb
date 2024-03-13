@@ -160,22 +160,6 @@ app.UseStaticFiles(); //This may cause IIS rewrite rule to fail during login. So
 app.Run();
 Console.WriteLine("Run Done.");
 
-//void ConnectToDatabase(DbContextOptionsBuilder dcob)
-//{
-//	string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
-//	switch (dbEngine)
-//	{
-//		case "sqlite":
-//			dcob.UseSqlite(identityConnectionString);
-//			break;
-//		case "mysql":
-//			dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
-//			break;
-//		default:
-//			throw new ArgumentException("Must define dbEngine like sqlite or mysql");
-//	}
-//}
-
 static void ConnectDatabase(DbContextOptionsBuilder dcob, string dbEngine, string connectionString)
 {
 	switch (dbEngine)

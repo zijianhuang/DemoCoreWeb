@@ -45,7 +45,7 @@ namespace AuthDbCreator
 					dcob.UseSqlite(connectionString);
 					break;
 				case "mysql":
-					dcob.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+					dcob.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); // connection is made to obtain some db server info.
 					break;
 				default:
 					throw new ArgumentException("Must define dbEngine like sqlite or mysql");
