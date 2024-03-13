@@ -49,14 +49,18 @@ namespace Fonlow.AuthDbCreator
 			return optionsBuilder.Options;
 		}
 
-		void ConnectToDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob){
-			if (dbEngine == "sqlite")
+		void ConnectToDatabase(DbContextOptionsBuilder<ApplicationDbContext> dcob)
+		{
+			switch (dbEngine)
 			{
-				dcob.UseSqlite(basicConnectionString);
-			}
-			else
-			{
-				dcob.UseMySql(basicConnectionString, ServerVersion.AutoDetect(basicConnectionString));
+				case "sqlite":
+					dcob.UseSqlite(basicConnectionString);
+					break;
+				case "mysql":
+					dcob.UseMySql(basicConnectionString, ServerVersion.AutoDetect(basicConnectionString)); 
+					break;
+				default:
+					throw new ArgumentException("Must define dbEngine like sqlite or mysql");
 			}
 		}
 

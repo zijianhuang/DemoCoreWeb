@@ -160,29 +160,18 @@ app.UseStaticFiles(); //This may cause IIS rewrite rule to fail during login. So
 app.Run();
 Console.WriteLine("Run Done.");
 
-//void ConfigApplicationDbContext(DbContextOptionsBuilder dcob)
-//{
-//	if (dbEngine=="sqlite")
-//	{
-//		var dbFilePath = Path.Combine(builder.Environment.ContentRootPath, dataDirectory, "auth.db");
-//		dcob.UseSqlite($"Data Source={dbFilePath}");
-//	}
-//	else
-//	{
-//		string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
-//		dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
-//	}
-//}
-
 void ConnectToDatabase(DbContextOptionsBuilder dcob)
 {
 	string identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
-	if (dbEngine == "sqlite")
+	switch (dbEngine)
 	{
-		dcob.UseSqlite(identityConnectionString);
-	}
-	else
-	{
-		dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
+		case "sqlite":
+			dcob.UseSqlite(identityConnectionString);
+			break;
+		case "mysql":
+			dcob.UseMySql(identityConnectionString, ServerVersion.AutoDetect(identityConnectionString));
+			break;
+		default:
+			throw new ArgumentException("Must define dbEngine like sqlite or mysql");
 	}
 }
