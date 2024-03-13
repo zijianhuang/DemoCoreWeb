@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fonlow.AspNetCore.Identity
 {
+	/// <summary>
+	/// Mapped to DB table aspnetroles
+	/// </summary>
 	public class ApplicationIdentityRole : IdentityRole<Guid>
 	{
 		public ApplicationIdentityRole()
@@ -16,6 +19,9 @@ namespace Fonlow.AspNetCore.Identity
 		}
 	}
 
+	/// <summary>
+	/// Mapped to table aspnetusers
+	/// </summary>
 	public class ApplicationUser : IdentityUser<Guid>, ITrackableEntity
 	{
 		/// <summary>
@@ -62,7 +68,7 @@ namespace Fonlow.AspNetCore.Identity
 	}
 
 	/// <summary>
-	/// Give EF context a hint to update time stamps when SaveChanges().
+	/// Give EF context a hint to update time stamps when SaveChanges(). A wholesale way of updating such columns.
 	/// </summary>
 	public interface ITrackableEntity
 	{

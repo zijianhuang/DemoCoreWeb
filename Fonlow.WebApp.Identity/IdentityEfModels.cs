@@ -15,6 +15,9 @@ namespace Fonlow.AspNetCore.Identity.EntityFrameworkCore
 		public ApplicationUserStore(ApplicationDbContext context, IdentityErrorDescriber describer = null) : base(context, describer) { }
 	}
 
+	/// <summary>
+	/// Db context for creating and managing tables for various authentication schems.
+	/// </summary>
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationIdentityRole, Guid>
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

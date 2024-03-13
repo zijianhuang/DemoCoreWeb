@@ -1,6 +1,7 @@
 using Fonlow.AspNetCore.Identity;
 using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
 using Fonlow.DateOnlyExtensions;
+using Fonlow.WebApp.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,26 @@ System.Reflection.Assembly appAssembly = System.Reflection.Assembly.GetExecuting
 string dirOfAppAssembly = System.IO.Path.GetDirectoryName(appAssembly.Location);
 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(System.IO.Path.Combine(dirOfAppAssembly, "appsettings.json")).Build();
 var appSettings = config.GetSection("appSettings");
+var environment = appSettings.GetValue<string>("environment");
+IAuthSetupSecrets authSetupSettings=null;
+IAuthSettings authSettings = null;
+if (environment == "test")
+{
+	var authSetupSettingsSection = config.GetSection("AuthSetupSettings");
+	var authSetupSettingsObject = new AuthSetupSettings();
+	authSetupSettingsSection.Bind(authSetupSettingsObject);
+	authSetupSettings = authSetupSettingsObject;
+	authSettings = authSetupSettingsObject;
+}
+else
+{
+	// fill authSetupSettings with data from a secured storage
+}
+
+if (authSetupSettings==null || string.IsNullOrEmpty(authSetupSettings.SymmetricSecurityKeyString)){
+	throw new ArgumentException("Need SymmetricSecurityKeyString"); // or throw whatever app specific exception
+}
+
 string webRootPath = "./";
 bool useSqlite = false;
 string dataDirectory = "./DemoApp_Data";
@@ -35,6 +56,11 @@ var options = new WebApplicationOptions
 
 var builder = WebApplication.CreateBuilder(options);
 builder.Configuration.AddConfiguration(config);
+
+var issuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(authSetupSettings.SymmetricSecurityKeyString));
+builder.Services.AddSingleton(issuerSigningKey);
+
+builder.Services.AddSingleton(authSettings);
 
 builder.Services.AddControllers(configure =>
 {
@@ -65,9 +91,9 @@ options =>
 	{
 		ValidateIssuer = false,
 		ValidateAudience = false,
-		ValidAudience = "http://fonlow.com/demoapp",
-		ValidIssuer = "http://fonlow.com/demoapp",
-		IssuerSigningKey = Fonlow.DemoApp.ApiConstants.SymmetricSecurityKey
+		ValidAudience = authSettings.Audience,
+		ValidIssuer = authSettings.Issuer,
+		IssuerSigningKey = issuerSigningKey,
 	}; // Thanks to https://dotnetdetail.net/asp-net-core-3-0-web-api-token-based-authentication-example-using-jwt-in-vs2019/
 });
 
@@ -92,7 +118,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationIdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddUserManager<ApplicationUserManager>()
 				.AddDefaultTokenProviders()
-				.AddTokenProvider(DemoApp.Accounts.DemoApConstants.AppCodeName, typeof(DataProtectorTokenProvider<ApplicationUser>)); //thanks to https://stackoverflow.com/questions/53659247/using-aspnetusertokens-table-to-store-refresh-token-in-asp-net-core-web-api;
+				.AddTokenProvider(authSettings.TokenProviderName, typeof(DataProtectorTokenProvider<ApplicationUser>)); //thanks to https://stackoverflow.com/questions/53659247/using-aspnetusertokens-table-to-store-refresh-token-in-asp-net-core-web-api;
 
 
 var app = builder.Build();

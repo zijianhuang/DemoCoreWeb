@@ -23,9 +23,4 @@
 
         public const string InternalRoles = Admin + "," + Manager + "," + Staff;
     }
-
-    public static class DemoApConstants {
-        public const string AppCodeName = "DemoWebTokenProviderName";
-
-	}
 }

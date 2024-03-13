@@ -1,4 +1,4 @@
-﻿using Fonlow.WebApp.Security;
+﻿using Fonlow.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 using Fonlow.AuthDbCreator;

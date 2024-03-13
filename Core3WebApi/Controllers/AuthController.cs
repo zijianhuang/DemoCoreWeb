@@ -1,11 +1,13 @@
 ﻿using Fonlow.AspNetCore.Identity;
 using Fonlow.WebApp.Accounts;
+using Fonlow.WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -22,9 +24,14 @@ namespace PoemsApp.Controllers
 			get; private set;
 		}
 
-		public AuthController(ApplicationUserManager userManager)
+		readonly IAuthSettings authSettings;
+		readonly SymmetricSecurityKey symmetricSecurityKey;
+
+		public AuthController(ApplicationUserManager userManager, SymmetricSecurityKey symmetricSecurityKey, IAuthSettings authSettings)
 		{
 			UserManager = userManager;
+			this.authSettings = authSettings;
+			this.symmetricSecurityKey= symmetricSecurityKey;
 		}
 
 		/// <summary>
@@ -76,8 +83,8 @@ namespace PoemsApp.Controllers
 				return BadRequest(new { message = "Username or password is invalid" });
 			}
 
-			var tokenHelper = new TokensHelper(UserManager);
-			var tokenTextExisting = await tokenHelper.MatchToken(user, DemoApp.Accounts.DemoApConstants.AppCodeName, "RefreshToken", refreshToken, connectionId);
+			var tokenHelper = new TokensHelper(UserManager, authSettings.TokenProviderName);
+			var tokenTextExisting = await tokenHelper.MatchToken(user, authSettings.TokenProviderName, "RefreshToken", refreshToken, connectionId);
 			if (!tokenTextExisting)
 			{
 				return StatusCode(406, new { message = "Invalid to retrieve token through refreshToken" });
@@ -106,21 +113,21 @@ namespace PoemsApp.Controllers
 #endif
 			DateTimeOffset expires = DateTimeOffset.UtcNow.Add(span);
 			JwtSecurityToken token = new JwtSecurityToken(
-				issuer: "http://mpdlaw.com.au/soloman",
-				audience: "http://mpdlaw.com.au/soloman",
+				issuer: authSettings.Issuer,
+				audience: authSettings.Audience,
 				expires: expires.UtcDateTime,
 				claims: claims,
-				signingCredentials: new SigningCredentials(Fonlow.DemoApp.ApiConstants.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256)
+				signingCredentials: new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
 				);
 
 			string accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
 			const string tokenName = "RefreshToken";
 			//await UserManager.RemoveAuthenticationTokenAsync(user, Constants.AppCodeName, tokenName);
-			var refreshToken = await UserManager.GenerateUserTokenAsync(user, DemoApp.Accounts.DemoApConstants.AppCodeName, tokenName);
+			var refreshToken = await UserManager.GenerateUserTokenAsync(user, authSettings.TokenProviderName, tokenName);
 			//await UserManager.SetAuthenticationTokenAsync(user, Constants.AppCodeName, tokenName, refreshToken);
-			var tokenHelper = new TokensHelper(UserManager);
-			await tokenHelper.UpsertToken(user, DemoApp.Accounts.DemoApConstants.AppCodeName, tokenName, refreshToken, connectionId);
+			var tokenHelper = new TokensHelper(UserManager, authSettings.TokenProviderName);
+			await tokenHelper.UpsertToken(user, authSettings.TokenProviderName, tokenName, refreshToken, connectionId);
 
 			return new TokenResponseModel()
 			{
@@ -139,13 +146,15 @@ namespace PoemsApp.Controllers
 
 	public class TokensHelper
 	{
-		public TokensHelper(ApplicationUserManager userManager)
+		public TokensHelper(ApplicationUserManager userManager, string tokenProviderName)
 		{
 			this.userManager = userManager;
+			this.tokenProviderName = tokenProviderName;
 		}
 
 		readonly ApplicationUserManager userManager;
 
+		readonly string tokenProviderName;
 		/// <summary>
 		/// Add or update a toke of an existing connection.
 		/// </summary>
@@ -196,8 +205,8 @@ namespace PoemsApp.Controllers
 
 			tokenList.Add(customToken);
 			string newTokensText = System.Text.Json.JsonSerializer.Serialize<CustomToken[]>(tokenList.ToArray());
-			await userManager.RemoveAuthenticationTokenAsync(user, DemoApp.Accounts.DemoApConstants.AppCodeName, tokenName); // need to remove it first, otherwise, Set won't work.
-			return await userManager.SetAuthenticationTokenAsync(user, DemoApp.Accounts.DemoApConstants.AppCodeName, tokenName, newTokensText);
+			await userManager.RemoveAuthenticationTokenAsync(user, tokenProviderName, tokenName); // need to remove it first, otherwise, Set won't work.
+			return await userManager.SetAuthenticationTokenAsync(user, tokenProviderName, tokenName, newTokensText);
 		}
 
 		public async Task<bool> MatchToken(ApplicationUser user, string loginProvider, string tokenName, string tokenValue, Guid connectionId)
