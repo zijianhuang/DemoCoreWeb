@@ -1,3 +1,3 @@
-﻿Extensions to `IdentityRole<Guid>` and `IdentityUser<Guid>` for Web apps that prefer using GUID rather than string for the ID type.
+﻿Helper functions to established a new Identity database, and optionally seed with predefined roles and users.
 
-High level wrappers for some classes of `Microsoft.AspNetCore.Identity.EntityFrameworkCore`.
+The caller should provide a callback function to establish the initial connection to a specific database engine, since this library has no dependency on any database engine.

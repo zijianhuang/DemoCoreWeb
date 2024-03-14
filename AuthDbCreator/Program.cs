@@ -1,5 +1,5 @@
 ﻿using Fonlow.AuthDbCreator;
-using Microsoft.EntityFrameworkCore;
+using Fonlow.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -17,38 +17,31 @@ namespace AuthDbCreator
 		{
 			AuthDb authDb;
 			IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-			if (args.Length == 0)//for internal development
+			var dbEngineDbContext = DbEngineDbContextLoader.CreateDbEngineDbContextFromAssembly("Fonlow.EntityFrameworkCore.Sqlite");
+			if (dbEngineDbContext != null)
 			{
-				Console.WriteLine("Create database with connection string in appsetings.json ...");
-				authDb = new AuthDb(config, ConnectDatabase);
-				await authDb.DropAndCreate();
+				if (args.Length == 0)//for internal development
+				{
+					Console.WriteLine("Create database with connection string in appsetings.json ...");
+					authDb = new AuthDb(config, dbEngineDbContext);
+					await authDb.DropAndCreate();
+				}
+				else
+				{
+					var dbEngine = args[0];
+					var connectionString = args[1];
+					var roleNames = args[2].Split(',');
+					Console.WriteLine("Create database with arguments ...");
+					authDb = new AuthDb(dbEngine, connectionString, roleNames, dbEngineDbContext);
+					await authDb.DropAndCreate();
+				}
+
+				await authDb.SeedDb();
+				Console.WriteLine("Done.");
 			}
 			else
 			{
-				var dbEngine = args[0];
-				var connectionString = args[1];
-				var roleNames = args[2].Split(',');
-				Console.WriteLine("Create database with arguments ...");
-				authDb = new AuthDb(dbEngine, connectionString, roleNames, ConnectDatabase);
-				await authDb.DropAndCreate();
-			}
-
-			await authDb.SeedDb();
-			Console.WriteLine("Done.");
-		}
-
-		static void ConnectDatabase(DbContextOptionsBuilder dcob, string dbEngine, string connectionString)
-		{
-			switch (dbEngine)
-			{
-				case "sqlite":
-					dcob.UseSqlite(connectionString);
-					break;
-				case "mysql":
-					dcob.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); // connection is made to obtain some db server info.
-					break;
-				default:
-					throw new ArgumentException("Must define dbEngine like sqlite or mysql");
+				Console.Error.WriteLine("DBEngineDbContext plugin not found.");
 			}
 		}
 	}

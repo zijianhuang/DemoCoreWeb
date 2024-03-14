@@ -1,5 +1,6 @@
 ﻿using Fonlow.AspNetCore.Identity;
 using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
+using Fonlow.EntityFrameworkCore.Abstract;
 using Fonlow.WebApp.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,24 +17,23 @@ namespace Fonlow.AuthDbCreator
 		readonly IConfiguration appConfig;
 		readonly IdentitySeeding identitySeeding;
 
-		string dbEngine;
 		string basicConnectionString;
-		readonly Action<DbContextOptionsBuilder, string, string> connectDatabase;
+		readonly IDbEngineDbContext dbEngineDbContext;
 
 		/// <summary>
 		/// Connect to database and get DB options
 		/// </summary>
 		/// <param name="config"></param>
 		/// <param name="connectDatabase"></param>
-		public AuthDb(IConfiguration config, Action<DbContextOptionsBuilder, string, string> connectDatabase)
+		public AuthDb(IConfiguration config, IDbEngineDbContext dbEngineDbContext)
 		{
 			appConfig = config;
-			this.connectDatabase= connectDatabase;
+			this.dbEngineDbContext= dbEngineDbContext;
 			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
 			identitySeeding = new IdentitySeeding();
 			IdentitySeedingSection.Bind(identitySeeding);
 			var appSettings = appConfig.GetSection("appSettings");
-			dbEngine = appSettings.GetValue<string>("dbEngine");
+			//dbEngine = appSettings.GetValue<string>("dbEngine");
 			if (IdentitySeedingSection != null)
 			{
 				roleNames = identitySeeding.Roles;
@@ -44,12 +44,11 @@ namespace Fonlow.AuthDbCreator
 			this.options = GetOptions();
 		}
 
-		public AuthDb(string dbEngine, string connectionString, string[] roleNames, Action<DbContextOptionsBuilder, string, string> connectDatabase)
+		public AuthDb(string dbEngine, string connectionString, string[] roleNames, IDbEngineDbContext dbEngineDbContext)
 		{
-			this.dbEngine = dbEngine;
 			this.basicConnectionString = connectionString;
 			this.roleNames = roleNames;
-			this.connectDatabase = connectDatabase;
+			this.dbEngineDbContext = dbEngineDbContext;
 			this.options = GetOptions();
 		}
 
@@ -60,8 +59,8 @@ namespace Fonlow.AuthDbCreator
 		public DbContextOptions<ApplicationDbContext> GetOptions()
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-			Console.WriteLine($"Ready to create {dbEngine} db with {basicConnectionString} ...");
-			connectDatabase(optionsBuilder, dbEngine, basicConnectionString);
+			Console.WriteLine($"Ready to create {dbEngineDbContext.DbEngineName} db with {basicConnectionString} ...");
+			dbEngineDbContext.ConnectDatabase(optionsBuilder, basicConnectionString);
 			return optionsBuilder.Options;
 		}
 
