@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "AuthDbCreatorCore": {
+    "AuthDbCreator": {
       "commandName": "Project"
     }
   }

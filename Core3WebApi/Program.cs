@@ -1,6 +1,7 @@
 using Fonlow.AspNetCore.Identity;
 using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
 using Fonlow.DateOnlyExtensions;
+using Fonlow.EntityFrameworkCore;
 using Fonlow.WebApp.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -19,7 +20,7 @@ string dirOfAppAssembly = System.IO.Path.GetDirectoryName(appAssembly.Location);
 IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile(System.IO.Path.Combine(dirOfAppAssembly, "appsettings.json")).Build();
 var appSettings = config.GetSection("appSettings");
 var environment = appSettings.GetValue<string>("environment");
-var dbEngine = appSettings.GetValue<string>("dbEngine");
+var dbEngineDbContextPlugins = appSettings.GetSection("dbEngineDbContextPlugins").Get<string[]>();
 var identityConnectionString = config.GetConnectionString("IdentityConnection");
 IAuthSetupSecrets authSetupSettings = null;
 IAuthSettings authSettings = null;
@@ -110,7 +111,15 @@ builder.Services.AddCors(options => options.AddPolicy("All", builder =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 {
-	ConnectDatabase(dcob, dbEngine, identityConnectionString);
+	var dbEngineDbContext = DbEngineDbContextLoader.CreateDbEngineDbContextFromAssemblyFile(dbEngineDbContextPlugins[0] + ".dll");
+	//var dbEngineDbContext = DbEngineDbContextLoader.CreateDbEngineDbContextFromAssemblyName(dbEngineDbContextPlugins[0]);
+	if (dbEngineDbContext == null)
+	{
+		Console.Error.WriteLine("No dbEngineDbContext");
+		throw new ArgumentException("Need dbEngineDbContextPlugin");
+	}
+
+	dbEngineDbContext.ConnectDatabase(dcob, identityConnectionString);
 });
 
 //For usage not with DI

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy $(OutDir)*.* $(SolutionDir)AuthDbCreator\$(OutDir)  /s /d /y" />
+    <Exec Command="xcopy $(OutDir)*.* $(SolutionDir)AuthDbCreator\$(OutDir)  /s /d /y&#xD;&#xA;xcopy $(OutDir)*.* $(SolutionDir)Core3WebApi\$(OutDir)  /s /d /y" />
   </Target>
 
 </Project>

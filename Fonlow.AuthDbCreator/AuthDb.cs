@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Fonlow.AuthDbCreator
 {
+	/// <summary>
+	/// Establish ASP.NET Core Identity database, optionally with some seeding for predefined roles and predefined users.
+	/// </summary>
 	public class AuthDb
 	{
 		readonly DbContextOptions<ApplicationDbContext> options;
@@ -23,12 +26,14 @@ namespace Fonlow.AuthDbCreator
 		/// <summary>
 		/// Connect to database and get DB options
 		/// </summary>
-		/// <param name="config"></param>
-		/// <param name="connectDatabase"></param>
+		/// <param name="config">It should contain a connection string named after "IdentityConnection"</param>
+		/// <param name="dbEngineDbContext">For specific DB engine</param>
 		public AuthDb(IConfiguration config, IDbEngineDbContext dbEngineDbContext)
 		{
 			appConfig = config;
+			basicConnectionString = appConfig.GetConnectionString("IdentityConnection");
 			this.dbEngineDbContext= dbEngineDbContext;
+
 			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
 			identitySeeding = new IdentitySeeding();
 			IdentitySeedingSection.Bind(identitySeeding);
@@ -37,16 +42,30 @@ namespace Fonlow.AuthDbCreator
 				roleNames = identitySeeding.Roles;
 			}
 
-			basicConnectionString = appConfig.GetConnectionString("IdentityConnection");
-
 			this.options = GetOptions();
 		}
 
-		public AuthDb(string dbEngine, string connectionString, string[] roleNames, IDbEngineDbContext dbEngineDbContext)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="config"></param>
+		/// <param name="connectionString"></param>
+		/// <param name="dbEngineDbContext"></param>
+		public AuthDb(IConfiguration config, string connectionString, IDbEngineDbContext dbEngineDbContext)
 		{
+			appConfig = config;
 			this.basicConnectionString = connectionString;
-			this.roleNames = roleNames;
 			this.dbEngineDbContext = dbEngineDbContext;
+
+			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
+			identitySeeding = new IdentitySeeding();
+			IdentitySeedingSection.Bind(identitySeeding);
+			if (IdentitySeedingSection != null)
+			{
+				roleNames = identitySeeding.Roles;
+			}
+
+
 			this.options = GetOptions();
 		}
 

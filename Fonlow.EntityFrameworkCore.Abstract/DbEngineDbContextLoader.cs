@@ -1,47 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Fonlow.EntityFrameworkCore.Abstract;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Fonlow.EntityFrameworkCore.Abstract;
 
 namespace Fonlow.EntityFrameworkCore
 {
+	/// <summary>
+	/// Load implementation of IDbEngineDbContext from an assembly.
+	/// </summary>
 	public sealed class DbEngineDbContextLoader
 	{
-		public static IDbEngineDbContext CreateDbEngineDbContextFromAssembly(string assemblyName)
+		/// <summary>
+		/// Load assembly file with a type implementing IDbEngineDbContext, and return the type as IDbEngineDbContext.
+		/// This is to be used in console apps or desktop apps.
+		/// </summary>
+		/// <param name="assemblyFilePath"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static IDbEngineDbContext CreateDbEngineDbContextFromAssemblyFile(string assemblyFilePath)
 		{
 			Assembly assembly;
 			try
 			{
-				Console.WriteLine("Current Dir: " +  Directory.GetCurrentDirectory());
-				assembly = Assembly.Load(assemblyName);
-				Trace.TraceInformation("Assembly {0} is loaded for type {1}.", assemblyName, "ICommand");
+				var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				var absolutePath = Path.Combine(dir, assemblyFilePath);
+				assembly = LoadAssemblyFile(absolutePath);
 			}
-			catch (System.IO.FileLoadException e)
+			catch (Exception e)
 			{
-				Trace.TraceWarning(String.Format("When loading plugin {0}, FileLoadException: {1}", assemblyName, e.Message));
-				return null;
-			}
-			catch (BadImageFormatException e)
-			{
-				Trace.TraceWarning(String.Format("When loading plugin {0}, BadImageFormatException: {1}", assemblyName, e.Message));
-				//when file is a win32 dll.
-				return null;
-			}
-			catch (System.IO.FileNotFoundException e)
-			{
-				Trace.TraceWarning(String.Format("When loading plugin {0}, FileNotFoundException: {1}", assemblyName, e.Message));
-				return null;
-			}
-			catch (ArgumentException e)
-			{
-				Trace.TraceWarning(String.Format("When loading plugin {0}, ArgumentException: {1}", assemblyName, e.Message));
-				return null;
+				Trace.TraceWarning(String.Format("When loading plugin {0}, ArgumentException: {1}", assemblyFilePath, e.Message));
+				throw;
 			}
 
+			return CreateDbEngineDbContextFromAssembly(assembly);
+		}
+
+		/// <summary>
+		/// This is to be used in hosted Web service.
+		/// </summary>
+		/// <param name="assemblyName"></param>
+		/// <returns></returns>
+		public static IDbEngineDbContext CreateDbEngineDbContextFromAssemblyName(string assemblyName)
+		{
+			Assembly assembly;
+			try
+			{
+				assembly = Assembly.Load(assemblyName);
+			}
+			catch (Exception e)
+			{
+				Trace.TraceWarning(String.Format("When loading plugin {0}, ArgumentException: {1}", assemblyName, e.Message));
+				throw;
+			}
+
+			return CreateDbEngineDbContextFromAssembly(assembly);
+		}
+
+		public static IDbEngineDbContext CreateDbEngineDbContextFromAssembly(Assembly assembly)
+		{
 			IDbEngineDbContext dbEngineDbContext = null;
 			try
 			{
@@ -56,7 +71,7 @@ namespace Fonlow.EntityFrameworkCore
 
 				if (dbEngineDbContext == null)
 				{
-					throw new ArgumentException($"Cannot find derived class of ControllersTsClientApiGenBase from {assemblyName}");
+					throw new ArgumentException($"Cannot find derived class of IDbEngineDbContext from {assembly.FullName}");
 				}
 
 				return dbEngineDbContext;
@@ -66,15 +81,30 @@ namespace Fonlow.EntityFrameworkCore
 			{
 				foreach (Exception ex in e.LoaderExceptions)
 				{
-					Trace.TraceWarning(String.Format("When loading plugin {0}, GetTypes errors occur: {1}", assemblyName, ex.Message));
+					Trace.TraceWarning(String.Format("When loading plugin {0}, GetTypes errors occur: {1}", assembly.FullName, ex.Message));
 				}
 			}
 			catch (TargetInvocationException e)
 			{
-				Trace.TraceWarning(String.Format("When loading plugin {0}, GetTypes errors occur: {1}", assemblyName, e.Message + "~~" + e.InnerException.Message));
+				Trace.TraceWarning(String.Format("When loading plugin {0}, GetTypes errors occur: {1}", assembly.FullName, e.Message + "~~" + e.InnerException.Message));
 			}
 
 			return null;
+		}
+
+		static Assembly LoadAssemblyFile(string assemblyFilePath)
+		{
+			try
+			{
+				return Assembly.LoadFile(assemblyFilePath);
+			}
+			catch (Exception ex) when (ex is System.IO.FileLoadException || ex is BadImageFormatException || ex is System.IO.FileNotFoundException || ex is ArgumentException)
+			{
+				var msg = String.Format("When loading {0}, errors occur: {1}", assemblyFilePath, ex.Message);
+				Console.WriteLine(msg);
+				Trace.TraceWarning(msg);
+				return null;
+			}
 		}
 	}
 }

@@ -27,6 +27,7 @@
     <ProjectReference Include="..\DemoApp.Accounts\DemoApp.Accounts.csproj" />
     <ProjectReference Include="..\DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj" />
     <ProjectReference Include="..\Fonlow.AspNetCore.Identity\Fonlow.AspNetCore.Identity.csproj" />
+    <ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
     <ProjectReference Include="..\Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj" />
   </ItemGroup>
 
