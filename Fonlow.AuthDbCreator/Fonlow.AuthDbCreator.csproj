@@ -7,9 +7,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Fonlow.AspNetCore.Identity\Fonlow.AspNetCore.Identity.csproj" />
 		<ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
 		<ProjectReference Include="..\Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj" />
-		<ProjectReference Include="..\Fonlow.WebApp.Identity\Fonlow.WebApp.Identity.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -2,6 +2,7 @@
 using Fonlow.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 
 namespace AuthDbCreator
@@ -13,10 +14,17 @@ namespace AuthDbCreator
 	/// </summary>
 	class Program
 	{
-		static async Task Main(string[] args)
+		static async Task<int> Main(string[] args)
 		{
 			AuthDb authDb;
 			IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+			var appSettings = config.GetSection("appSettings");
+			var plugins = appSettings.GetSection("dbEngineDbContextPlugins").Get<string[]>();
+			if (plugins ==null || plugins.Length == 0) {
+				Console.Error.WriteLine("No plugin of dbEngineDbContext found in appSettings");
+				return 10;
+			}
+
 			var dbEngineDbContext = DbEngineDbContextLoader.CreateDbEngineDbContextFromAssembly("Fonlow.EntityFrameworkCore.Sqlite");
 			if (dbEngineDbContext != null)
 			{
@@ -38,10 +46,12 @@ namespace AuthDbCreator
 
 				await authDb.SeedDb();
 				Console.WriteLine("Done.");
+				return 0;
 			}
 			else
 			{
 				Console.Error.WriteLine("DBEngineDbContext plugin not found.");
+				return 11;
 			}
 		}
 	}

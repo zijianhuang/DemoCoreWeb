@@ -32,8 +32,6 @@ namespace Fonlow.AuthDbCreator
 			var IdentitySeedingSection = appConfig.GetSection("IdentitySeeding");
 			identitySeeding = new IdentitySeeding();
 			IdentitySeedingSection.Bind(identitySeeding);
-			var appSettings = appConfig.GetSection("appSettings");
-			//dbEngine = appSettings.GetValue<string>("dbEngine");
 			if (IdentitySeedingSection != null)
 			{
 				roleNames = identitySeeding.Roles;

@@ -16,6 +16,7 @@ namespace Fonlow.EntityFrameworkCore
 			Assembly assembly;
 			try
 			{
+				Console.WriteLine("Current Dir: " +  Directory.GetCurrentDirectory());
 				assembly = Assembly.Load(assemblyName);
 				Trace.TraceInformation("Assembly {0} is loaded for type {1}.", assemblyName, "ICommand");
 			}

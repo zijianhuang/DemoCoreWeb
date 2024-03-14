@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy $(OutDir)*.* $(SolutionDir)AuthDbCreator\$(OutDir)  /s /d /y" />
+  </Target>
+
 </Project>
