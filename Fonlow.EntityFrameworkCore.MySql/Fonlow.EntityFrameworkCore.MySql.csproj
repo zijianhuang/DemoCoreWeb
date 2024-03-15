@@ -1,21 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	  <Version>1.0</Version>
+	  <Authors>Zijian Huang</Authors>
+	  <Description>MySqlDbEngineDbContext: Implementation of IDbEngineDbContext for MySql</Description>
+	  <PackageReleaseNotes></PackageReleaseNotes>
+	  <NeutralLanguage>en</NeutralLanguage>
+	  <PackageProjectUrl>https://github.com/zijianhuang/webapiclientgen</PackageProjectUrl>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.1" />
+	<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
+	<ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy $(OutDir)*.* $(SolutionDir)AuthDbCreator\$(OutDir)  /s /d /y" />
+	<Exec Command="xcopy $(OutDir)*.* $(SolutionDir)AuthDbCreator\$(OutDir)  /s /d /y" />
   </Target>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
+		<CopyDocumentationFilesFromPackages>true</CopyDocumentationFilesFromPackages>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="readme.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 
 </Project>

@@ -144,14 +144,14 @@ if (app.Environment.IsDevelopment()) //ASPNETCORE_ENVIRONMENT=Development in web
 }
 else
 {
-	//Only release build support https redirection.
-#if RELEASE
-	if (useHttps) // for locally running app, no need to have https.
-	{
-		app.UseHttpsRedirection();
-		app.UseHsts();//https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-6.0
-	}
-#endif
+//	//Only release build support https redirection.
+//#if RELEASE
+//	if (useHttps) // for locally running app, no need to have https.
+//	{
+//		app.UseHttpsRedirection();
+//		app.UseHsts();//https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-6.0
+//	}
+//#endif
 }
 app.UseAuthentication();
 app.UseAuthorization();

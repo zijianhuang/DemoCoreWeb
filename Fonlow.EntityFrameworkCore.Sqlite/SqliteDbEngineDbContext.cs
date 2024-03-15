@@ -2,7 +2,7 @@
 
 namespace Fonlow.EntityFrameworkCore.Sqlite
 {
-	public class DbEngineDbContext : Fonlow.EntityFrameworkCore.Abstract.IDbEngineDbContext
+	public class SqliteDbEngineDbContext : Fonlow.EntityFrameworkCore.Abstract.IDbEngineDbContext
 	{
 		public string DbEngineName => "Sqlite";
 

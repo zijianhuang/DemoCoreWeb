@@ -2,7 +2,7 @@
 
 namespace Fonlow.EntityFrameworkCore.MySql
 {
-	public class DbEngineDbContext : Fonlow.EntityFrameworkCore.Abstract.IDbEngineDbContext
+	public class MySqlDbEngineDbContext : Fonlow.EntityFrameworkCore.Abstract.IDbEngineDbContext
 	{
 		public string DbEngineName => "MySql";
 
