@@ -11,7 +11,7 @@ namespace Fonlow.EntityFrameworkCore
 	{
 		/// <summary>
 		/// Load assembly file with a type implementing IDbEngineDbContext, and return the type as IDbEngineDbContext.
-		/// This is to be used in console apps or desktop apps.
+		/// This is to be used in console apps or desktop apps or the startup codes of ASP.NET.
 		/// </summary>
 		/// <param name="assemblyFilePath"></param>
 		/// <returns></returns>
@@ -35,7 +35,7 @@ namespace Fonlow.EntityFrameworkCore
 		}
 
 		/// <summary>
-		/// This is to be used in hosted Web service.
+		/// This is to be used in a caller which is loaded through reflection, for example, a controller in ASP.NET.
 		/// </summary>
 		/// <param name="assemblyName"></param>
 		/// <returns></returns>

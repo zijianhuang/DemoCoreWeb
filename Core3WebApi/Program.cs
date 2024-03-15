@@ -120,6 +120,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(dcob =>
 	}
 
 	dbEngineDbContext.ConnectDatabase(dcob, identityConnectionString);
+	Console.WriteLine($"DB Engine: {dbEngineDbContext.DbEngineName}");
 });
 
 //For usage not with DI
