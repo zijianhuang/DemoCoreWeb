@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<Version>1.0</Version>
+		<Version>1.0.2</Version>
 		<Authors>Zijian Huang</Authors>
 		<Description>Helper functions to established a new Identity database, and optionally seed with predefined roles and users.</Description>
 		<PackageReleaseNotes></PackageReleaseNotes>
@@ -18,7 +18,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Fonlow.AspNetCore.Identity\Fonlow.AspNetCore.Identity.csproj" />
 		<ProjectReference Include="..\Fonlow.EntityFrameworkCore.Abstract\Fonlow.EntityFrameworkCore.Abstract.csproj" />
-		<ProjectReference Include="..\Fonlow.WebApp.Accounts\Fonlow.WebApp.Accounts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,7 +36,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="readme.md" Pack="true" PackagePath="\"/>
+		<None Include="readme.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		
-		<Version>1.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Zijian Huang</Authors>
 		<Description>ASP.NET Identity with GUID for ID.</Description>
 		<PackageReleaseNotes></PackageReleaseNotes>

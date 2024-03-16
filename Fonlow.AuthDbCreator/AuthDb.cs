@@ -1,7 +1,6 @@
 ﻿using Fonlow.AspNetCore.Identity;
 using Fonlow.AspNetCore.Identity.EntityFrameworkCore;
 using Fonlow.EntityFrameworkCore.Abstract;
-using Fonlow.WebApp.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
