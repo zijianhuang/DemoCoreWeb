@@ -61,7 +61,7 @@ namespace AuthDbCreator
 			return 0;
 		}
 
-		//static System.Reflection.Assembly AppDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		//static System.Reflection.Assembly AppDomain_AssemblyResolve(object sender, ResolveEventArgs args) Not needed in .NET Core
 		//{
 		//	System.Reflection.Assembly assembly;
 		//	try
