@@ -232,7 +232,7 @@ export namespace DemoWebApi_Models_Client {
 		 * String length: inclusive between 6 and 100
 		 * Data type: Password
 		 */
-		newPassword?: string | null;
+		newPassword: string;
 
 		/**
 		 * Required
@@ -357,6 +357,10 @@ export namespace DemoCoreWeb_Controllers_Client {
 }
 
 export namespace DemoWebApi_Controllers_Client {
+
+	/**
+	 * For testing different commbinations of parameters and returns
+	 */
 	@Injectable()
 	export class DateTypes {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/', private http: HttpClient) {
@@ -646,6 +650,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * Heroes operations
+	 */
 	@Injectable()
 	export class Heroes {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/', private http: HttpClient) {
@@ -730,6 +738,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * For testing different commbinations of parameters and returns
+	 */
 	@Injectable()
 	export class SuperDemo {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/', private http: HttpClient) {
@@ -759,6 +771,7 @@ export namespace DemoWebApi_Controllers_Client {
 
 		/**
 		 * GET api/SuperDemo/ActionStringResult
+		 * Status Codes: 200:OK : System.String
 		 */
 		getActionStringResult(headersHandler?: () => HttpHeaders): Observable<string> {
 			return this.http.get(this.baseUri + 'api/SuperDemo/ActionStringResult', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' });
@@ -1203,6 +1216,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.3.3
+	 */
 	@Injectable()
 	export class Tuple {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/', private http: HttpClient) {
