@@ -11,7 +11,7 @@
 	},
 
 	"ClientApiOutputs": {
-		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
+		"ClientLibraryProjectFolderName": "../CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
 		"CamelCase": true,
@@ -23,7 +23,7 @@
 		"Plugins": [
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Axios",
-				"TargetDir": "..\\..\\..\\..\\ReactHeroes\\src\\clientapi",
+				"TargetDir": "../ReactHeroes/src/clientapi",
 				"TSFile": "WebApiCoreAxiosClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8"
@@ -31,7 +31,7 @@
 
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Aurelia",
-				"TargetDir": "..\\..\\..\\..\\AureliaHeroes\\src\\clientapi",
+				"TargetDir": "../AureliaHeroes/src/clientapi",
 				"TSFile": "WebApiCoreAureliaClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8"
@@ -39,7 +39,7 @@
 
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.NG2",
-				"TargetDir": "..\\..\\..\\..\\AngularHeroes\\src\\clientapi",
+				"TargetDir": "../AngularHeroes/src/clientapi",
 				"TSFile": "WebApiCoreNg2ClientAuto.ts",
 				"AsModule": true,
 				"DataAnnotationsToComments": true,
@@ -48,7 +48,7 @@
 
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Fetch",
-				"TargetDir": "..\\..\\..\\..\\fetchapi\\src\\clientapi",
+				"TargetDir": "../fetchapi/src/clientapi",
 				"TSFile": "WebApiCoreFetchClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8"

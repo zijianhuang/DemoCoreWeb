@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>c:\VsProjects\DemoCoreWeb\Core3WebApi\Core3WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

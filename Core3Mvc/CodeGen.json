@@ -11,11 +11,14 @@
 	},
 
 	"ClientApiOutputs": {
-		"ClientLibraryProjectFolderName": "..\\..\\..\\..\\CoreWebApi.ClientApi",
+		"ClientLibraryProjectFolderName": "../../CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
 		"StringAsString": true,
-		"UseEnsureSuccessStatusCodeEx": true,
 		"CamelCase": true,
+		"UseEnsureSuccessStatusCodeEx": true,
+		"DataAnnotationsEnabled": true,
+		"DataAnnotationsToComments": true,
+		"HandleHttpRequestHeaders": true,
 
 		"Plugins": [
 

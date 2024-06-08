@@ -1,9 +1,9 @@
 ﻿#Launch WebApi Website and POST a request for generating client APIs
 cd $PSScriptRoot
-$path = "$PSScriptRoot\Core3WebApi\bin\Debug\net8.0"
+$path = "$PSScriptRoot\Core3WebApi"
 $procArgs = @{
     FilePath         = "dotnet.exe"
-    ArgumentList     = "$path\Core3WebApi.dll"
+    ArgumentList     = "run --project $path/Core3WebApi.csproj --no-build"
     WorkingDirectory = $path
     PassThru         = $true
 }
