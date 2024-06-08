@@ -12,302 +12,6 @@ export namespace DemoWebApi_Controllers_Client {
 		name?: string | null;
 	}
 
-}
-
-export namespace DemoWebApi_DemoData_Client {
-	export interface Address {
-		city?: string | null;
-		country?: string | null;
-
-		/** Type: GUID */
-		id?: string | null;
-		postalCode?: string | null;
-		state?: string | null;
-		street1?: string | null;
-		street2?: string | null;
-		type?: DemoWebApi_DemoData_Client.AddressType | null;
-
-		/**
-		 * It is a field
-		 */
-		location?: DemoWebApi_DemoData_Another_Client.MyPoint;
-	}
-
-	export enum AddressType { Postal, Residential }
-
-	export interface Company extends DemoWebApi_DemoData_Client.Entity {
-
-		/**
-		 * BusinessNumber to be serialized as BusinessNum
-		 */
-		BusinessNum?: string | null;
-		businessNumberType?: string | null;
-		foundDate?: Date | null;
-
-		/** Type: DateOnly */
-		registerDate?: Date | null;
-		textMatrix?: Array<Array<string>>;
-		int2D?: number[][];
-		int2DJagged?: Array<Array<number>>;
-		lines?: Array<string>;
-	}
-
-	export enum Days {
-		Sat = 1,
-		Sun = 2,
-		Mon = 3,
-		Tue = 4,
-		Wed = 5,
-
-		/**
-		 * Thursday
-		 */
-		Thu = 6,
-		Fri = 7
-	}
-
-
-	/**
-	 * Base class of company and person
-	 */
-	export interface Entity {
-
-		/**
-		 * Multiple addresses
-		 */
-		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
-		id?: string | null;
-
-		/**
-		 * Name of the entity.
-		 */
-		name: string;
-		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
-
-		/** Type: Uri */
-		web?: string | null;
-	}
-
-
-	/**
-	 * To test different serializations against Guid
-	 */
-	export interface IdMap {
-
-		/** Type: GUID */
-		id?: string | null;
-
-		/** Type: GUID */
-		idNotEmitDefaultValue?: string | null;
-		nullableId?: string | null;
-		requiredName: string;
-		text?: string | null;
-	}
-
-	export enum MedicalContraindiationResponseTypeReason { M = "Mm", S = "Ss", P = "Pp", I = "I", A = "A" }
-
-	export enum MedicalContraindiationResponseTypeTypeCode { P = "P", T = "Tt" }
-
-	export interface MimsPackage {
-
-		/** Type: int */
-		kk?: number | null;
-
-		/**
-		 * Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
-		 * and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
-		 */
-		kK2?: number | null;
-		optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType | null;
-		optionalInt?: number | null;
-		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
-		tag?: string | null;
-	}
-
-	export interface MimsResult<T> {
-		generatedAt?: Date | null;
-		message?: string | null;
-		result?: T;
-		success?: boolean | null;
-	}
-
-	export enum MyEnumType { First = 1, Two = 2 }
-
-	export interface MyGeneric<T, K, U> {
-		myK?: K;
-		myT?: T;
-		myU?: U;
-		status?: string | null;
-	}
-
-	export interface MyPeopleDic {
-		anotherDic?: {[id: string]: string };
-		dic?: {[id: string]: DemoWebApi_DemoData_Client.Person };
-		intDic?: {[id: number]: string };
-	}
-
-	export interface Person extends DemoWebApi_DemoData_Client.Entity {
-		baptised?: Date | null;
-
-		/**
-		 * Date of Birth.
-		 * This is optional.
-		 */
-		dob?: Date | null;
-		givenName?: string | null;
-		surname?: string | null;
-	}
-
-	export interface PhoneNumber {
-		fullNumber?: string | null;
-		phoneType?: DemoWebApi_DemoData_Client.PhoneType | null;
-	}
-
-
-	/**
-	 * Phone type
-	 * Tel, Mobile, Skyp and Fax
-	 */
-	export enum PhoneType {
-
-		/**
-		 * Land line
-		 */
-		Tel,
-
-		/**
-		 * Mobile phone
-		 */
-		Mobile,
-		Skype,
-		Fax
-	}
-
-}
-
-export namespace DemoWebApi_DemoData_Another_Client {
-
-	/**
-	 * 2D position
-	 * with X and Y
-	 * for Demo
-	 */
-	export interface MyPoint {
-
-		/**
-		 * X
-		 */
-		x: number;
-
-		/**
-		 * Y
-		 */
-		y: number;
-	}
-
-}
-
-export namespace DemoWebApi_Models_Client {
-	export interface AddExternalLoginBindingModel {
-		externalAccessToken?: string | null;
-	}
-
-	export interface ChangePasswordBindingModel {
-		confirmPassword?: string | null;
-		newPassword: string;
-		OldPwd: string;
-	}
-
-	export interface RegisterBindingModel {
-		confirmPassword?: string | null;
-		email?: string | null;
-		password?: string | null;
-	}
-
-	export interface RegisterExternalBindingModel {
-		email?: string | null;
-	}
-
-	export interface RemoveLoginBindingModel {
-		loginProvider?: string | null;
-		providerKey?: string | null;
-	}
-
-	export interface SetPasswordBindingModel {
-		confirmPassword?: string | null;
-		newPassword?: string | null;
-	}
-
-}
-
-export namespace Core3WebApi_Controllers_Client {
-	export class Statistics {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
-		}
-
-		/**
-		 * GET api/Statistics/distribution
-		 */
-		getDistribution(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.get(this.baseUri + 'api/Statistics/distribution', { headers: headersHandler ? headersHandler() : undefined });
-		}
-	}
-
-}
-
-export namespace DemoCoreWeb_Controllers_Client {
-	export class SpecialTypes {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
-		}
-
-		/**
-		 * Anonymous Dynamic of C#
-		 * GET api/SpecialTypes/AnonymousDynamic
-		 * @return {any} dyanmic things
-		 */
-		getAnonymousDynamic(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousDynamic2
-		 */
-		getAnonymousDynamic2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousObject
-		 */
-		getAnonymousObject(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { headers: headersHandler ? headersHandler() : undefined });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousObject2
-		 */
-		getAnonymousObject2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined });
-		}
-
-		/**
-		 * POST api/SpecialTypes/AnonymousObject
-		 */
-		postAnonymousObject(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
-		}
-
-		/**
-		 * POST api/SpecialTypes/AnonymousObject2
-		 */
-		postAnonymousObject2(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
-			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
-		}
-	}
-
-}
-
-export namespace DemoWebApi_Controllers_Client {
 
 	/**
 	 * For testing different commbinations of parameters and returns
@@ -1409,6 +1113,302 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		put(id: number | null, value: string | null, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
 			return Axios.put(this.baseUri + 'api/Values/' + id, JSON.stringify(value), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+	}
+
+}
+
+export namespace DemoWebApi_DemoData_Another_Client {
+
+	/**
+	 * 2D position
+	 * with X and Y
+	 * for Demo
+	 */
+	export interface MyPoint {
+
+		/**
+		 * X
+		 * Type: double
+		 */
+		x: number;
+
+		/**
+		 * Y
+		 * Type: double
+		 */
+		y: number;
+	}
+
+}
+
+export namespace DemoWebApi_DemoData_Client {
+	export interface Address {
+		city?: string | null;
+		country?: string | null;
+
+		/** Type: GUID */
+		id?: string | null;
+		postalCode?: string | null;
+		state?: string | null;
+		street1?: string | null;
+		street2?: string | null;
+		type?: DemoWebApi_DemoData_Client.AddressType | null;
+
+		/**
+		 * It is a field
+		 */
+		location?: DemoWebApi_DemoData_Another_Client.MyPoint;
+	}
+
+	export enum AddressType { Postal, Residential }
+
+	export interface Company extends DemoWebApi_DemoData_Client.Entity {
+
+		/**
+		 * BusinessNumber to be serialized as BusinessNum
+		 */
+		BusinessNum?: string | null;
+		businessNumberType?: string | null;
+		foundDate?: Date | null;
+
+		/** Type: DateOnly */
+		registerDate?: Date | null;
+		textMatrix?: Array<Array<string>>;
+		int2D?: number[][];
+		int2DJagged?: Array<Array<number>>;
+		lines?: Array<string>;
+	}
+
+	export enum Days {
+		Sat = 1,
+		Sun = 2,
+		Mon = 3,
+		Tue = 4,
+		Wed = 5,
+
+		/**
+		 * Thursday
+		 */
+		Thu = 6,
+		Fri = 7
+	}
+
+
+	/**
+	 * Base class of company and person
+	 */
+	export interface Entity {
+
+		/**
+		 * Multiple addresses
+		 */
+		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
+		id?: string | null;
+
+		/**
+		 * Name of the entity.
+		 */
+		name: string;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
+
+		/** Type: Uri */
+		web?: string | null;
+	}
+
+
+	/**
+	 * To test different serializations against Guid
+	 */
+	export interface IdMap {
+
+		/** Type: GUID */
+		id?: string | null;
+
+		/** Type: GUID */
+		idNotEmitDefaultValue?: string | null;
+		nullableId?: string | null;
+		requiredName: string;
+		text?: string | null;
+	}
+
+	export enum MedicalContraindiationResponseTypeReason { M = "Mm", S = "Ss", P = "Pp", I = "I", A = "A" }
+
+	export enum MedicalContraindiationResponseTypeTypeCode { P = "P", T = "Tt" }
+
+	export interface MimsPackage {
+
+		/** Type: int */
+		kk?: number | null;
+
+		/**
+		 * Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+		 * and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+		 * Type: int, -2,147,483,648 to 2,147,483,647
+		 */
+		kK2?: number | null;
+		optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType | null;
+		optionalInt?: number | null;
+		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
+		tag?: string | null;
+	}
+
+	export interface MimsResult<T> {
+		generatedAt?: Date | null;
+		message?: string | null;
+		result?: T;
+		success?: boolean | null;
+	}
+
+	export enum MyEnumType { First = 1, Two = 2 }
+
+	export interface MyGeneric<T, K, U> {
+		myK?: K;
+		myT?: T;
+		myU?: U;
+		status?: string | null;
+	}
+
+	export interface MyPeopleDic {
+		anotherDic?: {[id: string]: string };
+		dic?: {[id: string]: DemoWebApi_DemoData_Client.Person };
+		intDic?: {[id: number]: string };
+	}
+
+	export interface Person extends DemoWebApi_DemoData_Client.Entity {
+		baptised?: Date | null;
+
+		/**
+		 * Date of Birth.
+		 * This is optional.
+		 */
+		dob?: Date | null;
+		givenName?: string | null;
+		surname?: string | null;
+	}
+
+	export interface PhoneNumber {
+		fullNumber?: string | null;
+		phoneType?: DemoWebApi_DemoData_Client.PhoneType | null;
+	}
+
+
+	/**
+	 * Phone type
+	 * Tel, Mobile, Skyp and Fax
+	 */
+	export enum PhoneType {
+
+		/**
+		 * Land line
+		 */
+		Tel,
+
+		/**
+		 * Mobile phone
+		 */
+		Mobile,
+		Skype,
+		Fax
+	}
+
+}
+
+export namespace DemoWebApi_Models_Client {
+	export interface AddExternalLoginBindingModel {
+		externalAccessToken?: string | null;
+	}
+
+	export interface ChangePasswordBindingModel {
+		confirmPassword?: string | null;
+		newPassword: string;
+		OldPwd: string;
+	}
+
+	export interface RegisterBindingModel {
+		confirmPassword?: string | null;
+		email?: string | null;
+		password?: string | null;
+	}
+
+	export interface RegisterExternalBindingModel {
+		email?: string | null;
+	}
+
+	export interface RemoveLoginBindingModel {
+		loginProvider?: string | null;
+		providerKey?: string | null;
+	}
+
+	export interface SetPasswordBindingModel {
+		confirmPassword?: string | null;
+		newPassword?: string | null;
+	}
+
+}
+
+export namespace Core3WebApi_Controllers_Client {
+	export class Statistics {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		}
+
+		/**
+		 * GET api/Statistics/distribution
+		 */
+		getDistribution(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/Statistics/distribution', { headers: headersHandler ? headersHandler() : undefined });
+		}
+	}
+
+}
+
+export namespace DemoCoreWeb_Controllers_Client {
+	export class SpecialTypes {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		}
+
+		/**
+		 * Anonymous Dynamic of C#
+		 * GET api/SpecialTypes/AnonymousDynamic
+		 * @return {any} dyanmic things
+		 */
+		getAnonymousDynamic(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousDynamic2
+		 */
+		getAnonymousDynamic2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousObject
+		 */
+		getAnonymousObject(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousObject2
+		 */
+		getAnonymousObject2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * POST api/SpecialTypes/AnonymousObject
+		 */
+		postAnonymousObject(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+
+		/**
+		 * POST api/SpecialTypes/AnonymousObject2
+		 */
+		postAnonymousObject2(obj: any, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
 		}
 	}
 

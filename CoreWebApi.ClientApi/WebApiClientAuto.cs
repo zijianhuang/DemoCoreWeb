@@ -9,6 +9,13 @@
 
 namespace DemoWebApi.Controllers.Client
 {
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Net.Http;
+	using Newtonsoft.Json;
+	using Fonlow.Net.Http;
 	
 	
 	/// <summary>
@@ -21,848 +28,6 @@ namespace DemoWebApi.Controllers.Client
 		
 		public string Name { get; set; }
 	}
-}
-namespace DemoWebApi.DemoData.Client
-{
-	
-	
-	public class Address : object
-	{
-		
-		public string City { get; set; }
-		
-		[System.ComponentModel.DefaultValueAttribute("Australia")]
-		public string Country { get; set; } = "Australia";
-		
-		public System.Guid Id { get; set; }
-		
-		public string PostalCode { get; set; }
-		
-		public string State { get; set; }
-		
-		public string Street1 { get; set; }
-		
-		public string Street2 { get; set; }
-		
-		[System.ComponentModel.DefaultValueAttribute(AddressType.Residential)]
-		public DemoWebApi.DemoData.Client.AddressType Type { get; set; } = AddressType.Residential;
-		
-		/// <summary>
-		/// It is a field
-		/// </summary>
-		public DemoWebApi.DemoData.Another.Client.MyPoint Location { get; set; }
-	}
-	
-	public enum AddressType
-	{
-		
-		Postal,
-		
-		Residential,
-	}
-	
-	public class Company : DemoWebApi.DemoData.Client.Entity
-	{
-		
-		/// <summary>
-		/// BusinessNumber to be serialized as BusinessNum
-		/// </summary>
-		public string BusinessNumber { get; set; }
-		
-		public string BusinessNumberType { get; set; }
-		
-		/// <summary>
-		/// Data type: Date
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-		public System.DateTimeOffset FoundDate { get; set; }
-		
-		public System.DateOnly RegisterDate { get; set; }
-		
-		public string[][] TextMatrix { get; set; }
-		
-		public int[,] Int2D { get; set; }
-		
-		public int[][] Int2DJagged { get; set; }
-		
-		public string[] Lines { get; set; }
-	}
-	
-	public enum Days
-	{
-		
-		Sat = 1,
-		
-		Sun = 2,
-		
-		Mon = 3,
-		
-		Tue = 4,
-		
-		Wed = 5,
-		
-		/// <summary>
-		/// Thursday
-		/// </summary>
-		Thu = 6,
-		
-		Fri = 7,
-	}
-	
-	/// <summary>
-	/// Base class of company and person
-	/// </summary>
-	public class Entity : object
-	{
-		
-		/// <summary>
-		/// Multiple addresses
-		/// </summary>
-		public DemoWebApi.DemoData.Client.Address[] Addresses { get; set; }
-		
-		public System.Nullable<System.Guid> Id { get; set; }
-		
-		/// <summary>
-		/// Name of the entity.
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
-		public string Name { get; set; }
-		
-		public DemoWebApi.DemoData.Client.PhoneNumber[] PhoneNumbers { get; set; }
-		
-		public System.Uri Web { get; set; }
-	}
-	
-	/// <summary>
-	/// To test different serializations against Guid
-	/// </summary>
-	public class IdMap : object
-	{
-		
-		public System.Guid Id { get; set; }
-		
-		public System.Guid IdNotEmitDefaultValue { get; set; }
-		
-		public System.Nullable<System.Guid> NullableId { get; set; }
-		
-		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
-		public string RequiredName { get; set; }
-		
-		public string Text { get; set; }
-	}
-	
-	[Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-	public enum MedicalContraindiationResponseTypeReason
-	{
-		
-		M,
-		
-		S,
-		
-		P,
-		
-		I,
-		
-		A,
-	}
-	
-	[System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
-	public enum MedicalContraindiationResponseTypeTypeCode
-	{
-		
-		P,
-		
-		T,
-	}
-	
-	public class MimsPackage : object
-	{
-		
-		/// <summary>
-		/// Range: inclusive between 10 and 100
-		/// </summary>
-		[System.ComponentModel.DefaultValueAttribute(20)]
-		[System.ComponentModel.DataAnnotations.Range(typeof(System.Int32), "10", "100", ErrorMessage="KK has to be between 10 and 100.")]
-		public int KK { get; set; } = 20;
-		
-		/// <summary>
-		/// Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
-		/// and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
-		/// </summary>
-		public int KK2 { get; set; }
-		
-		public System.Nullable<DemoWebApi.DemoData.Client.MyEnumType> OptionalEnum { get; set; }
-		
-		public System.Nullable<int> OptionalInt { get; set; }
-		
-		public DemoWebApi.DemoData.Client.MimsResult<decimal> Result { get; set; }
-		
-		public string Tag { get; set; }
-	}
-	
-	public class MimsResult<T> : object
-	{
-		
-		public System.DateTime GeneratedAt { get; set; }
-		
-		public string Message { get; set; }
-		
-		public T Result { get; set; }
-		
-		public bool Success { get; set; }
-	}
-	
-	public enum MyEnumType
-	{
-		
-		First = 1,
-		
-		Two = 2,
-	}
-	
-	public class MyGeneric<T, K, U> : object
-	{
-		
-		public K MyK { get; set; }
-		
-		public T MyT { get; set; }
-		
-		public U MyU { get; set; }
-		
-		public string Status { get; set; }
-	}
-	
-	public class MyPeopleDic : object
-	{
-		
-		public System.Collections.Generic.IDictionary<string, string> AnotherDic { get; set; }
-		
-		public System.Collections.Generic.IDictionary<string, DemoWebApi.DemoData.Client.Person> Dic { get; set; }
-		
-		public System.Collections.Generic.IDictionary<int, string> IntDic { get; set; }
-	}
-	
-	public class Person : DemoWebApi.DemoData.Client.Entity
-	{
-		
-		/// <summary>
-		/// Data type: Date
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-		public System.Nullable<System.DateTimeOffset> Baptised { get; set; }
-		
-		/// <summary>
-		/// Date of Birth.
-		/// This is optional.
-		/// </summary>
-		public System.Nullable<System.DateOnly> DOB { get; set; }
-		
-		public string GivenName { get; set; }
-		
-		public string Surname { get; set; }
-	}
-	
-	public class PhoneNumber : object
-	{
-		
-		public string FullNumber { get; set; }
-		
-		public DemoWebApi.DemoData.Client.PhoneType PhoneType { get; set; }
-	}
-	
-	/// <summary>
-	/// Phone type
-	/// Tel, Mobile, Skyp and Fax
-	/// 
-	/// </summary>
-	public enum PhoneType
-	{
-		
-		/// <summary>
-		/// Land line
-		/// </summary>
-		Tel,
-		
-		/// <summary>
-		/// Mobile phone
-		/// </summary>
-		Mobile,
-		
-		Skype,
-		
-		Fax,
-	}
-}
-namespace DemoWebApi.DemoData.Another.Client
-{
-	
-	
-	/// <summary>
-	/// 2D position
-	/// with X and Y
-	/// for Demo
-	/// </summary>
-	public struct MyPoint
-	{
-		
-		/// <summary>
-		/// X
-		/// </summary>
-		public double X;
-		
-		/// <summary>
-		/// Y
-		/// </summary>
-		public double Y;
-	}
-}
-namespace DemoWebApi.Models.Client
-{
-	
-	
-	public class AddExternalLoginBindingModel : object
-	{
-		
-		/// <summary>
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		public string ExternalAccessToken { get; set; }
-	}
-	
-	public class ChangePasswordBindingModel : object
-	{
-		
-		/// <summary>
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string ConfirmPassword { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// String length: inclusive between 6 and 100
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
-		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string NewPassword { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string OldPassword { get; set; }
-	}
-	
-	public class RegisterBindingModel : object
-	{
-		
-		/// <summary>
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string ConfirmPassword { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		public string Email { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// String length: inclusive between 6 and 100
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string Password { get; set; }
-	}
-	
-	public class RegisterExternalBindingModel : object
-	{
-		
-		/// <summary>
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		public string Email { get; set; }
-	}
-	
-	public class RemoveLoginBindingModel : object
-	{
-		
-		/// <summary>
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		public string LoginProvider { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		public string ProviderKey { get; set; }
-	}
-	
-	public class SetPasswordBindingModel : object
-	{
-		
-		/// <summary>
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string ConfirmPassword { get; set; }
-		
-		/// <summary>
-		/// Required
-		/// String length: inclusive between 6 and 100
-		/// Data type: Password
-		/// </summary>
-		[System.ComponentModel.DataAnnotations.Required()]
-		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-		public string NewPassword { get; set; }
-	}
-}
-namespace Core3WebApi.Controllers.Client
-{
-	using System;
-	using System.Linq;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using System.Net.Http;
-	using Newtonsoft.Json;
-	using Fonlow.Net.Http;
-	
-	
-	public partial class Statistics
-	{
-		
-		private System.Net.Http.HttpClient client;
-		
-		private JsonSerializerSettings jsonSerializerSettings;
-		
-		public Statistics(System.Net.Http.HttpClient client, JsonSerializerSettings jsonSerializerSettings=null)
-		{
-			if (client == null)
-				throw new ArgumentNullException(nameof(client), "Null HttpClient.");
-
-			if (client.BaseAddress == null)
-				throw new ArgumentNullException(nameof(client), "HttpClient has no BaseAddress");
-
-			this.client = client;
-			this.jsonSerializerSettings = jsonSerializerSettings;
-		}
-		
-		/// <summary>
-		/// GET api/Statistics/distribution
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetDistributionAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/Statistics/distribution";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/Statistics/distribution
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject GetDistribution(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/Statistics/distribution";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-	}
-}
-namespace DemoCoreWeb.Controllers.Client
-{
-	using System;
-	using System.Linq;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using System.Net.Http;
-	using Newtonsoft.Json;
-	using Fonlow.Net.Http;
-	
-	
-	public partial class SpecialTypes
-	{
-		
-		private System.Net.Http.HttpClient client;
-		
-		private JsonSerializerSettings jsonSerializerSettings;
-		
-		public SpecialTypes(System.Net.Http.HttpClient client, JsonSerializerSettings jsonSerializerSettings=null)
-		{
-			if (client == null)
-				throw new ArgumentNullException(nameof(client), "Null HttpClient.");
-
-			if (client.BaseAddress == null)
-				throw new ArgumentNullException(nameof(client), "HttpClient has no BaseAddress");
-
-			this.client = client;
-			this.jsonSerializerSettings = jsonSerializerSettings;
-		}
-		
-		/// <summary>
-		/// Anonymous Dynamic of C#
-		/// GET api/SpecialTypes/AnonymousDynamic
-		/// </summary>
-		/// <returns>dyanmic things</returns>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousDynamicAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousDynamic";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// Anonymous Dynamic of C#
-		/// GET api/SpecialTypes/AnonymousDynamic
-		/// </summary>
-		/// <returns>dyanmic things</returns>
-		public Newtonsoft.Json.Linq.JObject GetAnonymousDynamic(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousDynamic";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousDynamic2
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousDynamic2Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousDynamic2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousDynamic2
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject GetAnonymousDynamic2(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousDynamic2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousObject
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousObjectAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousObject
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject GetAnonymousObject(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousObject2
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousObject2Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// GET api/SpecialTypes/AnonymousObject2
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject GetAnonymousObject2(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// POST api/SpecialTypes/AnonymousObject
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> PostAnonymousObjectAsync(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
-			using var requestWriter = new System.IO.StringWriter();
-			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
-			requestSerializer.Serialize(requestWriter, obj);
-			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
-			httpRequestMessage.Content = content;
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// POST api/SpecialTypes/AnonymousObject
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject PostAnonymousObject(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
-			using var requestWriter = new System.IO.StringWriter();
-			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
-			requestSerializer.Serialize(requestWriter, obj);
-			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
-			httpRequestMessage.Content = content;
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// POST api/SpecialTypes/AnonymousObject2
-		/// </summary>
-		public async Task<Newtonsoft.Json.Linq.JObject> PostAnonymousObject2Async(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
-			using var requestWriter = new System.IO.StringWriter();
-			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
-			requestSerializer.Serialize(requestWriter, obj);
-			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
-			httpRequestMessage.Content = content;
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = await client.SendAsync(httpRequestMessage);
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = await responseMessage.Content.ReadAsStreamAsync();
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-		
-		/// <summary>
-		/// POST api/SpecialTypes/AnonymousObject2
-		/// </summary>
-		public Newtonsoft.Json.Linq.JObject PostAnonymousObject2(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
-		{
-			var requestUri = "api/SpecialTypes/AnonymousObject2";
-			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
-			using var requestWriter = new System.IO.StringWriter();
-			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
-			requestSerializer.Serialize(requestWriter, obj);
-			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
-			httpRequestMessage.Content = content;
-			handleHeaders?.Invoke(httpRequestMessage.Headers);
-			var responseMessage = client.SendAsync(httpRequestMessage).Result;
-			try
-			{
-				responseMessage.EnsureSuccessStatusCodeEx();
-				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
-				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
-				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
-				var serializer = JsonSerializer.Create(jsonSerializerSettings);
-				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
-			}
-			finally
-			{
-				responseMessage.Dispose();
-			}
-		}
-	}
-}
-namespace DemoWebApi.Controllers.Client
-{
-	using System;
-	using System.Linq;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using System.Net.Http;
-	using Newtonsoft.Json;
-	using Fonlow.Net.Http;
-	
 	
 	/// <summary>
 	/// For testing different commbinations of parameters and returns
@@ -8116,6 +7281,837 @@ namespace DemoWebApi.Controllers.Client
 			try
 			{
 				responseMessage.EnsureSuccessStatusCodeEx();
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+	}
+}
+namespace DemoWebApi.DemoData.Another.Client
+{
+	
+	
+	/// <summary>
+	/// 2D position
+	/// with X and Y
+	/// for Demo
+	/// </summary>
+	public struct MyPoint
+	{
+		
+		/// <summary>
+		/// X
+		/// </summary>
+		public double X;
+		
+		/// <summary>
+		/// Y
+		/// </summary>
+		public double Y;
+	}
+}
+namespace DemoWebApi.DemoData.Client
+{
+	
+	
+	public class Address : object
+	{
+		
+		public string City { get; set; }
+		
+		[System.ComponentModel.DefaultValueAttribute("Australia")]
+		public string Country { get; set; } = "Australia";
+		
+		public System.Guid Id { get; set; }
+		
+		public string PostalCode { get; set; }
+		
+		public string State { get; set; }
+		
+		public string Street1 { get; set; }
+		
+		public string Street2 { get; set; }
+		
+		[System.ComponentModel.DefaultValueAttribute(AddressType.Residential)]
+		public DemoWebApi.DemoData.Client.AddressType Type { get; set; } = AddressType.Residential;
+		
+		/// <summary>
+		/// It is a field
+		/// </summary>
+		public DemoWebApi.DemoData.Another.Client.MyPoint Location { get; set; }
+	}
+	
+	public enum AddressType
+	{
+		
+		Postal,
+		
+		Residential,
+	}
+	
+	public class Company : DemoWebApi.DemoData.Client.Entity
+	{
+		
+		/// <summary>
+		/// BusinessNumber to be serialized as BusinessNum
+		/// </summary>
+		public string BusinessNumber { get; set; }
+		
+		public string BusinessNumberType { get; set; }
+		
+		/// <summary>
+		/// Data type: Date
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+		public System.DateTimeOffset FoundDate { get; set; }
+		
+		public System.DateOnly RegisterDate { get; set; }
+		
+		public string[][] TextMatrix { get; set; }
+		
+		public int[,] Int2D { get; set; }
+		
+		public int[][] Int2DJagged { get; set; }
+		
+		public string[] Lines { get; set; }
+	}
+	
+	public enum Days
+	{
+		
+		Sat = 1,
+		
+		Sun = 2,
+		
+		Mon = 3,
+		
+		Tue = 4,
+		
+		Wed = 5,
+		
+		/// <summary>
+		/// Thursday
+		/// </summary>
+		Thu = 6,
+		
+		Fri = 7,
+	}
+	
+	/// <summary>
+	/// Base class of company and person
+	/// </summary>
+	public class Entity : object
+	{
+		
+		/// <summary>
+		/// Multiple addresses
+		/// </summary>
+		public DemoWebApi.DemoData.Client.Address[] Addresses { get; set; }
+		
+		public System.Nullable<System.Guid> Id { get; set; }
+		
+		/// <summary>
+		/// Name of the entity.
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
+		public string Name { get; set; }
+		
+		public DemoWebApi.DemoData.Client.PhoneNumber[] PhoneNumbers { get; set; }
+		
+		public System.Uri Web { get; set; }
+	}
+	
+	/// <summary>
+	/// To test different serializations against Guid
+	/// </summary>
+	public class IdMap : object
+	{
+		
+		public System.Guid Id { get; set; }
+		
+		public System.Guid IdNotEmitDefaultValue { get; set; }
+		
+		public System.Nullable<System.Guid> NullableId { get; set; }
+		
+		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
+		public string RequiredName { get; set; }
+		
+		public string Text { get; set; }
+	}
+	
+	[Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+	public enum MedicalContraindiationResponseTypeReason
+	{
+		
+		M,
+		
+		S,
+		
+		P,
+		
+		I,
+		
+		A,
+	}
+	
+	[System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+	public enum MedicalContraindiationResponseTypeTypeCode
+	{
+		
+		P,
+		
+		T,
+	}
+	
+	public class MimsPackage : object
+	{
+		
+		/// <summary>
+		/// Range: inclusive between 10 and 100
+		/// </summary>
+		[System.ComponentModel.DefaultValueAttribute(20)]
+		[System.ComponentModel.DataAnnotations.Range(typeof(System.Int32), "10", "100", ErrorMessage="KK has to be between 10 and 100.")]
+		public int KK { get; set; } = 20;
+		
+		/// <summary>
+		/// Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+		/// and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+		/// </summary>
+		public int KK2 { get; set; }
+		
+		public System.Nullable<DemoWebApi.DemoData.Client.MyEnumType> OptionalEnum { get; set; }
+		
+		public System.Nullable<int> OptionalInt { get; set; }
+		
+		public DemoWebApi.DemoData.Client.MimsResult<decimal> Result { get; set; }
+		
+		public string Tag { get; set; }
+	}
+	
+	public class MimsResult<T> : object
+	{
+		
+		public System.DateTime GeneratedAt { get; set; }
+		
+		public string Message { get; set; }
+		
+		public T Result { get; set; }
+		
+		public bool Success { get; set; }
+	}
+	
+	public enum MyEnumType
+	{
+		
+		First = 1,
+		
+		Two = 2,
+	}
+	
+	public class MyGeneric<T, K, U> : object
+	{
+		
+		public K MyK { get; set; }
+		
+		public T MyT { get; set; }
+		
+		public U MyU { get; set; }
+		
+		public string Status { get; set; }
+	}
+	
+	public class MyPeopleDic : object
+	{
+		
+		public System.Collections.Generic.IDictionary<string, string> AnotherDic { get; set; }
+		
+		public System.Collections.Generic.IDictionary<string, DemoWebApi.DemoData.Client.Person> Dic { get; set; }
+		
+		public System.Collections.Generic.IDictionary<int, string> IntDic { get; set; }
+	}
+	
+	public class Person : DemoWebApi.DemoData.Client.Entity
+	{
+		
+		/// <summary>
+		/// Data type: Date
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+		public System.Nullable<System.DateTimeOffset> Baptised { get; set; }
+		
+		/// <summary>
+		/// Date of Birth.
+		/// This is optional.
+		/// </summary>
+		public System.Nullable<System.DateOnly> DOB { get; set; }
+		
+		public string GivenName { get; set; }
+		
+		public string Surname { get; set; }
+	}
+	
+	public class PhoneNumber : object
+	{
+		
+		public string FullNumber { get; set; }
+		
+		public DemoWebApi.DemoData.Client.PhoneType PhoneType { get; set; }
+	}
+	
+	/// <summary>
+	/// Phone type
+	/// Tel, Mobile, Skyp and Fax
+	/// 
+	/// </summary>
+	public enum PhoneType
+	{
+		
+		/// <summary>
+		/// Land line
+		/// </summary>
+		Tel,
+		
+		/// <summary>
+		/// Mobile phone
+		/// </summary>
+		Mobile,
+		
+		Skype,
+		
+		Fax,
+	}
+}
+namespace DemoWebApi.Models.Client
+{
+	
+	
+	public class AddExternalLoginBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string ExternalAccessToken { get; set; }
+	}
+	
+	public class ChangePasswordBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string NewPassword { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.RequiredAttribute()]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string OldPassword { get; set; }
+	}
+	
+	public class RegisterBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string Email { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string Password { get; set; }
+	}
+	
+	public class RegisterExternalBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string Email { get; set; }
+	}
+	
+	public class RemoveLoginBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string LoginProvider { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string ProviderKey { get; set; }
+	}
+	
+	public class SetPasswordBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string NewPassword { get; set; }
+	}
+}
+namespace Core3WebApi.Controllers.Client
+{
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Net.Http;
+	using Newtonsoft.Json;
+	using Fonlow.Net.Http;
+	
+	
+	public partial class Statistics
+	{
+		
+		private System.Net.Http.HttpClient client;
+		
+		private JsonSerializerSettings jsonSerializerSettings;
+		
+		public Statistics(System.Net.Http.HttpClient client, JsonSerializerSettings jsonSerializerSettings=null)
+		{
+			if (client == null)
+				throw new ArgumentNullException(nameof(client), "Null HttpClient.");
+
+			if (client.BaseAddress == null)
+				throw new ArgumentNullException(nameof(client), "HttpClient has no BaseAddress");
+
+			this.client = client;
+			this.jsonSerializerSettings = jsonSerializerSettings;
+		}
+		
+		/// <summary>
+		/// GET api/Statistics/distribution
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetDistributionAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Statistics/distribution";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/Statistics/distribution
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject GetDistribution(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Statistics/distribution";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+	}
+}
+namespace DemoCoreWeb.Controllers.Client
+{
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using System.Net.Http;
+	using Newtonsoft.Json;
+	using Fonlow.Net.Http;
+	
+	
+	public partial class SpecialTypes
+	{
+		
+		private System.Net.Http.HttpClient client;
+		
+		private JsonSerializerSettings jsonSerializerSettings;
+		
+		public SpecialTypes(System.Net.Http.HttpClient client, JsonSerializerSettings jsonSerializerSettings=null)
+		{
+			if (client == null)
+				throw new ArgumentNullException(nameof(client), "Null HttpClient.");
+
+			if (client.BaseAddress == null)
+				throw new ArgumentNullException(nameof(client), "HttpClient has no BaseAddress");
+
+			this.client = client;
+			this.jsonSerializerSettings = jsonSerializerSettings;
+		}
+		
+		/// <summary>
+		/// Anonymous Dynamic of C#
+		/// GET api/SpecialTypes/AnonymousDynamic
+		/// </summary>
+		/// <returns>dyanmic things</returns>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousDynamicAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousDynamic";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// Anonymous Dynamic of C#
+		/// GET api/SpecialTypes/AnonymousDynamic
+		/// </summary>
+		/// <returns>dyanmic things</returns>
+		public Newtonsoft.Json.Linq.JObject GetAnonymousDynamic(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousDynamic";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousDynamic2
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousDynamic2Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousDynamic2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousDynamic2
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject GetAnonymousDynamic2(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousDynamic2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousObject
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousObjectAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousObject
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject GetAnonymousObject(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousObject2
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> GetAnonymousObject2Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/SpecialTypes/AnonymousObject2
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject GetAnonymousObject2(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/AnonymousObject
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> PostAnonymousObjectAsync(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			using var requestWriter = new System.IO.StringWriter();
+			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
+			requestSerializer.Serialize(requestWriter, obj);
+			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/AnonymousObject
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject PostAnonymousObject(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			using var requestWriter = new System.IO.StringWriter();
+			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
+			requestSerializer.Serialize(requestWriter, obj);
+			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/AnonymousObject2
+		/// </summary>
+		public async Task<Newtonsoft.Json.Linq.JObject> PostAnonymousObject2Async(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			using var requestWriter = new System.IO.StringWriter();
+			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
+			requestSerializer.Serialize(requestWriter, obj);
+			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/AnonymousObject2
+		/// </summary>
+		public Newtonsoft.Json.Linq.JObject PostAnonymousObject2(Newtonsoft.Json.Linq.JObject obj, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/AnonymousObject2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			using var requestWriter = new System.IO.StringWriter();
+			var requestSerializer = JsonSerializer.Create(jsonSerializerSettings);
+			requestSerializer.Serialize(requestWriter, obj);
+			var content = new StringContent(requestWriter.ToString(), System.Text.Encoding.UTF8, "application/json");
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStreamAsync().Result;
+				using JsonReader jsonReader = new JsonTextReader(new System.IO.StreamReader(stream));
+				var serializer = JsonSerializer.Create(jsonSerializerSettings);
+				return serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(jsonReader);
 			}
 			finally
 			{
