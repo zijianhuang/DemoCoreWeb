@@ -67,4 +67,16 @@
 	  <ProjectReference Include="..\Fonlow.MauiHeroes.Views\Fonlow.MauiHeroes.Views.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="App.xaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="App.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
