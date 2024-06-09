@@ -1,4 +1,4 @@
-﻿namespace Fonlow.Heroes.Maui
+﻿namespace Fonlow.MauiHeroes
 {
 	public partial class MainPage : ContentPage
 	{
@@ -21,4 +21,5 @@
 			SemanticScreenReader.Announce(CounterBtn.Text);
 		}
 	}
+
 }
