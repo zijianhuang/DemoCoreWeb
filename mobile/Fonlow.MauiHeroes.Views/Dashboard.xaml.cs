@@ -17,20 +17,20 @@ namespace Fonlow.Heroes.Views
 		{
 			InitializeComponent ();
 
-        }
+		}
 
-        HeroesVM Model
-        {
-            get
-            {
-                return BindingContext as HeroesVM;
-            }
-        }
+		HeroesVM Model
+		{
+			get
+			{
+				return BindingContext as HeroesVM;
+			}
+		}
 
 
-        async void HeroesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            await Navigation.PushAsync(new HeroDetailPage(Model.Selected.Id));
-        }
-    }
+		async void HeroesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			await Navigation.PushAsync(new HeroDetailPage(Model.Selected.Id));
+		}
+	}
 }

@@ -4,8 +4,8 @@ namespace Fonlow.Heroes.VM
 {
 	public static class HeroesFunctions
 	{
-		static readonly Uri apiUri = new Uri("https://heroes.fonlow.net/webapi/"); //replace url with what in your dev environment
-		//static readonly Uri apiUri = new Uri("http://10.0.2.2:5000/");
+		static readonly Uri apiUri = new Uri("https://fonlow.org/"); //replace url with what in your dev environment
+																				   //static readonly Uri apiUri = new Uri("http://10.0.2.2:5000/");
 
 		public static Hero[] LoadHeroes()
 		{
@@ -20,8 +20,12 @@ namespace Fonlow.Heroes.VM
 			}
 			catch (WebApiRequestException ex)
 			{
-				System.Diagnostics.Trace.TraceError(ex.ToString());
-				throw;
+				return new Hero[] { new Hero{
+				Name="Not Found",
+				Id=0, }
+				};
+				//System.Diagnostics.Trace.TraceError(ex.ToString());
+				//throw;
 			}
 		}
 

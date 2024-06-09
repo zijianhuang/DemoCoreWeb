@@ -62,4 +62,9 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Fonlow.MauiHeroes.ViewModels\Fonlow.MauiHeroes.ViewModels.csproj" />
+	  <ProjectReference Include="..\Fonlow.MauiHeroes.Views\Fonlow.MauiHeroes.Views.csproj" />
+	</ItemGroup>
+
 </Project>
