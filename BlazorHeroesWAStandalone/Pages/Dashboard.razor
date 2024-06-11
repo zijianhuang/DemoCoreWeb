@@ -2,7 +2,7 @@
 @inject IHttpClientFactory ClientFactory
 @inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
 
-<PageTitle>Heroes</PageTitle>
+<PageTitle>Dashboard</PageTitle>
 <h3>Heroes Dashboard</h3>
 
 @if (heroes == null)
@@ -12,10 +12,10 @@
 else
 {
     <div class="heroes-menu">
-        @foreach (var hero in heroes)
+        @foreach (var hero in heroes.Take(4))
         {
             string href = $"/detail/{hero.Id}";
-            <a href="@href">"@hero.Name"</a>
+            <a href="@href">@hero.Name</a>
         }
 
     </div>
@@ -23,12 +23,13 @@ else
 
 @code {
     private DemoWebApi.Controllers.Client.Hero[]? heroes;
+    DemoWebApi.Controllers.Client.Heroes? heroesClient;
 
     protected override async Task OnInitializedAsync()
     {
         //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
         var client = ClientFactory.CreateClient("Core3WebAPI");
-        DemoWebApi.Controllers.Client.Heroes heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
+        heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
 
         heroes = await heroesClient.GetAsyncHeroesAsync();
     }

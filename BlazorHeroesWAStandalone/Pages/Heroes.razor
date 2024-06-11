@@ -1,0 +1,75 @@
+﻿@page "/heroes"
+@inject IHttpClientFactory ClientFactory
+@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
+
+<PageTitle>List</PageTitle>
+<h3>Heroes List</h3>
+
+@if (heroes == null)
+{
+    <p><em>Loading Heroes...</em></p>
+}
+else
+{
+    <div>
+        <label for="new-hero">Hero name: </label>
+        <input id="new-hero" ref="heroName" />
+
+        <!-- (click) passes input value to add() and then clears the input -->
+        <button type="button" class="add-button" click.delegate="addAndClear()">
+            Add hero
+        </button>
+    </div>
+
+    <ul class="heroes">
+        @foreach (var hero in heroes)
+        {
+            <li repeat.for="hero of heroes">
+                <a route-href="route: detail; params.bind: {id:hero.id}">
+                    <span class="badge">@hero.Id</span> @hero.Name
+                </a>
+                <button type="button" class="delete" title="delete hero" click.delegate="delete(hero)">x</button>
+            </li>
+        }
+
+    </ul>
+}
+
+@code {
+    private List<DemoWebApi.Controllers.Client.Hero> heroes;
+    private DemoWebApi.Controllers.Client.Hero? selectedHero;
+    DemoWebApi.Controllers.Client.Heroes? heroesClient;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var client = ClientFactory.CreateClient("Core3WebAPI");
+        heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
+
+        heroes = new List<DemoWebApi.Controllers.Client.Hero>(await heroesClient.GetHerosAsync());
+    }
+
+    async Task Add(string name)
+    {
+        name = name.Trim();
+        if (string.IsNullOrEmpty(name))
+        {
+            return;
+        }
+
+        var newHero = await heroesClient.PostAsync(name);
+        this.selectedHero = null;
+        heroes.Add(newHero);
+
+    }
+
+    async Task Delete(DemoWebApi.Controllers.Client.Hero hero)
+    {
+        await heroesClient.DeleteAsync(hero.Id);
+        heroes.Remove(hero);
+        if (selectedHero == hero)
+        {
+            selectedHero = null;
+        }
+    }
+}
