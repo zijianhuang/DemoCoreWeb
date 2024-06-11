@@ -36,13 +36,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiHeroes.WinUI", "MauiMul
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MauiMulti", "MauiMulti", "{6D111A1E-D72F-4886-B31F-78EEDD6CA87E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWeb", "BlazorHeroesWeb\BlazorHeroesWeb.csproj", "{2BEBF692-8FA2-4F3B-8F8C-FC5EE8338448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHeroesWeb", "BlazorHeroesWeb\BlazorHeroesWeb.csproj", "{2BEBF692-8FA2-4F3B-8F8C-FC5EE8338448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWA", "BlazorHeroesWA\BlazorHeroesWA\BlazorHeroesWA.csproj", "{25A8B2D2-284F-4ABD-9E15-ACC37B7F7F4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHeroesWA", "BlazorHeroesWA\BlazorHeroesWA\BlazorHeroesWA.csproj", "{25A8B2D2-284F-4ABD-9E15-ACC37B7F7F4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWA.Client", "BlazorHeroesWA\BlazorHeroesWA.Client\BlazorHeroesWA.Client.csproj", "{DA38BB0E-1026-4023-976B-E0701F5956E2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWAStandalone", "BlazorHeroesWAStandalone\BlazorHeroesWAStandalone.csproj", "{1CF67670-9F5E-451A-A217-E314DA10C0ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHeroesWA.Client", "BlazorHeroesWA\BlazorHeroesWA.Client\BlazorHeroesWA.Client.csproj", "{DA38BB0E-1026-4023-976B-E0701F5956E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWebApi.DemoDataCore", "DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj", "{D2998072-CB35-42A0-BC8B-3363597BC620}"
 EndProject
@@ -51,6 +49,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Tests\IntegrationTestShared\IntegrationTestShared.shproj", "{60B7393D-9285-4D0A-A368-877ED60C6C11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsTextJson", "Tests\IntegrationTestsTextJson\IntegrationTestsTextJson.csproj", "{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWAStandalone", "BlazorHeroesWAStandalone\BlazorHeroesWAStandalone.csproj", "{624790EC-7DD3-484B-B8E9-11B824D5A9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -328,22 +328,6 @@ Global
 		{DA38BB0E-1026-4023-976B-E0701F5956E2}.Release|x64.Build.0 = Release|Any CPU
 		{DA38BB0E-1026-4023-976B-E0701F5956E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{DA38BB0E-1026-4023-976B-E0701F5956E2}.Release|x86.Build.0 = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|x64.Build.0 = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Debug|x86.Build.0 = Debug|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|ARM64.Build.0 = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|x64.ActiveCfg = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|x64.Build.0 = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|x86.ActiveCfg = Release|Any CPU
-		{1CF67670-9F5E-451A-A217-E314DA10C0ED}.Release|x86.Build.0 = Release|Any CPU
 		{D2998072-CB35-42A0-BC8B-3363597BC620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2998072-CB35-42A0-BC8B-3363597BC620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2998072-CB35-42A0-BC8B-3363597BC620}.Debug|ARM64.ActiveCfg = Debug|Any CPU
@@ -392,6 +376,22 @@ Global
 		{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}.Release|x64.Build.0 = Release|Any CPU
 		{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}.Release|x86.Build.0 = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|ARM64.Build.0 = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|x64.Build.0 = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{624790EC-7DD3-484B-B8E9-11B824D5A9F2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
