@@ -50,7 +50,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsTextJson", "Tests\IntegrationTestsTextJson\IntegrationTestsTextJson.csproj", "{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHeroesWAStandalone", "BlazorHeroesWAStandalone\BlazorHeroesWAStandalone.csproj", "{624790EC-7DD3-484B-B8E9-11B824D5A9F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHeroesWAStandalone", "BlazorHeroesWAStandalone\BlazorHeroesWAStandalone.csproj", "{624790EC-7DD3-484B-B8E9-11B824D5A9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,7 @@
 ﻿@page "/weather"
 @* @inject HttpClient Http *@
 @inject IHttpClientFactory ClientFactory
+@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
 
 <PageTitle>Weather</PageTitle>
 
@@ -44,10 +45,7 @@ else
     {
         //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
         var client = ClientFactory.CreateClient("Core3WebAPI");
-        WebApplication1.Controllers.Client.WeatherForecast weatherForecastClient = new WebApplication1.Controllers.Client.WeatherForecast(client, new System.Text.Json.JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive=true,
-        });
+        WebApplication1.Controllers.Client.WeatherForecast weatherForecastClient = new WebApplication1.Controllers.Client.WeatherForecast(client, jsonSerializerOptions);
         forecasts = (await weatherForecastClient.GetAsync()).ToArray();
     }
 

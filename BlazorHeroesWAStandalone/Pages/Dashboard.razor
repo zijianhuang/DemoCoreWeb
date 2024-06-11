@@ -1,0 +1,35 @@
+﻿@page "/dashboard"
+@inject IHttpClientFactory ClientFactory
+@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
+
+<PageTitle>Heroes</PageTitle>
+<h3>Heroes Dashboard</h3>
+
+@if (heroes == null)
+{
+    <p><em>Loading Heroes...</em></p>
+}
+else
+{
+    <div class="heroes-menu">
+        @foreach (var hero in heroes)
+        {
+            string href = $"/detail/{hero.Id}";
+            <a href="@href">"@hero.Name"</a>
+        }
+
+    </div>
+}
+
+@code {
+    private DemoWebApi.Controllers.Client.Hero[]? heroes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var client = ClientFactory.CreateClient("Core3WebAPI");
+        DemoWebApi.Controllers.Client.Heroes heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
+
+        heroes = await heroesClient.GetAsyncHeroesAsync();
+    }
+}
