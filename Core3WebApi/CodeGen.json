@@ -1,10 +1,13 @@
 {
 	"ApiSelections": {
 		"ExcludedControllerNames": [
+			"DemoWebApi.Controllers.Home",
+			"DemoWebApi.Controllers.FileUpload"
 		],
 
 		"DataModelAssemblyNames": [
 			"DemoWebApi.DemoDataCore",
+			"DemoCoreWebControllers",
 			"Core3WebApi"
 		],
 		"CherryPickingMethods": 3
@@ -17,8 +20,10 @@
 		"CamelCase": true,
 		"UseEnsureSuccessStatusCodeEx": true,
 		"DataAnnotationsEnabled": true,
+		"IEnumerableToArray": false,
 		"DataAnnotationsToComments": true,
 		"HandleHttpRequestHeaders": true,
+		"UseSystemTextJson": true,
 
 		"Plugins": [
 			{

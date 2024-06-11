@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Fonlow.Net.Http;
+using System.Net;
 using Xunit;
-using Fonlow.Testing;
+using System.Threading.Tasks;
 
 namespace IntegrationTests
 {
@@ -16,41 +17,61 @@ namespace IntegrationTests
 
 
 		[Fact]
-		public async void TestGetAsyncHeroes()
+		public async Task TestGetAsyncHeroes()
 		{
-			var array = await api.GetAsyncHeroesAsync();
+			DemoWebApi.Controllers.Client.Hero[] array = await api.GetAsyncHeroesAsync();
 			Assert.NotEmpty(array);
 		}
 
 		[Fact]
-		public void TestGet()
+		public void TestGetHeroes()
 		{
-			var array = api.GetHeros();
+			DemoWebApi.Controllers.Client.Hero[] array = api.GetHeros();
 			Assert.NotEmpty(array);
+		}
+
+		[Fact]
+		public void TestGetHeroNotExists()
+		{
+			DemoWebApi.Controllers.Client.Hero h = api.GetHero(99999);
+			//Console.WriteLine(h.Name); //No compiler warning here, since the lib is generated.
+			Assert.Null(h);
+
+			DemoWebApi.Controllers.Client.Hero h2 = GetNullHero();
+			//Console.WriteLine(h2.Name); //no compiler warning here either.
+			//DoSomethingWithHero(h2);
 		}
 
 		[Fact]
 		public void TestPost()
 		{
-			var hero = api.Post("Abc");
+			DemoWebApi.Controllers.Client.Hero hero = api.Post("Abc");
 			Assert.Equal("Abc", hero.Name);
+		}
+
+		[Fact]
+		public void TestPostWithNull()
+		{
+			WebApiRequestException ex = Assert.Throws<WebApiRequestException>(() => api.Post(null));
+			Assert.Equal(HttpStatusCode.BadRequest, ex.StatusCode);
 		}
 
 		[Fact]
 		public void TestPostWithQuery()
 		{
-			var hero = api.PostWithQuery("Xyz");
+			DemoWebApi.Controllers.Client.Hero hero = api.PostWithQuery("Xyz");
 			Assert.Equal("Xyz", hero.Name);
 		}
 
-		[Fact]
-		public void TestSearch()
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
+		DemoWebApi.Controllers.Client.Hero GetNullHero()
 		{
-			var heroes = api.Search("Torna");
-			Assert.Single(heroes);
-			Assert.Equal("Tornado", heroes[0].Name);
+			return null;
 		}
 
-
+		//void DoSomethingWithHero([System.Diagnostics.CodeAnalysis.NotNull()] DemoWebApi.Controllers.Client.Hero hero)
+		//{
+		//	System.Console.WriteLine(hero.Name);
+		//}
 	}
 }

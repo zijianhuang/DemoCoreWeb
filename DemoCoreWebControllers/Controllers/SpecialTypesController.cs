@@ -4,12 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 namespace DemoCoreWeb.Controllers
 {
-	[Produces("application/json")] //.net core difference: .net core 2.0 does not support these.let's see 2.1 upcoming. issue #40
+	[ApiController]
 	[Route("api/SpecialTypes")]
-	public class SpecialTypesController : Controller
+	public class SpecialTypesController : ControllerBase
 	{
 		/// <summary>
 		/// Anonymous Dynamic of C#
@@ -26,6 +25,10 @@ namespace DemoCoreWeb.Controllers
 			};
 		}
 
+		/// <summary>
+		/// Async function returing dynamic
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet] //.net core up to 3.1 does not give correct return type in ApiExplorer.
 		[Route("AnonymousDynamic2")]
 		public async Task<dynamic> GetAnonymousDynamic2()
@@ -48,6 +51,10 @@ namespace DemoCoreWeb.Controllers
 			};
 		}
 
+		/// <summary>
+		/// Async function returning object
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("AnonymousObject2")]
 		public async Task<object> GetAnonymousObject2()
@@ -78,6 +85,11 @@ namespace DemoCoreWeb.Controllers
 			return obj;
 		}
 
+		/// <summary>
+		/// Async returning object, Post dynamic
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("AnonymousObject2")]
 		public async Task<object> PostAnonymousObject2([FromBody] dynamic obj)

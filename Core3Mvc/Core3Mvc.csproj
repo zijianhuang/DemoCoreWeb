@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj" />
+    <ProjectReference Include="..\DemoCoreWebControllers\DemoCoreWebControllers.csproj" />
   </ItemGroup>
-
-  <Import Project="..\DemoWebApi.ControllersShared\DemoWebApi.ControllersShared.projitems" Label="Shared" />
 
 </Project>

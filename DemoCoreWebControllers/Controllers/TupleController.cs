@@ -1,14 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-
 namespace DemoWebApi.Controllers
 {
 	/// <summary>
 	/// https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.3.3
 	/// </summary>
+	[ApiController]
 	[Route("api/[controller]")]
 	public class TupleController : ControllerBase
 	{
+		/// <summary>
+		/// Update in a transaction
+		/// </summary>
+		/// <param name="idAndOrderArray"></param>
+		[HttpPut("A1TupleArray")]
+		public void A1TupleArray([FromBody] Tuple<Guid, int>[] idAndOrderArray)
+		{
+			//do nothing
+		}
+
+		/// <summary>
+		/// Update IEnumerable Tuple in a transaction
+		/// </summary>
+		/// <param name="idAndOrderArray"></param>
+		[HttpPut("A2TupleArray")]
+		public void A2TupleIEnumerable([FromBody] System.Collections.Generic.IEnumerable<Tuple<Guid, int>> idAndOrderArray)
+		{
+			//do nothing
+		}
+
+		/// <summary>
+		/// Post tuple
+		/// </summary>
+		/// <param name="d"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("ChangeName")]
 		public DemoData.Person ChangeName([FromBody] Tuple<string, DemoData.Person> d)
@@ -45,8 +70,13 @@ namespace DemoWebApi.Controllers
 			return peopleAndCompany.Item1;
 		}
 
+		/// <summary>
+		/// Get Tuple in return. MaybeNull
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("PeopleCompany4")]
+		[return: System.Diagnostics.CodeAnalysis.MaybeNull]
 		public Tuple<DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Company> GetPeopleCompany4()
 		{
 			return null;
@@ -59,8 +89,13 @@ namespace DemoWebApi.Controllers
 			return peopleAndCompany.Item1;
 		}
 
+		/// <summary>
+		/// MaybeNull
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("PeopleCompany5")]
+		[return: System.Diagnostics.CodeAnalysis.MaybeNull]
 		public Tuple<DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Company> GetPeopleCompany5()
 		{
 			return null;
@@ -73,6 +108,11 @@ namespace DemoWebApi.Controllers
 			return peopleAndCompany.Item1;
 		}
 
+		/// <summary>
+		/// Post long tuple
+		/// </summary>
+		/// <param name="peopleAndCompany"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("PeopleCompany7")]
 		public DemoData.Person LinkPeopleCompany7([FromBody] Tuple<DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Person, DemoData.Company> peopleAndCompany)
@@ -110,6 +150,11 @@ namespace DemoWebApi.Controllers
 			return Tuple.Create<string, int>("Two", 2);
 		}
 
+		/// <summary>
+		/// Post tuple string int
+		/// </summary>
+		/// <param name="tuple"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("Tuple2")]
 		public string PostTuple2([FromBody] Tuple<string, int> tuple)
@@ -188,6 +233,10 @@ namespace DemoWebApi.Controllers
 			return tuple.Item1;
 		}
 
+		/// <summary>
+		/// Post nested tuple
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("Tuple8")]
 		public Tuple<string, string, string, string, string, string, int, Tuple<string, string, string>> GetTuple8()

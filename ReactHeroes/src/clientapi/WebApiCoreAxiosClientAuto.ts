@@ -3,29 +3,54 @@ import { AxiosResponse } from 'axios';
 export namespace DemoWebApi_Controllers_Client {
 
 	/**
-	 * Complex hero type
+	 * This class is used to carry the result of various file uploads.
 	 */
-	export interface Hero {
+	export interface FileResult {
 
-		/** Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 */
-		id?: string | null;
-		name?: string | null;
+		/**
+		 * Gets or sets the local path of the file saved on the server.
+		 */
+		fileNames?: Array<string>;
+
+		/**
+		 * Gets or sets the submitter as indicated in the HTML form used to upload the data.
+		 */
+		submitter?: string | null;
 	}
 
 
 	/**
-	 * For testing different commbinations of parameters and returns
+	 * Complex hero type
 	 */
+	export interface Hero {
+		address?: DemoWebApi_DemoData_Client.Address;
+		death?: Date | null;
+
+		/** Type: DateOnly */
+		dob?: Date | null;
+		emailAddress?: string | null;
+
+		/** Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 */
+		id?: string | null;
+		name?: string | null;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
+		webAddress?: string | null;
+	}
+
+	export interface SuperHero extends DemoWebApi_Controllers_Client.Hero {
+		super?: boolean | null;
+	}
+
 	export class DateTypes {
 		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
-		 * GET api/DateTypes/GetDateOnly
+		 * GET api/DateTypes/GetDateOnlyMin
 		 * @return {Date} Type: DateOnly
 		 */
-		getDateOnly(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnly', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		getDateOnlyMin(headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateOnlyMin', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 
 		/**
@@ -36,11 +61,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * return DateTimeOffset.Now
-		 * GET api/DateTypes/GetDateTimeOffset
+		 * GET api/DateTypes/ForDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => {[header: string]: string}): Promise<Date> {
-			return Axios.get<Date>(this.baseUri + 'api/DateTypes/GetDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+			return Axios.get<Date>(this.baseUri + 'api/DateTypes/ForDateTimeOffset', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 
 		/**
@@ -51,7 +75,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * If Dt is not defined, add a hour from now
 		 * GET api/DateTypes/NextHourNullable?n={n}&dt={dt}
 		 */
 		getNextHourNullable(n: number | null, dt: Date | null, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -66,7 +89,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * If Dt is not defined, add a year from now
 		 * GET api/DateTypes/NextYearNullable?n={n}&dt={dt}
 		 */
 		getNextYearNullable(n: number | null, dt: Date | null, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -74,7 +96,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Client should send DateTime.Date
 		 * POST api/DateTypes/IsDateTimeDate
 		 */
 		isDateTimeDate(dt: Date | null, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
@@ -111,7 +132,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * return d;
+		 * POST api/DateTypes/DateTimeNullable
+		 */
+		postDateTimeNullable(d: Date | null, headersHandler?: () => {[header: string]: string}): Promise<Date> {
+			return Axios.post<Date>(this.baseUri + 'api/DateTypes/DateTimeNullable', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
 		 * POST api/DateTypes/ForDateTimeOffset
 		 */
 		postDateTimeOffset(d: Date | null, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -119,7 +146,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * return d.ToString("O")
 		 * POST api/DateTypes/ForDateTimeOffsetForO
 		 */
 		postDateTimeOffsetForO(d: Date | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
@@ -134,7 +160,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Returned is DateTimeOffset?
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d: Date | null, headersHandler?: () => {[header: string]: string}): Promise<Date> {
@@ -171,10 +196,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Return Tuple DateTime?, DateTime?
 		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
-		 * @param {Date} startDate DateTime? startDate = null
-		 * @param {Date} endDate DateTime? endDate = null
 		 */
 		searchDateRange(startDate: Date | null, endDate: Date | null, headersHandler?: () => {[header: string]: string}): Promise<{item1: Date, item2: Date}> {
 			return Axios.get<{item1: Date, item2: Date}>(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate?.toISOString() : '') + (endDate ? '&endDate=' + endDate?.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
@@ -215,6 +237,38 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * POST api/Entities/createPersonByAdmin
+		 * Status Codes: 404:NotFound, 204:NoContent, 422:UnprocessableEntity
+		 */
+		createPersonByAdmin(p: DemoWebApi_DemoData_Client.Person | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
+			return Axios.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPersonByAdmin', JSON.stringify(p), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Entities/createPersonWeak
+		 * Status Codes: 404:NotFound, 204:NoContent, 200:OK : DemoWebApi.DemoData.Person
+		 */
+		createPersonWeak(p: DemoWebApi_DemoData_Client.Person | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
+			return Axios.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPersonWeak', JSON.stringify(p), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Entities/createPersonWithNotFound
+		 * Status Codes: 404:NotFound
+		 */
+		createPersonWithNotFound(p: DemoWebApi_DemoData_Client.Person | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
+			return Axios.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPersonWithNotFound', JSON.stringify(p), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Entities/createPersonWithStatuses
+		 * Status Codes: 404:NotFound, 204:NoContent, 422:UnprocessableEntity
+		 */
+		createPersonWithStatuses(p: DemoWebApi_DemoData_Client.Person | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
+			return Axios.post<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/createPersonWithStatuses', JSON.stringify(p), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
 		 * DELETE api/Entities/{id}
 		 */
 		delete(id: string | null, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
@@ -250,11 +304,14 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get a person
-		 * so to know the person
+		 * GET api/Entities/NullCompany
+		 */
+		getNullCompany(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Company> {
+			return Axios.get<DemoWebApi_DemoData_Client.Company>(this.baseUri + 'api/Entities/NullCompany', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
 		 * GET api/Entities/getPerson/{id}
-		 * @param {string} id unique id of that guy
-		 * @return {DemoWebApi_DemoData_Client.Person} person in db
 		 */
 		getPerson(id: string | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
 			return Axios.get<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/getPerson/' + id, { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
@@ -296,10 +353,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-
-	/**
-	 * Heroes operations
-	 */
 	export class Heroes {
 		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
@@ -319,7 +372,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get a hero.
 		 * GET api/Heroes/{id}
 		 */
 		getHero(id: string | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
@@ -327,11 +379,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get all heroes.
 		 * GET api/Heroes
 		 */
 		getHeros(headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
 			return Axios.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * GET api/Heroes/super?id={id}
+		 */
+		getSuperHero(id: string | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.SuperHero> {
+			return Axios.get<DemoWebApi_Controllers_Client.SuperHero>(this.baseUri + 'api/Heroes/super?id=' + id, { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 
 		/**
@@ -342,7 +400,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Add a hero
 		 * POST api/Heroes/q?name={name}
 		 */
 		postWithQuery(name: string | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
@@ -350,7 +407,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Update hero.
 		 * PUT api/Heroes
 		 */
 		put(hero: DemoWebApi_Controllers_Client.Hero | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_Controllers_Client.Hero> {
@@ -358,41 +414,209 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Search heroes
 		 * GET api/Heroes/search/{name}
-		 * @param {string} name keyword contained in hero name.
-		 * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
 		 */
 		search(name: string | null, headersHandler?: () => {[header: string]: string}): Promise<Array<DemoWebApi_Controllers_Client.Hero>> {
 			return Axios.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/search/' + (!name ? '' : encodeURIComponent(name)), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 	}
 
-	export class Home {
+	export class Numbers {
 		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
-		 * GET api/Home
+		 * GET api/Numbers/byte?d={d}
+		 * @return {number} Type: byte, 0 to 255
 		 */
-		index(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse<Blob>> {
-			return Axios.get(this.baseUri + 'api/Home', { headers: headersHandler ? headersHandler() : undefined, responseType: 'blob' }).then(d => {if (d.status<=204) return d.data; throw d;});
+		getByte(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.get<number>(this.baseUri + 'api/Numbers/byte?d=' + d, { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * GET api/Numbers/byteWithRange?d={d}
+		 * @return {number} Type: byte, 0 to 255
+		 */
+		getByteWithRange(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.get<number>(this.baseUri + 'api/Numbers/byteWithRange?d=' + d, { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/byte
+		 * @return {number} Type: byte, 0 to 255
+		 */
+		postByDOfnumber(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/byte', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/sbyte
+		 * @return {number} Type: sbyte, -128 to 127
+		 */
+		postByDOfnumber(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/sbyte', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/short
+		 * @return {number} Type: short, -32,768 to 32,767
+		 */
+		postByDOfnumber(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/short', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/ushort
+		 * @return {number} Type: ushort, 0 to 65,535
+		 */
+		postByDOfnumber(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/ushort', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/int
+		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
+		 */
+		postByDOfnumber(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/int', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/long
+		 * @return {string} Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+		 */
+		postByDOfstring(d: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/long', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/ulong
+		 * @return {string} Type: ulong, 0 to 18,446,744,073,709,551,615
+		 */
+		postByDOfstring(d: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/ulong', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/bigInteger
+		 * @return {string} Type: BigInteger
+		 */
+		postBigInteger(bigInteger: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/bigInteger', JSON.stringify(bigInteger), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/bigIntegralAsStringForJs
+		 */
+		postBigIntegralAsStringForJs(bigIntegral: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post(this.baseUri + 'api/Numbers/bigIntegralAsStringForJs', JSON.stringify(bigIntegral), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/BigNumbers
+		 */
+		postBigNumbers(bigNumbers: DemoWebApi_DemoData_Client.BigNumbers | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.BigNumbers> {
+			return Axios.post<DemoWebApi_DemoData_Client.BigNumbers>(this.baseUri + 'api/Numbers/BigNumbers', JSON.stringify(bigNumbers), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/int128
+		 * @return {string} Type: Int128, -170141183460469231731687303715884105728 to 170141183460469231731687303715884105727
+		 */
+		postInt128(int128: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/int128', JSON.stringify(int128), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/int64
+		 * @return {string} Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+		 */
+		postInt64(int64: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/int64', JSON.stringify(int64), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/IntegralEntity
+		 */
+		postIntegralEntity(integralEntity: DemoWebApi_DemoData_Client.IntegralEntity | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.IntegralEntity> {
+			return Axios.post<DemoWebApi_DemoData_Client.IntegralEntity>(this.baseUri + 'api/Numbers/IntegralEntity', JSON.stringify(integralEntity), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/IntegralEntityMustBeValid
+		 */
+		postIntegralEntityMustBeValid(integralEntity: DemoWebApi_DemoData_Client.IntegralEntity | null, headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.IntegralEntity> {
+			return Axios.post<DemoWebApi_DemoData_Client.IntegralEntity>(this.baseUri + 'api/Numbers/IntegralEntityMustBeValid', JSON.stringify(integralEntity), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/intRange
+		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
+		 */
+		postIntWithRange(d: number | null, headersHandler?: () => {[header: string]: string}): Promise<number> {
+			return Axios.post<number>(this.baseUri + 'api/Numbers/intRange', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/longRange
+		 * @return {string} Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+		 */
+		postLongWithRange(d: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/longRange', JSON.stringify(d), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/uint128
+		 * @return {string} Type: UInt128, 0 to 340282366920938463463374607431768211455
+		 */
+		postUint128(uint128: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/uint128', JSON.stringify(uint128), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * POST api/Numbers/uint64
+		 * @return {string} Type: ulong, 0 to 18,446,744,073,709,551,615
+		 */
+		postUint64(uint64: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.post<string>(this.baseUri + 'api/Numbers/uint64', JSON.stringify(uint64), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' } }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 	}
 
-
-	/**
-	 * For testing different commbinations of parameters and returns
-	 */
-	export class SuperDemo {
+	export class StringData {
 		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
-		 * GET api/SuperDemo/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
+		 * GET api/StringData/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
 		 */
 		athletheSearch(take: number | null, skip: number | null, order: string | null, sort: string | null, search: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/SuperDemo/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+			return Axios.get(this.baseUri + 'api/StringData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/StringData/String
+		 */
+		getABCDE(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/StringData/String', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/StringData/EmptyString
+		 */
+		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/StringData/EmptyString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/StringData/NullString
+		 */
+		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/StringData/NullString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+	}
+
+	export class SuperDemo {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
 		}
 
 		/**
@@ -415,6 +639,20 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getActionStringResult(headersHandler?: () => {[header: string]: string}): Promise<string> {
 			return Axios.get(this.baseUri + 'api/SuperDemo/ActionStringResult', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/SuperDemo/BadRequest
+		 */
+		getBadRequest(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse<Blob>> {
+			return Axios.get(this.baseUri + 'api/SuperDemo/BadRequest', { headers: headersHandler ? headersHandler() : undefined, responseType: 'blob' }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
+		 * GET api/SuperDemo/BadRequest2
+		 */
+		getBadRequest2(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse<string>> {
+			return Axios.get(this.baseUri + 'api/SuperDemo/BadRequest2', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' });
 		}
 
 		/**
@@ -507,6 +745,13 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * GET api/SuperDemo/StringPersonDic2
+		 */
+		getDictionaryOfPeople2(headersHandler?: () => {[header: string]: string}): Promise<{[id: string]: DemoWebApi_DemoData_Client.Person }> {
+			return Axios.get<{[id: string]: DemoWebApi_DemoData_Client.Person }>(this.baseUri + 'api/SuperDemo/StringPersonDic2', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+		}
+
+		/**
 		 * GET api/SuperDemo/doulbe
 		 * @return {number} Type: double
 		 */
@@ -515,19 +760,11 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Result of 0.1d + 0.2d - 0.3d
 		 * GET api/SuperDemo/DoubleZero
 		 * @return {number} Type: double
 		 */
 		getDoubleZero(headersHandler?: () => {[header: string]: string}): Promise<number> {
 			return Axios.get<number>(this.baseUri + 'api/SuperDemo/DoubleZero', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
-		}
-
-		/**
-		 * GET api/SuperDemo/EmptyString
-		 */
-		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/SuperDemo/EmptyString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
 		}
 
 		/**
@@ -649,13 +886,6 @@ export namespace DemoWebApi_Controllers_Client {
 		 */
 		getNullPerson(headersHandler?: () => {[header: string]: string}): Promise<DemoWebApi_DemoData_Client.Person> {
 			return Axios.get<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/SuperDemo/NullObject', { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
-		}
-
-		/**
-		 * GET api/SuperDemo/NullString
-		 */
-		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/SuperDemo/NullString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
 		}
 
 		/**
@@ -853,12 +1083,62 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+	export class TextData {
+		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		}
 
-	/**
-	 * https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.3.3
-	 */
+		/**
+		 * GET api/TextData/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
+		 */
+		athletheSearch(take: number | null, skip: number | null, order: string | null, sort: string | null, search: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/TextData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/TextData/String
+		 */
+		getABCDE(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/TextData/String', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/TextData/EmptyString
+		 */
+		getEmptyString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/TextData/EmptyString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/TextData/NullableString
+		 */
+		getNullableString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/TextData/NullableString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+
+		/**
+		 * GET api/TextData/NullString
+		 */
+		getNullString(headersHandler?: () => {[header: string]: string}): Promise<string> {
+			return Axios.get(this.baseUri + 'api/TextData/NullString', { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+		}
+	}
+
 	export class Tuple {
 		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		}
+
+		/**
+		 * PUT api/Tuple/A1TupleArray
+		 */
+		a1TupleArray(idAndOrderArray: Array<{item1: string, item2: number}> | null, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.put(this.baseUri + 'api/Tuple/A1TupleArray', JSON.stringify(idAndOrderArray), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
+		}
+
+		/**
+		 * PUT api/Tuple/A2TupleArray
+		 */
+		a2TupleIEnumerable(idAndOrderArray: Array<{item1: string, item2: number}> | null, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
+			return Axios.put(this.baseUri + 'api/Tuple/A2TupleArray', JSON.stringify(idAndOrderArray), { headers: headersHandler ? Object.assign(headersHandler(), { 'Content-Type': 'application/json;charset=UTF-8' }): { 'Content-Type': 'application/json;charset=UTF-8' },  responseType: 'text' });
 		}
 
 		/**
@@ -1064,7 +1344,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get a list of value
 		 * GET api/Values
 		 */
 		get(headersHandler?: () => {[header: string]: string}): Promise<Array<string>> {
@@ -1072,11 +1351,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Get by both Id and name
-		 * GET api/Values/{id}?name={name}
+		 * GET api/Values/Name/{id}?name={name}
 		 */
 		getByIdOfnumberAndNameOfstring(id: number | null, name: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/Values/' + id + '?name=' + (!name ? '' : encodeURIComponent(name)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+			return Axios.get(this.baseUri + 'api/Values/Name/' + id + '?name=' + (!name ? '' : encodeURIComponent(name)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
 		}
 
 		/**
@@ -1108,7 +1386,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
-		 * Update with valjue
 		 * PUT api/Values/{id}
 		 */
 		put(id: number | null, value: string | null, headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
@@ -1142,6 +1419,32 @@ export namespace DemoWebApi_DemoData_Another_Client {
 
 }
 
+export namespace DemoWebApi_DemoData_Base_Client {
+
+	/**
+	 * Base class of company and person
+	 */
+	export interface Entity {
+
+		/**
+		 * Multiple addresses
+		 */
+		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
+		emailAddress?: string | null;
+		id?: string | null;
+
+		/**
+		 * Name of the entity.
+		 */
+		name: string;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
+
+		/** Type: Uri */
+		web?: string | null;
+	}
+
+}
+
 export namespace DemoWebApi_DemoData_Client {
 	export interface Address {
 		city?: string | null;
@@ -1163,7 +1466,27 @@ export namespace DemoWebApi_DemoData_Client {
 
 	export enum AddressType { Postal, Residential }
 
-	export interface Company extends DemoWebApi_DemoData_Client.Entity {
+
+	/**  */
+	export interface BigNumbers {
+
+		/** Type: BigInteger */
+		bigInt?: string | null;
+
+		/** Type: Int128, -170141183460469231731687303715884105728 to 170141183460469231731687303715884105727 */
+		signed128?: string | null;
+
+		/** Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 */
+		signed64?: string | null;
+
+		/** Type: UInt128, 0 to 340282366920938463463374607431768211455 */
+		unsigned128?: string | null;
+
+		/** Type: ulong, 0 to 18,446,744,073,709,551,615 */
+		unsigned64?: string | null;
+	}
+
+	export interface Company extends DemoWebApi_DemoData_Base_Client.Entity {
 
 		/**
 		 * BusinessNumber to be serialized as BusinessNum
@@ -1196,28 +1519,6 @@ export namespace DemoWebApi_DemoData_Client {
 
 
 	/**
-	 * Base class of company and person
-	 */
-	export interface Entity {
-
-		/**
-		 * Multiple addresses
-		 */
-		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
-		id?: string | null;
-
-		/**
-		 * Name of the entity.
-		 */
-		name: string;
-		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
-
-		/** Type: Uri */
-		web?: string | null;
-	}
-
-
-	/**
 	 * To test different serializations against Guid
 	 */
 	export interface IdMap {
@@ -1230,6 +1531,30 @@ export namespace DemoWebApi_DemoData_Client {
 		nullableId?: string | null;
 		requiredName: string;
 		text?: string | null;
+	}
+
+	export interface IntegralEntity extends DemoWebApi_DemoData_Base_Client.Entity {
+
+		/** Type: byte, 0 to 255 */
+		byte?: number | null;
+
+		/** Type: int, -2,147,483,648 to 2,147,483,647 */
+		int?: number | null;
+
+		/** Type: int */
+		itemCount?: number | null;
+
+		/** Type: sbyte, -128 to 127 */
+		sByte?: number | null;
+
+		/** Type: short, -32,768 to 32,767 */
+		short?: number | null;
+
+		/** Type: uint, 0 to 4,294,967,295 */
+		uInt?: number | null;
+
+		/** Type: ushort, 0 to 65,535 */
+		uShort?: number | null;
 	}
 
 	export enum MedicalContraindiationResponseTypeReason { M = "Mm", S = "Ss", P = "Pp", I = "I", A = "A" }
@@ -1275,7 +1600,7 @@ export namespace DemoWebApi_DemoData_Client {
 		intDic?: {[id: number]: string };
 	}
 
-	export interface Person extends DemoWebApi_DemoData_Client.Entity {
+	export interface Person extends DemoWebApi_DemoData_Base_Client.Entity {
 		baptised?: Date | null;
 
 		/**
@@ -1345,6 +1670,21 @@ export namespace DemoWebApi_Models_Client {
 		newPassword?: string | null;
 	}
 
+
+	/**
+	 * Auth token
+	 */
+	export interface TokenResponseModel {
+		access_token?: string | null;
+		expires?: string | null;
+
+		/** Type: int, -2,147,483,648 to 2,147,483,647 */
+		expires_in?: number | null;
+		issued?: string | null;
+		token_type?: string | null;
+		username?: string | null;
+	}
+
 }
 
 export namespace Core3WebApi_Controllers_Client {
@@ -1368,9 +1708,7 @@ export namespace DemoCoreWeb_Controllers_Client {
 		}
 
 		/**
-		 * Anonymous Dynamic of C#
 		 * GET api/SpecialTypes/AnonymousDynamic
-		 * @return {any} dyanmic things
 		 */
 		getAnonymousDynamic(headersHandler?: () => {[header: string]: string}): Promise<AxiosResponse> {
 			return Axios.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined });

@@ -1,5 +1,7 @@
 ﻿using DemoWebApi.DemoData.Client;
+using Fonlow.Net.Http;
 using System;
+using System.Net;
 using Xunit;
 
 namespace IntegrationTests
@@ -37,10 +39,11 @@ namespace IntegrationTests
 				}},
 			};
 
-			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Person a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
 			Assert.Equal("Hey", a.GivenName);
 			Assert.Equal(person.DOB, a.DOB);
 			Assert.Equal(person.Baptised, a.Baptised);
+			Assert.Equal(person.Baptised.Value.Offset, a.Baptised.Value.Offset); //Even if the host is in Hawaii.
 		}
 
 		[Fact]
@@ -65,7 +68,7 @@ namespace IntegrationTests
 				}},
 			};
 
-			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Person a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
 			Assert.Equal("Hey", a.GivenName);
 			Assert.Equal(person.DOB, a.DOB);
 			Assert.Equal(person.Baptised, a.Baptised);
@@ -93,11 +96,125 @@ namespace IntegrationTests
 				}},
 			};
 
-			var a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
+			Person a = api.CreatePerson3(person, (headers) => { headers.Add("middle", "Hey"); });
 			Assert.Equal("Hey", a.GivenName);
 			Assert.Equal(person.DOB, a.DOB);
 			Assert.Equal(person.Baptised, a.Baptised);
 		}
+
+		[Fact]
+		public void TestCreatePersonByAdmin()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			Person a = api.CreatePersonByAdmin(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+			Assert.Equal(person.Baptised.Value.Offset, a.Baptised.Value.Offset); //Even if the host is in Hawaii.
+		}
+
+		[Fact]
+		public void TestCreatePersonWeak()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			Person a = api.CreatePersonWeak(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+			Assert.Equal(person.Baptised.Value.Offset, a.Baptised.Value.Offset); //Even if the host is in Hawaii.
+		}
+
+		[Fact]
+		public void TestCreatePersonWithNotFound()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			Person a = api.CreatePersonWithNotFound(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+			Assert.Equal(person.Baptised.Value.Offset, a.Baptised.Value.Offset); //Even if the host is in Hawaii.
+		}
+
+		[Fact]
+		public void TestCreatePersonWithStatuses()
+		{
+			Person person = new Person()
+			{
+				Name = "Some One",
+				Surname = "One",
+				GivenName = "Some",
+				DOB = new DateOnly(1988, 11, 23),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
+				Addresses = new Address[]{new Address(){
+					City="Brisbane",
+					State="QLD",
+					Street1="Somewhere",
+					Street2="Over the rainbow",
+					PostalCode="4000",
+					Country="Australia",
+					Type= AddressType.Postal,
+					Location = new DemoWebApi.DemoData.Another.Client.MyPoint() {X=4, Y=9 },
+				}},
+			};
+
+			Person a = api.CreatePersonWithStatuses(person, (headers) => { headers.Add("middle", "Hey"); });
+			Assert.Equal(person.DOB, a.DOB);
+			Assert.Equal(person.Baptised, a.Baptised);
+			Assert.Equal(person.Baptised.Value.Offset, a.Baptised.Value.Offset); //Even if the host is in Hawaii.
+		}
+
+
 
 		[Fact]
 		public void TestCreateCompany()
@@ -111,7 +228,7 @@ namespace IntegrationTests
 				RegisterDate = regDate,
 			};
 
-			var a = api.CreateCompany(c);
+			Company a = api.CreateCompany(c);
 			Assert.NotNull(a.Id);
 			Assert.Equal(regDate, a.RegisterDate);
 			Assert.Equal(foundDate, a.FoundDate);
@@ -125,7 +242,7 @@ namespace IntegrationTests
 				Name = "Super Co",
 			};
 
-			var a = api.CreateCompany(c);
+			Company a = api.CreateCompany(c);
 			Assert.NotNull(a.Id);
 			Assert.Equal(DateOnly.MinValue, a.RegisterDate);
 			Assert.Equal(c.FoundDate, a.FoundDate);
@@ -135,7 +252,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPatch()
 		{
-			var r = api.PatchPerson(new Person()
+			string r = api.PatchPerson(new Person()
 			{
 				Name = "Some One",
 				Surname = "One",
@@ -166,7 +283,7 @@ namespace IntegrationTests
 				Surname = "One",
 				GivenName = "Some",
 				DOB = new DateOnly(1988, 11, 23),
-				Baptised= DateTimeOffset.Now.Date.AddYears(-20),
+				Baptised = DateTimeOffset.Now.Date.AddYears(-20),
 				Addresses = new Address[]{new Address(){
 					City="Brisbane",
 					State="QLD",
@@ -179,7 +296,7 @@ namespace IntegrationTests
 				}},
 			};
 
-			var id = api.CreatePerson(person);
+			long id = api.CreatePerson(person);
 			Assert.True(id > 0);
 		}
 
@@ -204,7 +321,7 @@ namespace IntegrationTests
 			  }},
 			};
 
-			var ex = Assert.Throws<Fonlow.Net.Http.WebApiRequestException>(() => api.CreatePerson(person));
+			WebApiRequestException ex = Assert.Throws<Fonlow.Net.Http.WebApiRequestException>(() => api.CreatePerson(person));
 			System.Diagnostics.Debug.WriteLine(ex.ToString());
 		}
 
@@ -217,7 +334,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestUpdate()
 		{
-			var r = api.UpdatePerson(new Person()
+			string r = api.UpdatePerson(new Person()
 			{
 				Name = "Some One",
 				Surname = "One",
@@ -241,7 +358,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGet()
 		{
-			var person = api.GetPerson(100);
+			Person person = api.GetPerson(100);
 			Assert.NotNull(person);
 			Assert.Equal("Huang", person.Surname);
 			Assert.True(person.DOB.HasValue);
@@ -249,12 +366,15 @@ namespace IntegrationTests
 			Assert.Equal(1988, person.DOB.Value.Year);
 		}
 
-		[Fact]
+		/// <summary>
+		/// Expected to fail, before MS would fix Text.Json.JsonSerializer for Jagged array
+		/// </summary>
+		[Fact(Skip = "Unitl MS would fix Text.Json.JsonSerializer for Jagged array")]
 		public void TestGetCompany()
 		{
-			var c = api.GetCompany(1);
+			Company c = api.GetCompany(1);
 			Assert.Equal("Super Co", c.Name);
-			Assert.Equal(2, c.Addresses.Length);
+			Assert.Equal(2, c.Addresses.Count);
 			Assert.Equal(AddressType.Postal, c.Addresses[0].Type);
 			Assert.Equal(AddressType.Residential, c.Addresses[1].Type);
 			Assert.Equal(8, c.Int2D[1, 3]);
@@ -263,9 +383,16 @@ namespace IntegrationTests
 		}
 
 		[Fact]
+		public void TestGetNullCompany()
+		{
+			Company c = api.GetNullCompany();
+			Assert.Null(c);
+		}
+
+		[Fact]
 		public void TestGetMimsString()
 		{
-			var c = api.GetMims(new MimsPackage
+			MimsResult<string> c = api.GetMims(new MimsPackage
 			{
 				Tag = "Hello",
 				KK = 99,
@@ -282,7 +409,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestMyGeneric()
 		{
-			var c = api.GetMyGeneric(new MyGeneric<string, decimal, double>
+			MyGeneric<string, decimal, double> c = api.GetMyGeneric(new MyGeneric<string, decimal, double>
 			{
 				MyK = 123.456m,
 				MyT = "abc",
@@ -297,7 +424,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestMyGenericPerson()
 		{
-			var c = api.GetMyGenericPerson(new MyGeneric<string, decimal, Person>
+			MyGeneric<string, decimal, Person> c = api.GetMyGenericPerson(new MyGeneric<string, decimal, Person>
 			{
 				MyK = 123.456m,
 				MyT = "abc",
@@ -316,25 +443,27 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostIdMap_MissingRequiredName()
 		{
-			var d = new IdMap
+			IdMap d = new IdMap
 			{
 
 			};
-			var r = api.PostIdMap(d);  //payload is {"Id":"00000000-0000-0000-0000-000000000000"}, while RequiredName is with IsRequired=true;
-			Assert.Null(r); // The service binding will fail to deserialize sicne RequiredName has to be presented in payload,
+
+			WebApiRequestException ex = Assert.Throws<WebApiRequestException>(() => api.PostIdMap(d));
+			Assert.Equal(HttpStatusCode.BadRequest, ex.StatusCode);
+			//var r = api.PostIdMap(d);  //payload is {"Id":"00000000-0000-0000-0000-000000000000"}, while RequiredName is with IsRequired=true;
+			//Assert.Null(r); // Without validation checking, the Web API receive null.
 		}
 
 		[Fact]
 		public void TestPostIdMap()
 		{
-			var d = new IdMap
+			IdMap d = new IdMap
 			{
 				RequiredName = "Hey"
 			};
-			var r = api.PostIdMap(d);  //payload is {"Id":"00000000-0000-0000-0000-000000000000"}, while RequiredName is with IsRequired=true;
+			IdMap r = api.PostIdMap(d);  //payload is {"Id":"00000000-0000-0000-0000-000000000000"}, while RequiredName is with IsRequired=true;
 			Assert.Equal(Guid.Empty, r.Id);
 			Assert.Equal(Guid.Empty, r.IdNotEmitDefaultValue);
 		}
-
 	}
 }

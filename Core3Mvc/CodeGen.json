@@ -1,11 +1,14 @@
 {
 	"ApiSelections": {
 		"ExcludedControllerNames": [
-			"Demo3Mvc.Controllers.Home"
+			"DemoWebApi.Controllers.Home",
+			"DemoWebApi.Controllers.FileUpload"
 		],
+
 		"DataModelAssemblyNames": [
 			"DemoWebApi.DemoDataCore",
-			"Core3Mvc"
+			"DemoCoreWebControllers",
+			"Core3WebApi"
 		],
 		"CherryPickingMethods": 3
 	},
@@ -19,6 +22,7 @@
 		"DataAnnotationsEnabled": true,
 		"DataAnnotationsToComments": true,
 		"HandleHttpRequestHeaders": true,
+		"UseSystemTextJson": true,
 
 		"Plugins": [
 

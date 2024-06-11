@@ -3,12 +3,12 @@ using Fonlow.CodeDom.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using System.Linq;
 using System.Net;
 
 namespace Fonlow.WebApiClientGen
 {
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[ApiController]
 	[Route("api/[controller]")]
 	public class CodeGenController : ControllerBase
 	{
@@ -32,7 +32,7 @@ namespace Fonlow.WebApiClientGen
 		/// <param name="settings"></param>
 		/// <returns>OK if OK</returns>
 		[HttpPost]
-		public ActionResult TriggerCodeGen([FromBody] CodeGenSettings settings)
+		public IActionResult TriggerCodeGen([FromBody] CodeGenSettings settings)
 		{
 			if (settings == null)
 				return BadRequest("No settings");
@@ -40,11 +40,11 @@ namespace Fonlow.WebApiClientGen
 			if (settings.ClientApiOutputs == null)
 				return BadRequest("No settings/ClientApiOutputs");
 
-			Fonlow.Web.Meta.WebApiDescription[] apiDescriptions;
+			Fonlow.Web.Meta.WebApiDescription[] webApiDescriptions;
 			try
 			{
-				var descriptions = ApiExplorerHelper.GetApiDescriptions(apiExplorer);
-				apiDescriptions = descriptions.Select(d => Fonlow.Web.Meta.MetaTransform.GetWebApiDescription(d)).OrderBy(d => d.ActionDescriptor.ActionName).ToArray();
+				ApiDescription[] descriptions = ApiExplorerHelper.GetApiDescriptions(apiExplorer);
+				webApiDescriptions = descriptions.Select(d => Fonlow.Web.Meta.MetaTransform.GetWebApiDescription(d)).OrderBy(d => d.ActionDescriptor.ActionName).ToArray();
 
 			}
 			catch (Fonlow.Web.Meta.CodeGenException e)
@@ -62,14 +62,14 @@ namespace Fonlow.WebApiClientGen
 			{
 				settings.ClientApiOutputs.CamelCase = true;
 			}
-
+			
 			try
 			{
-				CodeGen.GenerateClientAPIs(this.webRootPath, settings, apiDescriptions);
+				CodeGen.GenerateClientAPIs(this.webRootPath, settings, webApiDescriptions);
 			}
 			catch (Fonlow.Web.Meta.CodeGenException e)
 			{
-				var msg = e.Message + (string.IsNullOrEmpty(e.Description) ? string.Empty : (" : " + e.Description));
+				string msg = e.Message + (string.IsNullOrEmpty(e.Description) ? string.Empty : (" : " + e.Description));
 				System.Diagnostics.Trace.TraceError(msg);
 				return BadRequest(msg);
 			}

@@ -1,7 +1,9 @@
 ﻿using DemoWebApi.DemoData.Client;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace IntegrationTests
 {
@@ -18,7 +20,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetIntArrayQ()
 		{
-			var d = api.GetIntArrayQ(new int[] { 3, 4, 5 });
+			int[] d = api.GetIntArrayQ(new int[] { 3, 4, 5 });
 			Assert.Equal(3, d.Length);
 			Assert.Equal(5, d[2]);
 		}
@@ -26,7 +28,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetIntArrayQ2()
 		{
-			var d = api.GetIntArrayQ2(new long[] { 3, 4, 5 });
+			long[] d = api.GetIntArrayQ2(new long[] { 3, 4, 5 });
 			Assert.Equal(3, d.Length);
 			Assert.Equal(5, d[2]);
 		}
@@ -34,7 +36,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetDecimalArrayQ()
 		{
-			var d = api.GetDecimalArrayQ(new decimal[] { 3.5m, 4.6m, 5.7m });
+			decimal[] d = api.GetDecimalArrayQ(new decimal[] { 3.5m, 4.6m, 5.7m });
 			Assert.Equal(3, d.Length);
 			Assert.Equal(5.7m, d[2]);
 		}
@@ -42,7 +44,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetStringArrayQ()
 		{
-			var d = api.GetStringArrayQ(new string[] { "Abc", "Eft", "hi" });
+			string[] d = api.GetStringArrayQ(new string[] { "Abc", "Eft", "hi" });
 			Assert.Equal(3, d.Length);
 			Assert.Equal("hi", d[2]);
 		}
@@ -50,7 +52,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetStringArrayQ2()
 		{
-			var d = api.GetStringArrayQ2(new string[] { "Abc", "Eft", "hi" });
+			string[] d = api.GetStringArrayQ2(new List<string> { "Abc", "Eft", "hi" });
 			Assert.Equal(3, d.Length);
 			Assert.Equal("hi", d[2]);
 		}
@@ -58,7 +60,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetEnumArrayQ2()
 		{
-			var d = api.GetEnumArrayQ2(new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.Sunday, DayOfWeek.Saturday });
+			DayOfWeek[] d = api.GetEnumArrayQ2(new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Sunday, DayOfWeek.Saturday });
 			Assert.Equal(3, d.Length);
 			Assert.Equal(DayOfWeek.Saturday, d[2]);
 		}
@@ -66,7 +68,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetEnumArrayDays()
 		{
-			var d = api.GetEnumArrayDays(new Days[] { Days.Mon, Days.Tue, Days.Wed });
+			Days[] d = api.GetEnumArrayDays(new Days[] { Days.Mon, Days.Tue, Days.Wed });
 			Assert.Equal(3, d.Length);
 			Assert.Equal(Days.Wed, d[2]);
 		}
@@ -74,58 +76,16 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetDay()
 		{
-			var d = api.GetDay(Days.Fri);
+			Days d = api.GetDay(Days.Fri);
 			Assert.Equal(Days.Fri, d);
 		}
 
 		[Fact]
 		public void TestPostDay()
 		{
-			var d = api.PostDay(Days.Fri, Days.Sat);
+			Days[] d = api.PostDay(Days.Fri, Days.Sat);
 			Assert.Equal(2, d.Length);
 			Assert.Equal(Days.Sat, d[1]);
-		}
-
-		[Fact]
-		public void TestAthletheSearch()
-		{
-			var s = api.AthletheSearch(32, 0, null, null, null);
-			Assert.Equal("\"320\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch2()
-		{
-			var s = api.AthletheSearch(32, 0, null, null, "Search");
-			Assert.Equal("\"320Search\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch3()
-		{
-			var s = api.AthletheSearch(32, 0, null, "Sort", "Search");
-			Assert.Equal("\"320SortSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch4()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", "Sort", "Search");
-			Assert.Equal("\"320OrderSortSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch5()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", null, "Search");
-			Assert.Equal("\"320OrderSearch\"", s);
-		}
-
-		[Fact]
-		public void TestAthletheSearch6()
-		{
-			var s = api.AthletheSearch(32, 0, "Order", "", "Search");
-			Assert.Equal("\"320OrderSearch\"", s);
 		}
 
 		[Fact]
@@ -145,7 +105,7 @@ namespace IntegrationTests
 		{
 			double dou = 1234.567;
 			decimal de = 1234.567m;
-			var t = api.GetPrimitiveNullable("abc", dou, de);
+			Tuple<string, double?, decimal?> t = api.GetPrimitiveNullable("abc", dou, de);
 			Assert.Equal(dou, t.Item2);
 			Assert.Equal(de, t.Item3);
 		}
@@ -154,7 +114,7 @@ namespace IntegrationTests
 		public void TestNullablePrimitiveWithFirstNull()
 		{
 			decimal de = 1234.567m;
-			var t = api.GetPrimitiveNullable("abc", null, de);
+			Tuple<string, double?, decimal?> t = api.GetPrimitiveNullable("abc", null, de);
 			Assert.Null(t.Item2);
 			Assert.Equal(de, t.Item3);
 		}
@@ -162,7 +122,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestNullablePrimitiveWithBothNulll()
 		{
-			var t = api.GetPrimitiveNullable("abc", null, null);
+			Tuple<string, double?, decimal?> t = api.GetPrimitiveNullable("abc", null, null);
 			Assert.Null(t.Item2);
 			Assert.Null(t.Item3);
 		}
@@ -171,7 +131,7 @@ namespace IntegrationTests
 		public void TestNullablePrimitiveWithSecondNull()
 		{
 			double dou = 1234.567;
-			var t = api.GetPrimitiveNullable("abc", dou, null);
+			Tuple<string, double?, decimal?> t = api.GetPrimitiveNullable("abc", dou, null);
 			Assert.Equal(dou, t.Item2);
 			Assert.Null(t.Item3);
 		}
@@ -179,14 +139,14 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetNullableDecimal()
 		{
-			var d = api.GetNullableDecimal(true);
+			decimal? d = api.GetNullableDecimal(true);
 			Assert.True(d.Value > 10);
 		}
 
 		[Fact]
 		public void TestGetDecimalNull()
 		{
-			var d = api.GetNullableDecimal(false);
+			decimal? d = api.GetNullableDecimal(false);
 			Assert.False(d.HasValue);
 		}
 
@@ -199,8 +159,8 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetByteArray()
 		{
-			var array = api.GetByteArray();
-			var s = System.Text.Encoding.UTF8.GetString(array);
+			byte[] array = api.GetByteArray();
+			string s = System.Text.Encoding.UTF8.GetString(array);
 			Assert.Equal("abcdefg", s);
 		}
 
@@ -258,7 +218,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestIntArray()
 		{
-			var d = api.GetIntArray();
+			int[] d = api.GetIntArray();
 			Assert.Equal(8, d[7]);
 		}
 
@@ -268,10 +228,14 @@ namespace IntegrationTests
 			Assert.True(api.PostIntArray(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }));
 		}
 
-		[Fact]
+		/// <summary>
+		/// Expected to fail, before MS would fix Text.Json.JsonSerializer for 2 dimensional array
+		/// Web API: public int[,] GetInt2D()
+		/// </summary>
+		[Fact(Skip = "Expected to fail, before MS would fix Text.Json.JsonSerializer for 2 dimensional array")]
 		public void TestInt2D()
 		{
-			var d = api.GetInt2D();
+			int[,] d = api.GetInt2D();
 			Assert.Equal(1, d.GetUpperBound(0));
 			Assert.Equal(3, d.GetUpperBound(1));
 			Assert.Equal(1, d[0, 0]);
@@ -282,17 +246,20 @@ namespace IntegrationTests
 		[Fact]
 		public void TestInt2DJagged()
 		{
-			var d = api.GetInt2DJagged();
+			int[][] d = api.GetInt2DJagged();
 			Assert.Equal(1, d.GetUpperBound(0));
 			Assert.Equal(1, d[0][0]);
 			Assert.Equal(4, d[0][3]);
 			Assert.Equal(8, d[1][3]);
 		}
 
-		[Fact]
+		/// <summary>
+		/// Expected to fail, before MS would fix Text.Json.JsonSerializer  for 2 dimensional array
+		/// </summary>
+		[Fact(Skip = "Unitl MS would fix Text.Json.JsonSerializer for Jagged array")]
 		public void TestPostInt2D()
 		{
-			var d = api.PostInt2D(new int[,]
+			bool d = api.PostInt2D(new int[,]
 			{
 			   {1,2,3, 4 },
 			   {5,6,7, 8 }
@@ -300,10 +267,13 @@ namespace IntegrationTests
 			Assert.True(d);
 		}
 
-		[Fact]
+		/// <summary>
+		/// Expected to fail, before MS would fix Text.Json.JsonSerializer for 2 dimensional array
+		/// </summary>
+		[Fact(Skip = "Expected to fail, before MS would fix Text.Json.JsonSerializer for 2 dimensional array")]
 		public void TestPostInt2DExpectedFalse()
 		{
-			var d = api.PostInt2D(new int[,]
+			bool d = api.PostInt2D(new int[,]
 			{
 			   {1,2,3, 4 },
 			   {5,6,7, 9 }
@@ -314,7 +284,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostInt2DJagged()
 		{
-			var d = api.PostInt2DJagged(new int[][]
+			bool d = api.PostInt2DJagged(new int[][]
 			{
 			   new int[] {1,2,3, 4 },
 			   new int[] {5,6,7, 8 }
@@ -325,7 +295,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostInt2DJaggedExpectedFalse()
 		{
-			var d = api.PostInt2DJagged(new int[][]
+			bool d = api.PostInt2DJagged(new int[][]
 			{
 			   new int[] {1,2,3, 4 },
 			   new int[] {5,6,7, 9 }
@@ -334,22 +304,47 @@ namespace IntegrationTests
 		}
 
 		[Fact]
-		public void TestGetTextStream()
+		public async Task TestGetTextStream()
 		{
+
+/* Unmerged change from project 'IntegrationTestsTextJson'
+Before:
 			var response = api.GetTextStream();
-			var stream = response.Content.ReadAsStreamAsync().Result;
+			var stream = await response.Content.ReadAsStreamAsync();
 			using (var reader = new System.IO.StreamReader(stream))
+After:
+			HttpResponseMessage response = api.GetTextStream();
+			Stream stream = await response.Content.ReadAsStreamAsync();
+			using (StreamReader reader = new System.IO.StreamReader(stream))
+*/
+			System.Net.Http.HttpResponseMessage response = api.GetTextStream();
+			System.IO.Stream stream = await response.Content.ReadAsStreamAsync();
+			using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
 			{
-				var s = reader.ReadToEnd();
+				string s = reader.ReadToEnd();
 				Assert.Equal("abcdefg", s);
 			}
 
 		}
 
 		[Fact]
+		public void TestGetBadRequest()
+		{
+			Fonlow.Net.Http.WebApiRequestException ex = Assert.Throws<Fonlow.Net.Http.WebApiRequestException>(() => api.GetBadRequest());
+			Assert.Equal("{\"DemoKey\":[\"Some description\"]}", ex.Response);
+		}
+
+		[Fact]
+		public void TestGetBadRequest2()
+		{
+			Fonlow.Net.Http.WebApiRequestException ex = Assert.Throws<Fonlow.Net.Http.WebApiRequestException>(() => api.GetBadRequest2());
+			Assert.Equal("{\"DemoKey\":[\"Some description\"]}", ex.Response);
+		}
+
+		[Fact]
 		public void TestDictionary()
 		{
-			var dic = new Dictionary<string, Person>()
+			Dictionary<string, Person> dic = new Dictionary<string, Person>()
 			{
 				{"Iron Man", new Person()
 				{
@@ -375,7 +370,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostDic()
 		{
-			var r = api.PostDictionary(new Dictionary<string, Person>()
+			int r = api.PostDictionary(new Dictionary<string, Person>()
 			{
 				{"Iron Man", new Person()
 				{
@@ -399,7 +394,7 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetKeyValuePair()
 		{
-			var r = api.GetKeyhValuePair();
+			KeyValuePair<string, Person> r = api.GetKeyhValuePair();
 			Assert.Equal("Spider Man", r.Key);
 			Assert.Equal("Peter Parker", r.Value.Name);
 		}
@@ -407,42 +402,42 @@ namespace IntegrationTests
 		[Fact]
 		public void TestGetICollection()
 		{
-			var r = api.GetICollection();
+			Person[] r = api.GetICollection().ToArray();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
 		[Fact]
 		public void TestGetCollection()
 		{
-			var r = api.GetCollection();
+			System.Collections.ObjectModel.Collection<Person> r = api.GetCollection();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
 		[Fact]
 		public void TestGetIList()
 		{
-			var r = api.GetIList();
+			IList<Person> r = api.GetIList();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
 		[Fact]
 		public void TestGetList()
 		{
-			var r = api.GetList();
+			List<Person> r = api.GetList();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
 		[Fact]
 		public void TestGetIReadOnlyCollection()
 		{
-			var r = api.GetIReadOnlyCollection();
+			Person[] r = api.GetIReadOnlyCollection().ToArray();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
 		[Fact]
 		public void TestGetIReadOnlyList()
 		{
-			var r = api.GetIReadOnlyList();
+			IReadOnlyList<Person> r = api.GetIReadOnlyList();
 			Assert.Equal("Peter Parker", r[1].Name);
 		}
 
@@ -450,6 +445,27 @@ namespace IntegrationTests
 		static Person[] GetPersonList()
 		{
 			return new Person[] {
+				new Person()
+				{
+					Name= "Tony Stark",
+					Surname="Stark",
+					GivenName="Tony"
+				},
+
+				new Person() {
+					Name="Peter Parker",
+					Addresses= new Address[] { new Address() {
+							City="New York"
+
+						} },
+				}
+
+			};
+		}
+
+		static System.Collections.ObjectModel.Collection<Person> GetPersonCollection()
+		{
+			return new System.Collections.ObjectModel.Collection<Person> {
 				new Person()
 				{
 					Name= "Tony Stark",
@@ -484,13 +500,13 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostCollection()
 		{
-			Assert.Equal(2, api.PostCollection(GetPersonList()));
+			Assert.Equal(2, api.PostCollection(GetPersonCollection()));
 		}
 
 		[Fact]
 		public void TestPostList()
 		{
-			Assert.Equal(2, api.PostList(GetPersonList()));
+			Assert.Equal(2, api.PostList(GetPersonList().ToList()));
 		}
 
 		[Fact]
@@ -508,47 +524,68 @@ namespace IntegrationTests
 		[Fact]
 		public void TestPostWithQueryButEmptyBody()
 		{
-			var r = api.PostWithQueryButEmptyBody("abc", 123);
+			Tuple<string, int> r = api.PostWithQueryButEmptyBody("abc", 123);
 			Assert.Equal("abc", r.Item1);
 			Assert.Equal(123, r.Item2);
 		}
 
 		[Fact]
-		public async void TestPostActionResult()
+		public async Task TestPostActionResult()
 		{
+
+/* Unmerged change from project 'IntegrationTestsTextJson'
+Before:
 			var m = await api.PostActionResultAsync();
+After:
+			HttpResponseMessage m = await api.PostActionResultAsync();
+*/
+			System.Net.Http.HttpResponseMessage m = await api.PostActionResultAsync();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
-			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			string s = await m.Content.ReadAsStringAsync();
+			Assert.Equal("abcdefg", s);
 		}
 
 		[Fact]
-		public async void TestGetActionResult()
+		public async Task TestGetActionResult()
 		{
+
+/* Unmerged change from project 'IntegrationTestsTextJson'
+Before:
 			var m = await api.GetActionResultAsync();
+After:
+			HttpResponseMessage m = await api.GetActionResultAsync();
+*/
+			System.Net.Http.HttpResponseMessage m = await api.GetActionResultAsync();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
-			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			string s = await m.Content.ReadAsStringAsync();
+			Assert.Equal("abcdefg", s);
 
 		}
 
 		[Fact]
-		public async void TestGetActionResult2()
+		public async Task TestGetActionResult2()
 		{
+
+/* Unmerged change from project 'IntegrationTestsTextJson'
+Before:
 			var m = await api.GetActionResult2Async();
+After:
+			HttpResponseMessage m = await api.GetActionResult2Async();
+*/
+			System.Net.Http.HttpResponseMessage m = await api.GetActionResult2Async();
 			Assert.Equal(System.Net.HttpStatusCode.OK, m.StatusCode);
-			var s = await m.Content.ReadAsStringAsync();
-			Assert.Equal("\"abcdefg\"", s);
+			string s = await m.Content.ReadAsStringAsync();
+			Assert.Equal("abcdefg", s);
 
 		}
 
 		[Fact]
 		public void TestPostGuids()
 		{
-			var id1 = Guid.NewGuid();
-			var id2 = Guid.NewGuid();
-			var ids = new Guid[] { id1, id2 };
-			var r = api.PostGuids(ids);
+			Guid id1 = Guid.NewGuid();
+			Guid id2 = Guid.NewGuid();
+			Guid[] ids = new Guid[] { id1, id2 };
+			Guid[] r = api.PostGuids(ids);
 			Assert.Equal(2, r.Length);
 			Assert.Equal(id1, r[0]);
 		}
