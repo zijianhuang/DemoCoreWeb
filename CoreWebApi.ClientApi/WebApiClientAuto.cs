@@ -19,6 +19,7 @@ namespace DemoWebApi.Controllers.Client
 	using Fonlow.Net.Http;
 	
 	
+	[System.SerializableAttribute()]
 	public class Hero : object
 	{
 		
@@ -43,12 +44,14 @@ namespace DemoWebApi.Controllers.Client
 		public string WebAddress { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class SuperHero : DemoWebApi.Controllers.Client.Hero
 	{
 		
 		public bool Super { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class FileResult : object
 	{
 		
@@ -1751,6 +1754,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Entities/NullCompany
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<DemoWebApi.DemoData.Client.Company> GetNullCompanyAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Entities/NullCompany";
@@ -1773,6 +1777,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Entities/NullCompany
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public DemoWebApi.DemoData.Client.Company GetNullCompany(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Entities/NullCompany";
@@ -2185,6 +2190,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Heroes/{id}
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<DemoWebApi.Controllers.Client.Hero> GetHeroAsync(long id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Heroes/"+id;
@@ -2207,6 +2213,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Heroes/{id}
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public DemoWebApi.Controllers.Client.Hero GetHero(long id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Heroes/"+id;
@@ -2273,6 +2280,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Heroes/super?id={id}
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<DemoWebApi.Controllers.Client.SuperHero> GetSuperHeroAsync(long id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Heroes/super?id="+id;
@@ -2295,6 +2303,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Heroes/super?id={id}
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public DemoWebApi.Controllers.Client.SuperHero GetSuperHero(long id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Heroes/super?id="+id;
@@ -3645,6 +3654,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/StringData/NullString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<string> GetNullStringAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/StringData/NullString";
@@ -3668,6 +3678,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/StringData/NullString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public string GetNullString(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/StringData/NullString";
@@ -5191,6 +5202,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/NullObject
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<DemoWebApi.DemoData.Client.Person> GetNullPersonAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/NullObject";
@@ -5213,6 +5225,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/NullObject
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public DemoWebApi.DemoData.Client.Person GetNullPerson(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/NullObject";
@@ -6529,6 +6542,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/TextData/NullableString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<string> GetNullableStringAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/TextData/NullableString";
@@ -6552,6 +6566,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/TextData/NullableString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public string GetNullableString(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/TextData/NullableString";
@@ -6575,6 +6590,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/TextData/NullString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<string> GetNullStringAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/TextData/NullString";
@@ -6598,6 +6614,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/TextData/NullString
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public string GetNullString(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/TextData/NullString";
@@ -6779,6 +6796,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Tuple/PeopleCompany4
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<System.Tuple<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Company>> GetPeopleCompany4Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Tuple/PeopleCompany4";
@@ -6801,6 +6819,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Tuple/PeopleCompany4
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public System.Tuple<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Company> GetPeopleCompany4(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Tuple/PeopleCompany4";
@@ -6823,6 +6842,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Tuple/PeopleCompany5
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public async Task<System.Tuple<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Company>> GetPeopleCompany5Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Tuple/PeopleCompany5";
@@ -6845,6 +6865,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/Tuple/PeopleCompany5
 		/// </summary>
+		[return: System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
 		public System.Tuple<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.Company> GetPeopleCompany5(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/Tuple/PeopleCompany5";
@@ -8409,6 +8430,7 @@ namespace DemoWebApi.DemoData.Another.Client
 {
 	
 	
+	[System.SerializableAttribute()]
 	public struct MyPoint
 	{
 		
@@ -8421,6 +8443,7 @@ namespace DemoWebApi.DemoData.Base.Client
 {
 	
 	
+	[System.SerializableAttribute()]
 	public class Entity : object
 	{
 		
@@ -8446,6 +8469,7 @@ namespace DemoWebApi.DemoData.Client
 {
 	
 	
+	[System.SerializableAttribute()]
 	public class Address : object
 	{
 		
@@ -8480,6 +8504,7 @@ namespace DemoWebApi.DemoData.Client
 		public DemoWebApi.DemoData.Another.Client.MyPoint Location { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public enum AddressType
 	{
 		
@@ -8488,6 +8513,7 @@ namespace DemoWebApi.DemoData.Client
 		Residential,
 	}
 	
+	[System.SerializableAttribute()]
 	public class PhoneNumber : object
 	{
 		
@@ -8501,6 +8527,7 @@ namespace DemoWebApi.DemoData.Client
 		public DemoWebApi.DemoData.Client.PhoneType PhoneType { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public enum PhoneType
 	{
 		
@@ -8513,6 +8540,7 @@ namespace DemoWebApi.DemoData.Client
 		Fax,
 	}
 	
+	[System.SerializableAttribute()]
 	public class Person : DemoWebApi.DemoData.Base.Client.Entity
 	{
 		
@@ -8526,6 +8554,7 @@ namespace DemoWebApi.DemoData.Client
 		public string Surname { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class Company : DemoWebApi.DemoData.Base.Client.Entity
 	{
 		
@@ -8547,6 +8576,7 @@ namespace DemoWebApi.DemoData.Client
 		public System.Collections.Generic.IEnumerable<string> Lines { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public enum Days
 	{
 		
@@ -8565,6 +8595,7 @@ namespace DemoWebApi.DemoData.Client
 		Fri = 7,
 	}
 	
+	[System.SerializableAttribute()]
 	public class MimsResult<T> : object
 	{
 		
@@ -8577,6 +8608,7 @@ namespace DemoWebApi.DemoData.Client
 		public bool Success { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class MyGeneric<T, K, U> : object
 	{
 		
@@ -8589,6 +8621,7 @@ namespace DemoWebApi.DemoData.Client
 		public string Status { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class BigNumbers : object
 	{
 		
@@ -8603,6 +8636,7 @@ namespace DemoWebApi.DemoData.Client
 		public ulong Unsigned64 { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class IdMap : object
 	{
 		
@@ -8618,6 +8652,7 @@ namespace DemoWebApi.DemoData.Client
 		public string Text { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class IntegralEntity : DemoWebApi.DemoData.Base.Client.Entity
 	{
 		
@@ -8637,6 +8672,7 @@ namespace DemoWebApi.DemoData.Client
 		public ushort UShort { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public class MimsPackage : object
 	{
 		
@@ -8655,6 +8691,7 @@ namespace DemoWebApi.DemoData.Client
 		public string Tag { get; set; }
 	}
 	
+	[System.SerializableAttribute()]
 	public enum MyEnumType
 	{
 		
@@ -8667,6 +8704,7 @@ namespace WebApplication1.Client
 {
 	
 	
+	[System.SerializableAttribute()]
 	public class WeatherForecast : object
 	{
 		
