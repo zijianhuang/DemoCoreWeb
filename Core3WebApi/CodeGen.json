@@ -10,7 +10,7 @@
 			"DemoCoreWebControllers",
 			"Core3WebApi"
 		],
-		"CherryPickingMethods": 3
+		"CherryPickingMethods": 32
 	},
 
 	"ClientApiOutputs": {
