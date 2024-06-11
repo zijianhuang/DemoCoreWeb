@@ -1,5 +1,6 @@
 ﻿@page "/weather"
-@inject HttpClient Http
+@* @inject HttpClient Http *@
+@inject IHttpClientFactory ClientFactory
 
 <PageTitle>Weather</PageTitle>
 
@@ -37,21 +38,27 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private WebApplication1.Client.WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var client = ClientFactory.CreateClient("Core3WebAPI");
+        WebApplication1.Controllers.Client.WeatherForecast weatherForecastClient = new WebApplication1.Controllers.Client.WeatherForecast(client, new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive=true,
+        });
+        forecasts = (await weatherForecastClient.GetAsync()).ToArray();
     }
 
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
+    // public class WeatherForecast
+    // {
+    //     public DateOnly Date { get; set; }
 
-        public int TemperatureC { get; set; }
+    //     public int TemperatureC { get; set; }
 
-        public string? Summary { get; set; }
+    //     public string? Summary { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+    //     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    // }
 }
