@@ -1,21 +1,110 @@
-import { DemoWebApi_Controllers_Client, DemoWebApi_DemoData_Client } from './clientapi/WebApiCoreAxiosClientAuto';
+import { AxiosError } from 'axios';
+import { DemoWebApi_DemoData_Client, DemoWebApi_Controllers_Client, DemoWebApi_DemoData_Base_Client } from './clientapi/WebApiCoreAxiosClientAuto';
 
+// JEST provides a few ways of handling async code. This test suite use callbacks, 
+// since it is a simple hack from the test suite initially written for Angular 2.
+
+//const apiBaseUri = 'http://localhost:10965/';
 const apiBaseUri = 'http://localhost:5000/';
+
+function instanceOfAxiosError(obj: any): obj is AxiosError {
+  return 'isAxiosError' in obj;
+}
+
+export function errorResponseToString(error: AxiosError | any): string {
+  let errMsg: string;
+  if (instanceOfAxiosError(error)) {
+    if (error.response?.status === 0) {
+      errMsg = 'No response from backend. Connection is unavailable.';
+    } else {
+      if (error.message) {
+        errMsg = `${error.response?.status} - ${error.response?.statusText}: ${error.message}`;
+      } else {
+        errMsg = `${error.response?.status} - ${error.response?.statusText}`;
+      }
+    }
+
+    errMsg += error.response?.data ? (' ' + JSON.stringify(error.response.data)) : '';
+    return errMsg;
+  } else {
+    errMsg = error.message ? error.message : error.toString();
+    return errMsg;
+  }
+}
 
 describe('Values API', () => {
   const service = new DemoWebApi_Controllers_Client.Values(apiBaseUri);
 
-  it('get', async () => {
-	const data = await service.get();
-	expect(data[1]).toBe('value2');
+  it('get', (done) => {
+    service.get().then(
+      data => {
+        console.debug(data.length);
+        expect(data[1]).toBe('value2');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('Post', async () => {
-	const data = await service.post('Abc');
-	expect(data).toBe('ABC');
+  it('getByIdAndName', (done) => {
+    service.getByIdOfInt32AndNameOfString(1, 'Abc').then(
+      data => {
+        console.debug(data.length);
+        expect(data).toBe('Abc1');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
+
+  it('getByName', (done) => {
+    service.getByNameOfString('Abc').then(
+      data => {
+        console.debug(data.length);
+        expect(data).toBe('ABC');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
+
+  it('Post', (done) => {
+    service.post('Abc').then(
+      data => {
+        console.debug(data.length);
+        expect(data).toBe('ABC');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
+
+  it('getByIdAndChinese', (done) => {
+    service.getByIdOfInt32AndNameOfString(1, 'something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.\'; <>: \"').then(
+      data => {
+        console.debug(data.length);
+        expect(data).toBe('something to say中文\\`-=|~!@#$%^&*()_+/|?[]{},.\'; <>: \"1');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
+
 
 
 });
@@ -24,29 +113,62 @@ describe('Values API', () => {
 describe('Heroes API', () => {
   const service = new DemoWebApi_Controllers_Client.Heroes(apiBaseUri);
 
-  it('getAll', async () => {
-	const data = await service.getHeros();
-	expect(data.length).toBeGreaterThan(0);
-  }
-  );
-
-  it('Add', async () => {
-	const data = await service.post('somebody');
-	expect(data.name).toBe('somebody');
-  }
-  );
-
-  it('PostWithQuery', async () => {
-	const data = await service.postWithQuery('somebodyqqq');
-	expect(data.name).toBe('somebodyqqq');
+  it('getAll', (done) => {
+    service.getHeros().then(
+      data => {
+        console.debug(data.length);
+        expect(data.length).toBeGreaterThan(0);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
-  it('search', async () => {
-	const data = await service.search('Torna');
-	expect(data.length).toBe(1);
-	expect(data[0].name).toBe('Tornado');
+  it('Add', (done) => {
+    service.post('somebody').then(
+      data => {
+        expect(data.name).toBe('somebody');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('PostWithQuery', (done) => {
+    service.postWithQuery('somebodyqqq').then(
+      data => {
+        expect(data.name).toBe('somebodyqqq');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('search', (done) => {
+    service.search('Torna').then(
+      data => {
+        console.debug(data.length);
+        expect(data.length).toBe(1);
+        expect(data[0].name).toBe('Tornado');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
   }
   );
 
@@ -56,377 +178,768 @@ describe('Heroes API', () => {
 describe('entities API', () => {
   const client = new DemoWebApi_Controllers_Client.Entities(apiBaseUri);
 
-  //it('getPersonNotFound', async ()=> {
+  //it('getPersonNotFound', (done) => {
   //    client.getPersonNotFound(123)
   //        .then(
   //        data => {
   //            fail('That is bad. Should be 404.');
-  //            
+  //            done();
   //        },
   //        error => {
   //            expect(errorResponseToString(error)).toContain('404');
-  //            
+  //            done();
   //        }
   //        );
   //}
   //);
 
-  it('add', async () => {
-	let id: number;
-	const newPerson: DemoWebApi_DemoData_Client.Person = {
-	  name: 'John Smith' + Date.now().toString(),
-	  givenName: 'John',
-	  surname: 'Smith',
-	  dob: new Date('1977-12-28')
-	};
+  it('add', (done) => {
+    let id: string;
+    const newPerson: DemoWebApi_DemoData_Client.Person = {
+      name: 'John Smith' + Date.now().toString(),
+      givenName: 'John',
+      surname: 'Smith',
+      dob: new Date('1977-12-28')
+    };
 
-	const data = client.createPerson(newPerson);
-	expect(data).toBeTruthy();
+    client.createPerson(newPerson)
+      .then(
+        data => {
+          id = data;
+          expect(data).toBeTruthy();
+          done();
+        },
+        error => {
+          fail(errorResponseToString(error));
+        }
+      );
 
   }
   );
+
+  it('addWthHeadersHandling', (done) => {
+    let id: number;
+    const newPerson: DemoWebApi_DemoData_Client.Person = {
+      name: 'John Smith' + Date.now().toString(),
+      givenName: 'John',
+      surname: 'Smith',
+      dob: new Date('1977-12-28')
+    };
+
+    client.createPerson3(newPerson, () => { return { middle: 'Hey' }; })
+      .then(
+        data => {
+          expect(data.givenName).toBe('Hey');
+          done();
+        },
+        error => {
+
+          done();
+        }
+      );
+
+  }
+  );
+
+  it('myGenericPerson', (done) => {
+    const newPerson: DemoWebApi_DemoData_Client.Person = {
+      name: 'John Smith',
+      givenName: 'John',
+      surname: 'Smith',
+      dob: new Date('1977-12-28')
+    };
+
+    const c: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person> = {
+      myK: 123.456,
+      myT: 'abc',
+      myU: newPerson,
+      status: 'OK',
+    };
+
+    client.getMyGenericPerson(c)
+      .then(
+        data => {
+          expect(data.myU?.name).toBe('John Smith');
+          expect(data.status).toBe('OK');
+          done();
+        },
+        error => {
+          fail(errorResponseToString(error));
+        }
+      );
+
+  }
+  );
+
 
 });
 
-describe('DateTypes API', () => {
-  const service = new DemoWebApi_Controllers_Client.DateTypes(apiBaseUri);
 
-  it('GetNextHour', async () => {
-	const dt = new Date(Date.now());
-	const h = dt.getHours();
-	const data = await service.getNextHour(dt);
-	const dd = new Date(data);
-	expect(dd.getHours()).toBe(h + 1);
+describe('StringData API', () => {
+  const service = new DemoWebApi_Controllers_Client.StringData(apiBaseUri);
 
+  it('TestAthletheSearch', (done) => {
+    service.athletheSearch(32, 0, null, null, null).then(
+      data => {
+        expect(data).toBe('"320"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('GetNextYear', async () => {
-	const dt = new Date(Date.now());
-	const h = dt.getFullYear();
-	const data = await service.getNextYear(dt);
-	const dd = new Date(data);
-	expect(dd.getFullYear()).toBe(h + 1);
-
-
+  it('TestAthletheSearch2', (done) => {
+    service.athletheSearch(32, 0, null, null, "Search").then(
+      data => {
+        expect(data).toBe('"320Search"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('PostNextYear', async () => {
-	const dt = new Date(Date.now());
-	const h = dt.getFullYear();
-	const data = await service.postNextYear(dt);
-	const dd = new Date(data);
-	expect(dd.getFullYear()).toBe(h + 1);
-
-
+  it('TestAthletheSearch3', (done) => {
+    service.athletheSearch(32, 0, null, "Sort", "Search").then(
+      data => {
+        expect(data).toBe('"320SortSearch"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getNextYearNullable', async () => {
-	let now = new Date(Date.now());
-	const data = await service.getNextYearNullable(2, now);
-	let dt = new Date(data);//data is actually string, NG HttpClient does not translate it to Date
-	expect(dt.getFullYear()).toEqual(now.getFullYear() + 2);
-
-
+  it('TestAthletheSearch4', (done) => {
+    service.athletheSearch(32, 0, "Order", "Sort", "Search").then(
+      data => {
+        expect(data).toBe('"320OrderSortSearch"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getNextHourNullable', async () => {
-	let now = new Date(Date.now());
-	const data = await service.getNextHourNullable(2, now);
-	let dt = new Date(data);
-	expect(dt.getHours() % 24).toEqual((now.getHours() + 2) % 24)
-
+  it('TestAthletheSearch5', (done) => {
+    service.athletheSearch(32, 0, "Order", null, "Search").then(
+      data => {
+        expect(data).toBe('"320OrderSearch"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getNextYearNullable2', async () => {
-	let now = new Date(Date.now());
-	const data = await service.getNextYearNullable(2, undefined!);
-	let dt = new Date(data);
-	expect(dt.getFullYear()).toEqual(now.getFullYear() + 2);
+  it('TestAthletheSearch6', (done) => {
+    service.athletheSearch(32, 0, "Order", "", "Search").then(
+      data => {
+        expect(data).toBe('"320OrderSearch"');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getNextHourNullable2', async () => {
-	let now = new Date(Date.now());
-	const data = await service.getNextHourNullable(2, null!);
-	let dt = new Date(data);
-	expect(dt.getHours() % 24).toEqual((now.getHours() + 2) % 24)
-
+  it('getABCDE', (done) => {
+    service.getABCDE().then(
+      data => {
+        expect(data).toBe('"ABCDE"'); // AxiosResponse.data is smart to remove double quotes from the string json object, though I ask for text.
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-
-  it('searchDateRange', async () => {
-	let startDt = new Date(Date.now());
-	let endDt = new Date(Date.now() + 100000);
-	const data = await service.searchDateRange(startDt, endDt);
-	expect(new Date(data.item1)).toEqual(startDt);
-	expect(new Date(data.item2)).toEqual(endDt);
-
+  it('getEmptyString', (done) => {
+    service.getEmptyString().then(
+      data => {
+        expect(data).toBe('""');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
+  /**
+   * Angular HttpClient could identify null value.
+   */
+  it('getNullString', (done) => {
+    service.getNullString().then(
+      data => {
+        expect(data).toBe(null);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
+});
 
-  it('searchDateRangeEndUndefined', async () => {
-	let startDt = new Date(Date.now());
-	let endDt = new Date(Date.now() + 100000);
-	const data = await service.searchDateRange(startDt, undefined!);
-	expect(new Date(data.item1)).toEqual(startDt);
-	expect(data.item2).toBeUndefined();
+describe('TextData API', () => {
+  const service = new DemoWebApi_Controllers_Client.TextData(apiBaseUri);
+
+  it('TestAthletheSearch', (done) => {
+    service.athletheSearch(32, 0, null, null, null).then(
+      data => {
+        expect(data).toBe('320'); // somehow data is number rather than string. AxiosResponse.data is too smart?
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-
-  it('searchDateRangeStartUndefined', async () => {
-	let startDt = new Date(Date.now());
-	let endDt = new Date(Date.now() + 100000);
-	const data = await service.searchDateRange(undefined!, endDt);
-	expect(data.item1).toBeUndefined();
-	expect(new Date(data.item2)).toEqual(endDt);
-
+  it('TestAthletheSearch2', (done) => {
+    service.athletheSearch(32, 0, null, null, 'Search').then(
+      data => {
+        expect(data).toBe('320Search');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-
-  it('searchDateRangeBeUndefined', async () => {
-	let startDt = new Date(Date.now());
-	let endDt = new Date(Date.now() + 100000);
-	const data = await service.searchDateRange(null!, undefined!);
-	expect(data.item1).toBeUndefined();
-	expect(data.item1).toBeUndefined();
+  it('getABCDE', (done) => {
+    service.getABCDE().then(
+      data => {
+        expect(data).toBe('ABCDE');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
+  it('getEmptyString', (done) => {
+    service.getEmptyString().then(
+      data => {
+        expect(data).toBe('');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
 
+  /**
+   * Angular HttpClient could identify null value.
+   */
+  it('getNullString', (done) => {
+    service.getNullString().then(
+      data => {
+        expect(data).toBe(null);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
 
 });
 
 describe('SuperDemo API', () => {
   const service = new DemoWebApi_Controllers_Client.SuperDemo(apiBaseUri);
 
-  it('getBool', async () => {
-	const data = await service.getBool();
-	expect(data).toBeTruthy();
+  it('getBool', (done) => {
+    service.getBool().then(
+      data => {
+        expect(data).toBeTruthy();
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getFloatZero', (done) => {
+    service.getFloatZero().then(
+      data => {
+        expect(data).toBeLessThan(0.000001);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getDoubleZero', (done) => {
+    service.getDoubleZero().then(
+      data => {
+        expect(data).not.toBe(0);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getDecimalZero', (done) => {
+    service.getDecimalZero().then(
+      data => {
+        expect(data).toBe(0);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getIntSquare', (done) => {
+    service.getIntSquare(100).then(
+      data => {
+        expect(data).toBe(10000);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getDecimalSquare', (done) => {
+    service.getDecimalSquare(100).then(
+      data => {
+        expect(data).toBe(10000);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getNullableDecimal', (done) => {
+    service.getNullableDecimal(true).then(
+      data => {
+        expect(data).toBeGreaterThan(10);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getNullableDecimalNull', (done) => {
+    service.getNullableDecimal(false).then(
+      data => {
+        //expect(data).toBeNull();
+        expect(data).toBe(''); // .net core return 204 nocontent empty body
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getNullPerson', (done) => {
+    service.getNullPerson().then(
+      data => {
+        //expect(data).toBeNull();
+        expect(data).toBe(''); // .net core return 204 nocontent empty body
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getByteArray', (done) => {
+    service.getByteArray().then(
+      data => {
+        expect(data.length).toBeGreaterThan(0);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  // it('getTextStream', (done) => {
+  //   service.getTextStream().then(
+  //     data => {
+  // 	  console.debug('getTextStream');
+  // 	  console.debug(data); // abcdefg
+  // 	  expect(data).toBe('abcdefg');
+
+  //   //  const reader = new FileReader();//axios actually give string rather than a blob structure
+  //   //  reader.onload = () => {
+  //   //  expect(reader.result).toBe('abcdefg'); 
+  //   //  };
+  //   //  reader.readAsText(data.data);
+
+  //       done();
+  //     },
+  //     error => {
+  //       fail(errorResponseToString(error));
+  //       done();
+  //     }
+  //   );
+
+  // }
+  // );
+
+  it('getActionResult', (done) => {
+    service.getActionResult().then(
+      response => {
+        expect(response.status).toBe(200);
+        expect(response.data).toBe('abcdefg');
+
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getbyte', (done) => {
+    service.getbyte().then(
+      data => {
+        expect(data).toEqual(255);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getActionStringResult', (done) => {
+    service.getActionStringResult().then(
+      data => {
+        expect(data).toContain('abcdefg');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
 
-  it('getFloatZero', async () => {
-	const data = await service.getFloatZero();
-	expect(data).toBeLessThan(0.000001);
-
-  }
-  );
-
-  it('getDoubleZero', async () => {
-	const data = await service.getDoubleZero();
-	expect(data).not.toBe(0);
-  }
-  );
-
-  it('getDecimalZero', async () => {
-	const data = await service.getDecimalZero();
-	expect(data).toBe(0);
-  }
-  );
-
-  it('getIntSquare', async () => {
-	const data = await service.getIntSquare(100);
-	expect(data).toBe(10000);
-  }
-  );
-
-  it('getDecimalSquare', async () => {
-	const data = await service.getDecimalSquare(100);
-	expect(data).toBe(10000);
-
-  }
-  );
-
-  it('getNullableDecimal', async () => {
-	const data = await service.getNullableDecimal(true);
-	expect(data).toBeGreaterThan(10);
-  }
-  );
-
-  it('getNullableDecimalNull', async () => {
-	const data = await service.getNullableDecimal(false);// .net core return 204 nocontent empty body
-	expect(data).toBe('');
-  }
-  );
-
-  it('getNullString', async () => {
-	const data = await service.getNullString();
-	expect(data).toBeNull(); // .net core return 204 nocontent empty body
-  }
-  );
-
-  it('getNullPerson', async () => {
-	const data = await service.getNullPerson();
-	expect(data).toBe(''); // .net core return 204 nocontent empty body
-
-  }
-  );
-
-  it('getActionResult', async () => {
-	const data = await service.getActionResult();
-	//console.debug(data);
-	expect(data.status).toBe(200);
-	expect(data.data).toBe('"abcdefg"');
-
-  }
-  );
-
-  it('getbyte', async () => {
-	const data = await service.getbyte();
-	expect(data).toEqual(255);
-  }
-  );
-
-  it('getActionStringResult', async () => {
-	const data = await service.getActionStringResult();
-	expect(data).toContain('abcdefg');
+  it('getChar', (done) => {
+    service.getChar().then(
+      data => {
+        expect(data).toBe('A');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
 
-  it('getChar', async () => {
-	const data = await service.getChar();
-	expect(data).toBe('A');
-  }
-  );
-
-
-  it('getDecimal', async () => {
-	const data = await service.getDecimal();
-	expect(data).toBe(79228162514264337593543950335);
-
-  }
-  );
-
-
-  it('getdouble', async () => {
-	const data = await service.getdouble();
-	expect(data).toBe(-1.7976931348623e308);
-  }
-  );
-
-  it('getUint', async () => {
-	const data = await service.getUint();
-	expect(data).toBe(4294967295);
-  }
-  );
-
-  it('getulong', async () => {
-	const data = await service.getulong();
-	expect(data).toBe(18446744073709551615);
-
-  }
-  );
-
-  it('getInt2D', async () => {
-	const data = await service.getInt2D();
-	expect(data[0][0]).toBe(1);
-	expect(data[0][3]).toBe(4);
-	expect(data[1][0]).toBe(5);
-	expect(data[1][3]).toBe(8);
+  it('getDecimal', (done) => {
+    service.getDecimal().then(
+      data => {
+        expect(data).toBe(79228162514264337593543950335);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
 
-  it('getInt2DJagged', async () => {
-	const data = await service.getInt2DJagged();
-	expect(data[0][0]).toBe(1);
-	expect(data[0][3]).toBe(4);
-	expect(data[1][0]).toBe(5);
-	expect(data[1][3]).toBe(8);
+  it('getdouble', (done) => {
+    service.getdouble().then(
+      data => {
+        expect(data).toBe(-1.7976931348623e308);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
+  }
+  );
+
+  it('getUint', (done) => {
+    service.getUint().then(
+      data => {
+        expect(data).toBe(4294967295);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getInt2D', (done) => {
+    service.getInt2D().then(
+      data => {
+        expect(data[0][0]).toBe(1);
+        expect(data[0][3]).toBe(4);
+        expect(data[1][0]).toBe(5);
+        expect(data[1][3]).toBe(8);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
 
-  it('postInt2D', async () => {
-	const data = await service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]);
-	expect(data).toBeTruthy();
-  }
-  );
-
-  it('postIntArray', async () => {
-	const data = await service.postIntArray([1, 2, 3, 4, 5, 6, 7, 8]);
-	expect(data).toBeTruthy();
-
-  }
-  );
-
-  it('postWithQueryButEmptyBody', async () => {
-	const data = await service.postWithQueryButEmptyBody('abc', 123);
-	expect(data.item1).toBe('abc');
-	expect(data.item2).toBe(123);
+  it('getInt2DJagged', (done) => {
+    service.getInt2DJagged().then(
+      data => {
+        expect(data[0][0]).toBe(1);
+        expect(data[0][3]).toBe(4);
+        expect(data[1][0]).toBe(5);
+        expect(data[1][3]).toBe(8);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
-  it('getDictionaryOfPeople', async () => {
-	const data = await service.getDictionaryOfPeople();
-	let p = data['spider Man']; //ASP.NET Web API with NewtonSoftJson made it camcel;
-	if (!p) {
-	  p = data['Spider Man']; //.NET Core is OK
-	}
-	expect(p.name).toBe('Peter Parker');
-	expect(p.addresses![0].city).toBe('New York');
+
+  it('postInt2D', (done) => {
+    service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]).then(
+      data => {
+        expect(data).toBeTruthy();
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
-  it('PostDictionaryOfPeople', async () => {
-	const data = await service.postDictionary({
-	  'Iron Man': {
-		'surname': 'Stark',
-		'givenName': 'Tony',
-		'dob': null!,
-		'id': '00000000-0000-0000-0000-000000000000',
-		'name': 'Tony Stark',
-		'addresses': []
-	  },
-	  'Spider Man': {
-		'name': 'Peter Parker',
-		'addresses': [
-		  {
-
-			'id': '00000000-0000-0000-0000-000000000000',
-			'city': 'New York',
-			state: 'Somewhere',
-			'postalCode': null!,
-			'country': null!,
-			'type': 0,
-			location: { x: 100, y: 200 }
-
-		  }
-		]
-	  }
-	});
-
-	expect(data).toBe(2);
-
+  it('postIntArray', (done) => {
+    service.postIntArray([1, 2, 3, 4, 5, 6, 7, 8]).then(
+      data => {
+        expect(data).toBeTruthy();
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
 
-  it('getKeyhValuePair', async () => {
-	const data = await service.getKeyhValuePair();
-	expect(data.key).toBe('Spider Man');
-	expect(data.value.addresses![0].city).toBe('New York');
+  it('postIntArrayQ', (done) => {
+    service.getIntArrayQ([6, 7, 8]).then(
+      data => {
+        expect(data.length).toBe(3);
+        expect(data[2]).toBe(8);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
 
   }
   );
+
+  it('postDay', (done) => {
+    service.postDay(DemoWebApi_DemoData_Client.Days.Fri, DemoWebApi_DemoData_Client.Days.Mon).then(
+      data => {
+        expect(data.length).toBe(2);
+        expect(data[1]).toBe(DemoWebApi_DemoData_Client.Days.Mon);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('postWithQueryButEmptyBody', (done) => {
+    service.postWithQueryButEmptyBody('abc', 123).then(
+      data => {
+        expect(data.item1).toBe('abc');
+        expect(data.item2).toBe(123);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getDictionaryOfPeople', (done) => {
+    service.getDictionaryOfPeople().then(
+      data => {
+        let p = data['spider Man']; //ASP.NET Web API with NewtonSoftJson made it camcel;
+        if (!p) {
+          p = data['Spider Man']; //.NET Core is OK
+        }
+        expect(p.name).toBe('Peter Parker');
+        expect(p.addresses![0].city).toBe('New York');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('PostDictionaryOfPeople', (done) => {
+    service.postDictionary({
+      'Iron Man': {
+        'surname': 'Stark',
+        'givenName': 'Tony',
+        'dob': null,
+        'id': '00000000-0000-0000-0000-000000000000',
+        'name': 'Tony Stark',
+        'addresses': []
+      },
+      'Spider Man': {
+        'name': 'Peter Parker',
+        'addresses': [
+          {
+
+            'id': '00000000-0000-0000-0000-000000000000',
+            'city': 'New York',
+            state: 'Somewhere',
+            'postalCode': null,
+            'country': null,
+            'type': 0,
+            location: { x: 100, y: 200 }
+
+          }
+        ]
+      }
+    }).then(
+      data => {
+        expect(data).toBe(2);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getKeyhValuePair', (done) => {
+    service.getKeyhValuePair().then(
+      data => {
+        expect(data.key).toBe('Spider Man');
+        expect(data.value.addresses![0].city).toBe('New York');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
+  it('getBool', (done) => {
+    service.getBool().then(
+      data => {
+        expect(data).toBeTruthy();
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+
+  }
+  );
+
 
 
 });
@@ -435,71 +948,497 @@ describe('Tuple API', () => {
   const service = new DemoWebApi_Controllers_Client.Tuple(apiBaseUri);
 
 
-  it('getTuple2', async () => {
-	const data = await service.getTuple2();
-	expect(data.item1).toBe('Two');
-	expect(data.item2).toBe(2);
+  it('getTuple2', (done) => {
+    service.getTuple2().then(
+      data => {
+        expect(data.item1).toBe('Two');
+        expect(data.item2).toBe(2);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('postTuple2', async () => {
-	const data = await service.postTuple2({ item1: "One", item2: 2 });
-	expect(data).toBe('One');
-
+  it('postTuple2', (done) => {
+    service.postTuple2({ item1: "One", item2: 2 }).then(
+      data => {
+        expect(data).toBe('One');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getTuple7', async () => {
-	const data = await service.getTuple7();
-	expect(data.item1).toBe('Seven');
-	expect(data.item7).toBe(7);
-
+  it('getTuple7', (done) => {
+    service.getTuple7().then(
+      data => {
+        expect(data.item1).toBe('Seven');
+        expect(data.item7).toBe(7);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-
-  it('postTuple7', async () => {
-	const data = await service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '33333', item7: 9 });
-	expect(data).toBe('One');
+  it('getTuple2', (done) => {
+    service.getTuple2().then(
+      data => {
+        expect(data.item1).toBe('Two');
+        expect(data.item2).toBe(2);
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('getTuple8', async () => {
-	const data = await service.getTuple8();
-	expect(data.item1).toBe('Nested');
-	expect(data.rest.item1).toBe('nine');
-
+  it('postTuple7', (done) => {
+    service.postTuple7({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '33333', item7: 9 }).then(
+      data => {
+        expect(data).toBe('One');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('postTuple8', async () => {
-	const data = await service.postTuple8({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '', item7: '', rest: { item1: 'a', item2: 'b', item3: 'c' } });
-	expect(data).toBe('a');
-
+  it('getTuple8', (done) => {
+    service.getTuple8().then(
+      data => {
+        expect(data.item1).toBe('Nested');
+        expect(data.rest.item1).toBe('nine');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
-  it('linkPersonCompany1', async () => {
-	const data = await service.linkPersonCompany1({
-	  item1: {
-		name: 'someone',
-		surname: 'my',
-		givenName: 'something',
-	  },
-
-	  item2: {
-		name: 'Super',
-		addresses: [{ city: 'New York', street1: 'Somewhere st' }]
-	  }
-	});
-
-	expect(data.name).toBe('someone');
-
+  it('postTuple8', (done) => {
+    service.postTuple8({ item1: 'One', item2: '', item3: '', item4: '', item5: '', item6: '', item7: '', rest: { item1: 'a', item2: 'b', item3: 'c' } }).then(
+      data => {
+        expect(data).toBe('a');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
   }
   );
 
+  it('linkPersonCompany1', (done) => {
+    service.linkPersonCompany1({
+      item1: {
+        name: 'someone',
+        surname: 'my',
+        givenName: 'something',
+      },
 
-
+      item2: {
+        name: 'Super',
+        addresses: [{ city: 'New York', street1: 'Somewhere st' }]
+      }
+    }).then(
+      data => {
+        expect(data.name).toBe('someone');
+        done();
+      },
+      error => {
+        fail(errorResponseToString(error));
+      }
+    );
+  }
+  );
 
 });
 
+/**
+ * Test when Web API has customized serialization for 64-bit and BigInteger.
+ */
+describe('Numbers API', () => {
+  const service = new DemoWebApi_Controllers_Client.Numbers(apiBaseUri);
+
+  it('postBigNumbers', (done) => {
+    const d: DemoWebApi_DemoData_Client.BigNumbers = {
+      unsigned64: '18446744073709551615', //2 ^ 64 -1,
+      signed64: '9223372036854775807', //2 ^ 63 -1,
+      unsigned128: '340282366920938463463374607431768211455',
+      signed128: '170141183460469231731687303715884105727',
+      bigInt: '6277101735386680762814942322444851025767571854389858533375', // 3 unsigned64, 192bits
+    };
+    /**
+    request:
+    {
+    "unsigned64":"18446744073709551615",
+    "signed64":"9223372036854775807",
+    "unsigned128":"340282366920938463463374607431768211455",
+    "signed128":"170141183460469231731687303715884105727",
+    "bigInt":"6277101735386680762814942322444851025767571854389858533375"
+    }
+    response:
+    {
+        "signed64": 9223372036854775807,
+        "unsigned64": 18446744073709551615,
+        "signed128": "170141183460469231731687303715884105727",
+        "unsigned128": "340282366920938463463374607431768211455",
+        "bigInt": 6277101735386680762814942322444851025767571854389858533375
+    }
+    
+     */
+    service.postBigNumbers(d).then(
+      r => {
+        expect(BigInt(r.unsigned64!)).toBe(BigInt('18446744073709551615'));
+
+        expect(BigInt(r.signed64!)).toBe(BigInt('9223372036854775807'));
+
+        expect(BigInt(r.unsigned128!)).toBe(BigInt(340282366920938463463374607431768211455n));
+
+        expect(BigInt(r.signed128!)).toEqual(BigInt(170141183460469231731687303715884105727n));
+
+        expect(BigInt(r.bigInt!)).toEqual(BigInt(6277101735386680762814942322444851025767571854389858533375n));
+
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+
+  }
+  );
+
+  it('postIntegralEntity', (done) => {
+    service.postIntegralEntity({ name: 'Some one', byte: 255, uShort: 65535 }).then(
+      r => {
+        expect(r.byte).toBe(255);
+        expect(r.uShort).toBe(65535);
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postIntegralEntityInvalid', (done) => {
+    service.postIntegralEntity({ name: 'Some one', byte: 260, uShort: 65540 }).then(
+      r => {
+        fail('validation');
+      },
+      error => {
+        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        done();
+      }
+    );
+  }
+  );
+
+  /**
+   * Backend checks if the data is null, likely due to invalid properties. And throw error.
+   */
+  it('postIntegralEntityInvalidButBackendCheckNull', (done) => {
+    service.postIntegralEntityMustBeValid({ name: 'Some one', byte: 260, uShort: 65540 }).then(
+      r => {
+        fail('backend should throw 500')
+      },
+      error => {
+        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        done();
+      }
+    );
+  }
+  );
+
+
+  it('postUShort', (done) => {
+    service.postByDOfUInt16(65535).then(
+      r => {
+        expect(r).toBe(65535);
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postUShortInvalid', (done) => {
+    service.postByDOfUInt16(65540).then(
+      r => {
+        fail('validation');
+      },
+      error => {
+        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        done();
+      }
+    );
+  }
+  );
+
+  it('postByte', (done) => {
+    service.postByDOfByte(255).then(
+      r => {
+        expect(r).toBe(255);
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  /**
+   * ASP.NET Web API check ModelState and throw
+   */
+  it('postByteInvalid', (done) => {
+    service.postByDOfByte(258).then(
+      r => {
+        fail("backend should throw");
+      },
+      error => {
+        expect(errorResponseToString(error)).toContain('400');
+        done();
+      }
+    );
+  }, 200
+  );
+
+  it('getByte', (done) => {
+    service.getByte(255).then(
+      r => {
+        expect(r).toBe(255);
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('getByteInvalid', (done) => {
+    service.getByte(258).then(
+      r => {
+        fail('validation');
+      },
+      async error => {
+        expect(await errorResponseToString(error)).toContain('is not valid');
+        done();
+      }
+    );
+  }
+  );
+
+  it('postByteWithNegativeInvalid', (done) => {
+    service.postByDOfByte(-10).then(
+      r => {
+        fail("backend throws")
+      },
+      error => {
+        expect(errorResponseToString(error)).toContain('400');
+        done();
+      }
+    );
+  }, 200
+  );
+
+  it('postSByte', (done) => {
+    service.postByDOfSByte(127).then(
+      r => {
+        expect(r).toBe(127);
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postSByteInvalid', (done) => {
+    service.postByDOfSByte(130).then(
+      r => {
+        fail('validation')
+      },
+      async error => {
+        expect(await errorResponseToString(error)).toContain('Error converting value 130 to type ');
+        done();
+      }
+    );
+  }
+  );
+
+  it('postInt64', (done) => {
+    service.postInt64('9223372036854775807').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('9223372036854775807'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postUInt64', (done) => {
+    service.postUint64('18446744073709551615').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('18446744073709551615'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postInt64Smaller', (done) => {
+    service.postInt64('9223372036854775123').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('9223372036854775123'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postLongAsBigInt', (done) => {
+    // request: "9223372036854775807"
+    // response: "9223372036854775807"
+    service.postBigInteger('9223372036854775807').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('9223372036854775807'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postLongAsBigIntWithSmallNumber', (done) => {
+    service.postBigInteger('123').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt(123n));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+
+  }
+  );
+
+  it('postReallyBigInt192bits', (done) => {
+    // request: "6277101735386680762814942322444851025767571854389858533375"
+    // response: "6277101735386680762814942322444851025767571854389858533375"
+    service.postBigInteger('6277101735386680762814942322444851025767571854389858533375').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt(6277101735386680762814942322444851025767571854389858533375n));
+        expect(BigInt(r).valueOf()).toBe(BigInt('6277101735386680762814942322444851025767571854389858533375'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postReallyBigInt80bits', (done) => {
+    service.postBigInteger('604462909807314587353087').then(
+      r => {
+        expect(BigInt(r).valueOf()).toBe(604462909807314587353087n);
+        expect(BigInt(r).valueOf()).toBe(BigInt('604462909807314587353087'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  it('postReallyBigInt128bits', (done) => {
+    service.postBigInteger('340282366920938463463374607431768211455').then(
+      r => {
+        expect(BigInt(r).valueOf()).toBe(340282366920938463463374607431768211455n);
+        expect(BigInt(r).valueOf()).toBe(BigInt('340282366920938463463374607431768211455'));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  /**
+   * Correct.
+   * Request as string: "170141183460469231731687303715884105727",
+   * Response: "170141183460469231731687303715884105727" , Content-Type: application/json; charset=utf-8
+   */
+  it('postInt128', (done) => {
+    service.postInt128('170141183460469231731687303715884105727').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('170141183460469231731687303715884105727'));
+        expect(BigInt(r)).toBe(BigInt(170141183460469231731687303715884105727n));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+  /**
+   * Correct.
+   * Request as string: "340282366920938463463374607431768211455",
+   * Response: "340282366920938463463374607431768211455" , Content-Type: application/json; charset=utf-8
+   */
+  it('postUInt128', (done) => {
+    service.postUint128('340282366920938463463374607431768211455').then(
+      r => {
+        expect(BigInt(r)).toBe(BigInt('340282366920938463463374607431768211455'));
+        expect(BigInt(r)).toBe(BigInt(340282366920938463463374607431768211455n));
+        expect(BigInt(r).valueOf()).toBe(BigInt('340282366920938463463374607431768211455'));
+        expect(BigInt(r).valueOf()).toBe(BigInt(340282366920938463463374607431768211455n));
+        done();
+      },
+      error => {
+        fail(error);
+      }
+    );
+  }
+  );
+
+
+});

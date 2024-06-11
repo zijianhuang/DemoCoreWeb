@@ -1,1 +1,0 @@
-﻿This is to test the .NET Core Web API.

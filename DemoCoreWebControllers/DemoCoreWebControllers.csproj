@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<AnalysisLevel>latest-minimum</AnalysisLevel>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<GlobalAnalyzerConfigFiles Include="../DemoCoreWeb/DemoApps.globalconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Fonlow.WebApiClientGenCore" Version="7.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DemoWebApi.DemoDataCore\DemoWebApi.DemoDataCore.csproj" />
+	</ItemGroup>
+
+</Project>

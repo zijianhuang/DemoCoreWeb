@@ -4,6 +4,56 @@ using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using DemoWebApi.DemoData.Base;
+using System.Numerics;
+
+namespace DemoWebApi.DemoData.Base
+{
+	/// <summary>
+	/// Base class of company and person
+	/// </summary>
+	[DataContract(Namespace = Constants.DataNamespace)]
+	public class Entity
+	{
+		public Entity()
+		{
+			Addresses = new List<Address>();
+		}
+
+		[DataMember]
+		public Guid? Id { get; set; }
+
+		/// <summary>
+		/// Name of the entity.
+		/// </summary>
+		[DataMember(IsRequired = true)]//MVC and Web API does not care
+		[System.ComponentModel.DataAnnotations.Required]//MVC and Web API care about only this
+		[MinLength(2), MaxLength(255)]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Multiple addresses
+		/// </summary>
+		[DataMember]
+		public IList<Address> Addresses { get; set; }
+
+
+		[DataMember]
+		public virtual ObservableCollection<PhoneNumber> PhoneNumbers { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		[DataMember]
+		[RegularExpression(@"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")]
+		public Uri Web { get; set; }
+
+		[DataMember, EmailAddress, MaxLength(255)]
+		public string EmailAddress { get; set; }
+	}
+}
 
 namespace DemoWebApi.DemoData
 {
@@ -64,6 +114,7 @@ namespace DemoWebApi.DemoData
 
 
 		[DataMember]
+		[MaxLength(120), Phone]
 		public string FullNumber { get; set; }
 
 		[DataMember]
@@ -113,21 +164,27 @@ namespace DemoWebApi.DemoData
 		public Guid EntityId { get; set; }
 
 		[DataMember]
+		[StringLength(100, MinimumLength = 2)]
 		public string Street1 { get; set; }
 
 		[DataMember]
+		[StringLength(100, MinimumLength = 2)]
 		public string Street2 { get; set; }
 
 		[DataMember]
+		[StringLength(50, MinimumLength = 2)]
 		public string City { get; set; }
 
 		[DataMember]
+		[StringLength(30, MinimumLength = 2)]
 		public string State { get; set; }
 
 		[DataMember]
+		[StringLength(10, MinimumLength = 2)]
 		public string PostalCode { get; set; }
 
 		[DataMember]
+		[StringLength(30, MinimumLength = 2)]
 		[System.ComponentModel.DefaultValue("Australia")]
 		public string Country { get; set; }
 
@@ -142,45 +199,32 @@ namespace DemoWebApi.DemoData
 		public DemoWebApi.DemoData.Another.MyPoint Location;
 	}
 
-	/// <summary>
-	/// Base class of company and person
-	/// </summary>
 	[DataContract(Namespace = Constants.DataNamespace)]
-	public class Entity
+	public class IntegralEntity : Entity
 	{
-		public Entity()
-		{
-			Addresses = new List<Address>();
-		}
+		[DataMember]
+		public sbyte SByte { get; set; }
 
 		[DataMember]
-		public Guid? Id { get; set; }
-
-		/// <summary>
-		/// Name of the entity.
-		/// </summary>
-		[DataMember(IsRequired =true)]//MVC and Web API does not care
-		[System.ComponentModel.DataAnnotations.Required]//MVC and Web API care about only this
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Multiple addresses
-		/// </summary>
-		[DataMember]
-		public IList<Address> Addresses { get; set; }
-
+		public byte Byte { get; set; }
 
 		[DataMember]
-		public virtual ObservableCollection<PhoneNumber> PhoneNumbers { get; set; }
-
-		public override string ToString()
-		{
-			return Name;
-		}
+		public short Short { get; set; }
 
 		[DataMember]
-		public Uri Web { get; set; }
+		public ushort UShort { get; set; }
+
+		[DataMember]
+		public int Int { get; set; }
+
+		[DataMember]
+		public uint UInt { get; set; }
+
+		[Range(-1000, 1000000)]
+		[DataMember]
+		public int ItemCount { get; set; }
 	}
+
 
 	[DataContract(Namespace = Constants.DataNamespace)]
 	public class Person : Entity
@@ -214,7 +258,7 @@ namespace DemoWebApi.DemoData
 		/// <summary>
 		/// BusinessNumber to be serialized as BusinessNum
 		/// </summary>
-		[DataMember(Name ="BusinessNum")]
+		[DataMember(Name = "BusinessNum")]
 		public string BusinessNumber { get; set; }
 
 		[DataMember]
@@ -242,7 +286,7 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
-	public class MyPeopleDic 
+	public class MyPeopleDic
 	{
 		[DataMember]
 		public IDictionary<string, Person> Dic { get; set; }
@@ -252,7 +296,7 @@ namespace DemoWebApi.DemoData
 
 		[DataMember]
 		public IDictionary<int, string> IntDic { get; set; }
-	 
+
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
@@ -334,7 +378,7 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
-	[System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+	//[System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
 	public enum MedicalContraindiationResponseTypeTypeCode
 	{
 
@@ -361,10 +405,33 @@ namespace DemoWebApi.DemoData
 		public Guid IdNotEmitDefaultValue { get; set; }
 
 		[DataMember(IsRequired = true)]
+		[Required] // ASP.NET with System.Text.Json won't respect DataMember(IsRequired = true), thus add this.
 		public string RequiredName { get; set; }
 
 		[DataMember()]
 		public string Text { get; set; }
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	[DataContract(Namespace = Constants.DataNamespace)]
+	public class BigNumbers
+	{
+		[DataMember]
+		public long Signed64 { get; set; }
+
+		[DataMember]
+		public ulong Unsigned64 { get; set; }
+
+		[DataMember]
+		public Int128 Signed128 { get; set; }
+
+		[DataMember]
+		public UInt128 Unsigned128 { get; set; }
+
+		[DataMember()]
+		public BigInteger BigInt { get; set; }
 	}
 
 }

@@ -30,7 +30,7 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
   function save(): void {
     service.put(hero!).then(
       d => {
-        setHero({...hero})
+        setHero({...hero!})
         console.debug('response: ' + JSON.stringify(d));
       }
     ).catch(error => alert(error));
@@ -42,7 +42,7 @@ export default function HeroDetail() { //https://stackoverflow.com/questions/475
 
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     hero!.name = e.currentTarget.value;
-    setHero({...hero});
+    setHero({...hero!});
   }
 
   return (

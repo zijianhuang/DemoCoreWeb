@@ -1,0 +1,42 @@
+﻿@page "/detail/{id}"
+@inject IHttpClientFactory ClientFactory
+@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
+
+<PageTitle>Heroes</PageTitle>
+<h3>Heroes Dashboard</h3>
+
+@if (hero == null)
+{
+    <p><em>Loading Hero...</em></p>
+}
+else
+{
+    <div if.bind="hero">
+        <h2>@hero.Name Details</h2>
+        <div><span>id: </span>@hero.Id</div>
+        <div>
+            <label for="hero-name">Hero name: </label>
+            <input id="hero-name" value.bind="@hero.Name" placeholder="Name" />
+        </div>
+
+        <button type="button" click.delegate="goBack()">go back</button>
+        <button type="button" click.delegate="save()">save</button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public long Id { get; set; }
+
+    private DemoWebApi.Controllers.Client.Hero? hero;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var client = ClientFactory.CreateClient("Core3WebAPI");
+        DemoWebApi.Controllers.Client.Heroes heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
+
+        hero = await heroesClient.GetHeroAsync(Id);
+
+    }
+}
