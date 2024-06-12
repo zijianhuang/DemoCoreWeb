@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls.Xaml;
-using DemoWebApi.Controllers.Client;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui;
+﻿using DemoWebApi.Controllers.Client;
+using Fonlow.Heroes.VM;
 
 namespace Fonlow.Heroes.Views
 {
@@ -16,7 +9,7 @@ namespace Fonlow.Heroes.Views
         public HeroDetailPage(long heroId)
         {
             InitializeComponent();
-            BindingContext = VM.HeroesFunctions.LoadHero(heroId);
+            BindingContext = ClientApiSingleton.Instance.HeroesApi.GetHero(heroId);
         }
 
         Hero Model
@@ -29,7 +22,7 @@ namespace Fonlow.Heroes.Views
 
         private async void Save_Clicked(object sender, EventArgs e)
         {
-            await VM.HeroesFunctions.SaveAsync(Model);
+            await ClientApiSingleton.Instance.HeroesApi.PutAsync(Model);
         }
     }
 }

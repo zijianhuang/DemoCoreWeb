@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui;
+using Fonlow.Heroes.VM;
 
 namespace Fonlow.Heroes.Views
 {
@@ -25,7 +26,7 @@ namespace Fonlow.Heroes.Views
         {
             var heroesVM = new VM.HeroesVM();
 
-            heroesVM.Load(Fonlow.Heroes.VM.HeroesFunctions.LoadHeroes());
+            heroesVM.Load(ClientApiSingleton.Instance.HeroesApi.GetHeroes());
             BindingContext = heroesVM;
         }
 

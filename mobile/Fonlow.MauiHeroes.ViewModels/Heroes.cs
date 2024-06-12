@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+
 namespace Fonlow.Heroes.VM
 {
 	public class HeroesVM : INotifyPropertyChanged
@@ -14,6 +15,7 @@ namespace Fonlow.Heroes.VM
 			SearchCommand = new Command<string>(Search);
 		}
 
+		readonly HttpClient httpClient;
 		public void Load(IEnumerable<Hero> items)
 		{
 			Items = new ObservableCollection<Hero>(items);
@@ -81,7 +83,8 @@ namespace Fonlow.Heroes.VM
 				{
 					Selected = null;
 				}
-				await HeroesFunctions.DeleteAsync(id);
+
+				await ClientApiSingleton.Instance.HeroesApi.DeleteAsync(id);
 				Items.Remove(first);
 				NotifyPropertyChanged("Items");
 				NotifyPropertyChanged("Count");
@@ -99,7 +102,7 @@ namespace Fonlow.Heroes.VM
 
 		async void Search(string keyword)
 		{
-			var r = await HeroesFunctions.SearchAsync(keyword);
+			var r = await ClientApiSingleton.Instance.HeroesApi.SearchAsync(keyword); 
 			Items = new ObservableCollection<Hero>(r);
 			NotifyPropertyChanged("Items");
 			NotifyPropertyChanged("Count");

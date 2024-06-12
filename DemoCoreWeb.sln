@@ -46,8 +46,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWebApi.DemoDataCore", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCoreWebControllers", "DemoCoreWebControllers\DemoCoreWebControllers.csproj", "{3CF4D025-7332-4EB9-B5E1-DD7B4AD926D6}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IntegrationTestShared", "Tests\IntegrationTestShared\IntegrationTestShared.shproj", "{60B7393D-9285-4D0A-A368-877ED60C6C11}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestsTextJson", "Tests\IntegrationTestsTextJson\IntegrationTestsTextJson.csproj", "{1C24AD54-CFBE-471D-ACB4-D9B5E115628A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHeroesWAStandalone", "BlazorHeroesWAStandalone\BlazorHeroesWAStandalone.csproj", "{624790EC-7DD3-484B-B8E9-11B824D5A9F2}"
@@ -405,14 +403,9 @@ Global
 		{8215BB5A-EC0A-407D-8F61-373F40275E86} = {6D111A1E-D72F-4886-B31F-78EEDD6CA87E}
 		{2F9FBC53-F4DD-42E5-AF99-43FB4B228E20} = {6D111A1E-D72F-4886-B31F-78EEDD6CA87E}
 		{581B7B99-11D1-48DA-A7E6-6BDBC2A0A04D} = {6D111A1E-D72F-4886-B31F-78EEDD6CA87E}
-		{60B7393D-9285-4D0A-A368-877ED60C6C11} = {39445712-FE9F-4406-A103-F181E9DC2233}
 		{1C24AD54-CFBE-471D-ACB4-D9B5E115628A} = {39445712-FE9F-4406-A103-F181E9DC2233}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3EFB0EB-BFFA-4C16-B235-B121695229EF}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{1c24ad54-cfbe-471d-acb4-d9b5e115628a}*SharedItemsImports = 5
-		Tests\IntegrationTestShared\IntegrationTestShared.projitems*{60b7393d-9285-4d0a-a368-877ed60c6c11}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

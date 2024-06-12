@@ -43,6 +43,4 @@
 		<Using Include="Xunit" />
 	</ItemGroup>
 
-	<Import Project="..\IntegrationTestShared\IntegrationTestShared.projitems" Label="Shared" />
-
 </Project>

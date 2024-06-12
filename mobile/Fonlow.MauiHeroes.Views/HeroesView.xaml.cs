@@ -41,7 +41,7 @@ namespace Fonlow.Heroes.Views
         private async void Entry_Completed(object sender, EventArgs e)
         {
             var text = ((Entry)sender).Text;
-            var hero= await  HeroesFunctions.AddAsync(text);
+            var hero = await ClientApiSingleton.Instance.HeroesApi.PostAsync(text);
             Model.Items.Add(hero);
         }
     }

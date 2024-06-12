@@ -18,8 +18,7 @@ namespace Fonlow.MauiHeroes
 #if DEBUG
 			builder.Logging.AddDebug();
 #endif
-
-			return builder.Build();
+            return builder.Build();
 		}
 	}
 }
