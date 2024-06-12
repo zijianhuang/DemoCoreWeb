@@ -1,6 +1,5 @@
 ﻿@page "/heroes"
-@inject IHttpClientFactory ClientFactory
-@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
+@inject DemoWebApi.Controllers.Client.Heroes heroesApi //use typed HttpClient
 
 <PageTitle>List</PageTitle>
 <h3>Heroes List</h3>
@@ -38,15 +37,10 @@ else
 @code {
     private List<DemoWebApi.Controllers.Client.Hero> heroes;
     private DemoWebApi.Controllers.Client.Hero? selectedHero;
-    DemoWebApi.Controllers.Client.Heroes? heroesClient;
 
     protected override async Task OnInitializedAsync()
     {
-        //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-        var client = ClientFactory.CreateClient("Core3WebAPI");
-        heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
-
-        heroes = new List<DemoWebApi.Controllers.Client.Hero>(await heroesClient.GetHeroesAsync());
+        heroes = new List<DemoWebApi.Controllers.Client.Hero>(await heroesApi.GetHeroesAsync());
     }
 
     async Task Add(string name)
@@ -57,7 +51,7 @@ else
             return;
         }
 
-        var newHero = await heroesClient.PostAsync(name);
+        var newHero = await heroesApi.PostAsync(name);
         this.selectedHero = null;
         heroes.Add(newHero);
 
@@ -65,7 +59,7 @@ else
 
     async Task Delete(DemoWebApi.Controllers.Client.Hero hero)
     {
-        await heroesClient.DeleteAsync(hero.Id);
+        await heroesApi.DeleteAsync(hero.Id);
         heroes.Remove(hero);
         if (selectedHero == hero)
         {

@@ -11,7 +11,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddHttpClient("Core3WebAPI", client =>
 {
-    client.BaseAddress = new Uri("https://fonlow.org");
+    client.BaseAddress = new Uri("http://localhost:5000");
+});
+
+builder.Services.AddHttpClient<DemoWebApi.Controllers.Client.Heroes>(heroesApiClient =>
+{
+    heroesApiClient.BaseAddress = new Uri("http://localhost:5000");
 });
 
 builder.Services.AddScoped<JsonSerializerOptions>(sp =>
@@ -38,3 +43,4 @@ builder.Services.AddScoped<JsonSerializerOptions>(sp =>
 });
 
 await builder.Build().RunAsync();
+
