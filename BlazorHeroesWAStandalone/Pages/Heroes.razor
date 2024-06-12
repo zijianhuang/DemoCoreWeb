@@ -46,7 +46,7 @@ else
         var client = ClientFactory.CreateClient("Core3WebAPI");
         heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
 
-        heroes = new List<DemoWebApi.Controllers.Client.Hero>(await heroesClient.GetHerosAsync());
+        heroes = new List<DemoWebApi.Controllers.Client.Hero>(await heroesClient.GetHeroesAsync());
     }
 
     async Task Add(string name)

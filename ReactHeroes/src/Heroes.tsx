@@ -14,7 +14,7 @@ export default function Heroes() {
 
   useEffect(() => {
     console.debug('getHeros...');
-    service.getHeros().then(
+    service.getHeroes().then(
       data => {
         setHeroes(data);
       }

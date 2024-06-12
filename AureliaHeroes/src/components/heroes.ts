@@ -12,7 +12,7 @@ export class HeroesComponent {
     }
 
     getHeroes(): void {
-        this.heroesService.getHeros().then(
+        this.heroesService.getHeroes().then(
             heroes => {
                 this.heroes = heroes;
             }

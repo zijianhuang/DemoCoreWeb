@@ -11,7 +11,7 @@ export class DashboardComponent {
   }
 
   created() {
-    this.heroesSerrvice.getHeros().then(
+    this.heroesSerrvice.getHeroes().then(
       heroes => {
         this.heroes = heroes.slice(1, 5);
       }

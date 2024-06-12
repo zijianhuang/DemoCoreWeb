@@ -14,7 +14,7 @@ export default class Dashboard extends Component<{}, { loading: boolean }> {
   }
 
   componentDidMount(): void {
-    this.service.getHeros().then(
+    this.service.getHeroes().then(
       heroes => {
         this.heroes = heroes.slice(1, 5);
         console.debug('heroes loaded');

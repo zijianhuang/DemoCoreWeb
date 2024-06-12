@@ -15,7 +15,7 @@ namespace Fonlow.Heroes.VM
 				{
 					httpClient.BaseAddress = apiUri;
 					var api = new DemoWebApi.Controllers.Client.Heroes(httpClient);
-					return api.GetHeros();
+					return api.GetHeroes();
 				}
 			}
 			catch (WebApiRequestException ex)
