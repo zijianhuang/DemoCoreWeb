@@ -2,7 +2,7 @@
 @inject DemoWebApi.Controllers.Client.Heroes heroesApi //use typed HttpClient
 
 <PageTitle>List</PageTitle>
-<h3>Heroes List</h3>
+<h2>My Heroes</h2>
 
 @if (heroes == null)
 {
@@ -12,10 +12,10 @@ else
 {
     <div>
         <label for="new-hero">Hero name: </label>
-        <input id="new-hero" ref="heroName" />
+        <input id="new-hero" @bind="@newHeroName" />
 
         <!-- (click) passes input value to add() and then clears the input -->
-        <button type="button" class="add-button" click.delegate="addAndClear()">
+        <button type="button" class="add-button" @onclick="AddAndClear">
             Add hero
         </button>
     </div>
@@ -23,11 +23,12 @@ else
     <ul class="heroes">
         @foreach (var hero in heroes)
         {
-            <li repeat.for="hero of heroes">
-                <a route-href="route: detail; params.bind: {id:hero.id}">
+            string href = $"/detail/{hero.Id}";
+            <li>
+                <a href="@href">
                     <span class="badge">@hero.Id</span> @hero.Name
                 </a>
-                <button type="button" class="delete" title="delete hero" click.delegate="delete(hero)">x</button>
+                <button type="button" class="delete" title="delete hero" @onclick="()=>Delete(hero)">x</button>
             </li>
         }
 
@@ -37,6 +38,7 @@ else
 @code {
     private List<DemoWebApi.Controllers.Client.Hero> heroes;
     private DemoWebApi.Controllers.Client.Hero? selectedHero;
+    string? newHeroName;
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,6 +56,13 @@ else
         var newHero = await heroesApi.PostAsync(name);
         this.selectedHero = null;
         heroes.Add(newHero);
+
+    }
+
+    async Task AddAndClear()
+    {
+        await Add(newHeroName);
+        newHeroName = null;
 
     }
 
