@@ -14,7 +14,6 @@ else
         <label for="new-hero">Hero name: </label>
         <input id="new-hero" @bind="@newHeroName" />
 
-        <!-- (click) passes input value to add() and then clears the input -->
         <button type="button" class="add-button" @onclick="AddAndClear">
             Add hero
         </button>
@@ -31,7 +30,6 @@ else
                 <button type="button" class="delete" title="delete hero" @onclick="()=>Delete(hero)">x</button>
             </li>
         }
-
     </ul>
 }
 

@@ -26,18 +26,7 @@ builder.Services.AddScoped<JsonSerializerOptions>(sp =>
         PropertyNameCaseInsensitive = true,
     };
 
-    options.Converters.Add(new BigIntegerJsonConverter());
-    options.Converters.Add(new Int64JsonConverter());
-    options.Converters.Add(new UInt64JsonConverter());
-    options.Converters.Add(new Int128JsonConverter());
-    options.Converters.Add(new UInt128JsonConverter());
-
-    options.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString; // for the sake of UInt128
-
-    //Needed by .NET Framework clients, JavaScript clients and any naughty client, since System.Text.Json is a bit less fault tolerant than Newtonsoft.Json
-    options.Converters.Add(new Fonlow.Text.Json.DateOnlyExtensions.DateOnlyJsonConverter());
-    options.Converters.Add(new Fonlow.Text.Json.DateOnlyExtensions.DateTimeJsonConverter());
-    options.Converters.Add(new Fonlow.Text.Json.DateOnlyExtensions.DateTimeOffsetJsonConverter());
+    options.Converters.Add(new Int64JsonConverter()); //Hero.Id is long, 64-bit, exceeding 53-bit precision of JS number
 
     return options;
 });
