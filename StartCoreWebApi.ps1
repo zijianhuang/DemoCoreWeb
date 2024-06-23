@@ -2,8 +2,7 @@
 cd $PSScriptRoot
 $path = "$PSScriptRoot\Core3WebApi"
 $procArgs = @{
-    FilePath         = "dotnet.exe"
-    ArgumentList     = "run --project $path/Core3WebApi.csproj --no-build"
+    FilePath         = "$path/bin/Debug/net8.0/Core3WebApi.exe"
     WorkingDirectory = $path
     PassThru         = $true
 }
