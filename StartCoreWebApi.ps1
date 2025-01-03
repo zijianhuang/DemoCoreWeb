@@ -2,7 +2,7 @@
 cd $PSScriptRoot
 $path = "$PSScriptRoot\Core3WebApi"
 $procArgs = @{
-    FilePath         = "$path/bin/Debug/net8.0/Core3WebApi.exe"
+    FilePath         = "$path/bin/Debug/net9.0/Core3WebApi.exe"
     WorkingDirectory = $path
     PassThru         = $true
 }
