@@ -1,0 +1,48 @@
+﻿@page "/detail/{id:long}"
+@* @inject IHttpClientFactory ClientFactory
+@inject System.Text.Json.JsonSerializerOptions jsonSerializerOptions
+ *@
+
+@inject DemoWebApi.Controllers.Client.Heroes heroesApi //use typed HttpClient
+
+<PageTitle>Heroes</PageTitle>
+<h3>Heroes Dashboard</h3>
+
+@if (hero == null)
+{
+    <p><em>Loading Hero...</em></p>
+}
+else
+{
+    <div if.bind="hero">
+        <h2>@hero.Name Details</h2>
+        <div><span>id: </span>@hero.Id</div>
+        <div>
+            <label for="hero-name">Hero name: </label>
+            <input id="hero-name" @bind="@hero.Name" placeholder="Name" />
+        </div>
+
+        <button type="button" onclick="history.back()">go back</button>
+        <button type="button" @onclick="save">Save</button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public long Id { get; set; }
+
+    private DemoWebApi.Controllers.Client.Hero? hero;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // var client = ClientFactory.CreateClient("Core3WebAPI");
+        // DemoWebApi.Controllers.Client.Heroes heroesClient = new DemoWebApi.Controllers.Client.Heroes(client, jsonSerializerOptions);
+        // hero = await heroesClient.GetHeroAsync(Id);
+        hero = await heroesApi.GetHeroAsync(Id);
+    }
+
+    async Task save()
+    {
+        await heroesApi.PutAsync(hero);
+    }
+}

@@ -1,0 +1,26 @@
+﻿@page "/detail/{id:long}"
+@model HeroesRazor.Pages.HeroDetailModel
+@{
+}
+
+<PageTitle>Heroes</PageTitle>
+<h3>Heroes Dashboard</h3>
+
+@if (Model.Hero == null)
+{
+    <p><em>Loading Hero...</em></p>
+}
+else
+{
+    <div if.bind="hero">
+        <h2>@Model.Hero.Name Details</h2>
+        <div><span>id: </span>@Model.Id</div>
+        <div>
+            <label for="hero-name">Hero name: </label>
+            <input id="hero-name" bind ="@Model.Hero.Name" placeholder="Name" />
+        </div>
+
+        <button type="button" onclick="history.back()">go back</button>
+        <button type="button" onclick ="@Model.Save()">Save</button>
+    </div>
+}

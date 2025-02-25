@@ -45,12 +45,12 @@ else
 
     async Task Add(string name)
     {
-        name = name.Trim();
         if (string.IsNullOrEmpty(name))
         {
             return;
         }
 
+        name = name.Trim();
         var newHero = await heroesApi.PostAsync(name);
         this.selectedHero = null;
         heroes.Add(newHero);

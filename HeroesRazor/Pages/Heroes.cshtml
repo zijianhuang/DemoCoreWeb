@@ -1,0 +1,36 @@
+﻿@page
+@model HeroesRazor.Pages.HeroesModel
+@{
+}
+
+<PageTitle>List</PageTitle>
+<h2>My Heroes</h2>
+
+@if (@Model.heroes == null)
+{
+    <p><em>Loading Heroes...</em></p>
+}
+else
+{
+    <div>
+        <label for="new-hero">Hero name: </label>
+        <input id="new-hero" bind ="@Model.newHeroName" />
+
+        <button type="button" class="add-button" onclick ="@Model.AddAndClear()">
+            Add hero
+        </button>
+    </div>
+
+    <ul class="heroes">
+        @foreach (var hero in @Model.heroes)
+        {
+            string href = $"/detail/{hero.Id}";
+            <li>
+                <a href="@href">
+                    <span class="badge">@hero.Id</span> @hero.Name
+                </a>
+                <button type="button" class="delete" title="delete hero" onclick ="@Model.Delete(hero)">x</button>
+            </li>
+        }
+    </ul>
+}

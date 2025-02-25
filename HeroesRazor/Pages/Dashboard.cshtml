@@ -1,0 +1,23 @@
+﻿@page
+@model HeroesRazor.Pages.DashboardModel
+@{
+	
+}
+
+<PageTitle>Dashboard</PageTitle>
+<h2>Top Heroes</h2>
+
+@if (Model.Heroes == null)
+{
+	<p><em>Loading Heroes...</em></p>
+}
+else
+{
+	<div class="heroes-menu">
+		@foreach (var hero in Model.Heroes.Take(4))
+		{
+			string href = $"/detail/{@hero.Id}";
+			<a href="@href">@hero.Name</a>
+		}
+	</div>
+}
