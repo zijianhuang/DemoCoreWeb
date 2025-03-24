@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Fonlow.WebApiClientGenCore" Version="7.9.2" />
+	  <PackageReference Include="Fonlow.WebApiClientGenCore" Version="7.10.0" />
 	</ItemGroup>
 
 	<ItemGroup>
