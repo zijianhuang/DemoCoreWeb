@@ -6,7 +6,8 @@ import { DemoWebApi_Controllers_Client, } from '../../clientapi/WebApiCoreNg2Cli
 @Component({
     selector: 'app-hero-detail',
     templateUrl: './hero-detail.component.html',
-    styleUrls: ['./hero-detail.component.css']
+    styleUrls: ['./hero-detail.component.css'],
+    standalone: false
 })
 export class HeroDetailComponent implements OnInit {
     hero?: DemoWebApi_Controllers_Client.Hero;
