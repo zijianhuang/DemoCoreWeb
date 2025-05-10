@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
     standalone: false
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  private test='Multiple';
+  title = $localize`Tour of ${this.test} Heroes`;
 }

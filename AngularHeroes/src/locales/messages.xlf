@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en">
+  <file id="ngi18n" original="ng.template">
+    <unit id="8713870492138317531">
+      <notes>
+        <note category="location">src/app/hero-detail/hero-detail.component.html:2,3</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{hero.name | uppercase}}"/> Details</source>
+      </segment>
+    </unit>
+    <unit id="7700315636287332095">
+      <notes>
+        <note category="location">src/app/app.component.ts:11</note>
+      </notes>
+      <segment>
+        <source>Tour of <ph id="0" equiv="PH" disp="this.test"/> Heroes</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

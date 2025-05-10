@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0" srcLang="en" trgLang="zh-hans" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="ngi18n" original="ng.template">
+    <unit id="8713870492138317531">
+      <segment>
+        <source>
+          <ph disp="{{hero.name | uppercase}}" equiv="INTERPOLATION" id="0" /> Details</source>
+        <target>
+          <ph disp="{{hero.name | uppercase}}" equiv="INTERPOLATION" id="0" /> 细节</target>
+      </segment>
+    </unit>
+    <unit id="7700315636287332095">
+      <segment>
+        <source>
+          <ph disp="this.test" equiv="PH" id="0" />Tour of  Heroes</source>
+        <target>游览<ph disp="this.test" equiv="PH" id="0" />英雄</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

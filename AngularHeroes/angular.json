@@ -13,6 +13,30 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "baseHref": "/en/",
+          "code": "en"
+        },
+        "locales": {
+          "zh-hans": {
+            "translation": "src/locales/messages.zh-hans.xlf",
+            "baseHref": "/zh-hans/"
+          },
+          "zh-hant": {
+            "translation": "src/locales/messages.zh-hant.xlf",
+            "baseHref": "/zh-hant/"
+          },
+          "ja": {
+            "translation": "src/locales/messages.ja.xlf",
+            "baseHref": "/ja/"
+          },
+          "es": {
+            "translation": "src/locales/messages.es.xlf",
+            "baseHref": "/es/"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -23,7 +47,8 @@
             "index": "src/index.html",
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -76,7 +101,6 @@
               "outputPath": {
                 "base": "../ngdist/dev/"
               },
-
               "index": {
                 "input": "src/index.html",
                 "output": "./index.html"
@@ -101,18 +125,29 @@
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "angular.io-example:build"
-          }
-        },
+				"extract-i18n": {
+					"builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+					"options": {
+						"buildTarget": "angular.io-example:build",
+						"format": "xlf2",
+						"includeContext": "sourceFileOnly",
+						"outputPath": "src/locales",
+						"targetFiles": [
+							"messages.zh-hans.xlf",
+							"messages.zh-hant.xlf",
+							"messages.ja.xlf",
+							"messages.es.xlf"
+						],
+						"sourceFile": "messages.xlf"
+					}
+				},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
@@ -140,5 +175,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

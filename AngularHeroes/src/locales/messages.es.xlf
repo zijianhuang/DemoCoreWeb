@@ -1,0 +1,16 @@
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en" trgLang="es">
+  <file id="ngi18n" original="ng.template">
+    <unit id="8713870492138317531">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{hero.name | uppercase}}"/> Details</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{hero.name | uppercase}}"/> Details</target>
+      </segment>
+    </unit>
+    <unit id="7700315636287332095">
+      <segment state="initial">
+        <source>Tour of <ph id="0" equiv="PH" disp="this.test"/> Heroes</source>
+        <target>Tour of <ph id="0" equiv="PH" disp="this.test"/> Heroes</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
