@@ -21,3 +21,20 @@ And this repository contains the demo applications.
 1. Tour of the Heroes with Aurelia in folder AureliaHeroes. Integration test suite included.
 1. Tour of the Heroes with React TS in folder ReactHeroes.  Integration test suite included.
 1. vueTS, JEST test suite with Vue TypeScript and the generated TypeScript codes.
+
+## Troubleshooting
+
+The repos contains a few MAUI projects. Generally you can run Visual Studio as normal user rather than admin. However, for certain releases of Visual Studio or build task, when building MauiHeroes.Droid.csproj, you may encounter:
+```
+The specified task executable "java.exe" could not be run. System.ComponentModel.Win32Exception (0x80004005): Access is denied
+   at System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   at Microsoft.Build.Utilities.ToolTask.StartToolProcess(Process proc)
+   at Microsoft.Build.Utilities.ToolTask.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands)
+   at Microsoft.Build.Utilities.ToolTask.Execute()
+```
+
+To resolve this, you may have to run Visual Studio as admin.
+
+Offending Environment:
+* Windows 11 Pro 24H2, Build 26100.2061
+* Visual Studio 2022
