@@ -17,29 +17,34 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
-                        "outputPath": {
-                          "base": "dist"
-                        },
-                        "index": "src/index.html",
-                        "polyfills": [
-                            "zone.js",
-                            "zone.js/testing"
-                        ],
-                        "tsConfig": "tsconfig.app.json",
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets",
-                            {
-                                "glob": "siteconfig.js",
-                                "input": "src/conf/",
-                                "output": "./conf/"
-                            }
-                        ],
-                        "styles": [
-                            "src/styles.css"
-                        ],
-                        "scripts": [],
-                        "browser": "src/main.ts"
+                      "outputPath": {
+                        "base": "dist"
+                      },
+                      "index": "src/index.html",
+                      "polyfills": [
+                        "zone.js",
+                        "zone.js/testing"
+                      ],
+                      "tsConfig": "tsconfig.app.json",
+                      "assets": [
+                        "src/favicon.ico",
+                        "src/assets",
+                        {
+                          "glob": "siteconfig.js",
+                          "input": "src/conf/",
+                          "output": "./conf/"
+                        }
+                      ],
+                      "styles": [
+                        "src/styles.css"
+                      ],
+                      "scripts": [],
+                      "browser": "src/main.ts",
+                      "server": "src/main.server.ts",
+                      "outputMode": "server",
+                      "ssr": {
+                        "entry": "src/server.ts"
+                      }
                     },
                     "configurations": {
                         "production": {

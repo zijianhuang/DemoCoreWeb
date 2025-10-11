@@ -5,9 +5,17 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full', data: {
+    renderMode: 'server'
+  } },
+  { path: 'dashboard', component: DashboardComponent, data: {
+    renderMode: 'server'
+  } },
+  {
+    path: 'detail/:id', component: HeroDetailComponent, data: {
+      renderMode: 'server'
+    }
+  },
   { path: 'heroes', component: HeroesComponent }
 ];
 
