@@ -2,14 +2,46 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 export namespace DemoWebApi_Controllers_Client {
+
+	/**
+	 * This class is used to carry the result of various file uploads.
+	 */
+	export interface FileResult {
+
+		/**
+		 * Gets or sets the local path of the file saved on the server.
+		 */
+		fileNames?: Array<string>;
+
+		/**
+		 * Gets or sets the submitter as indicated in the HTML form used to upload the data.
+		 */
+		submitter?: string | null;
+	}
+
+
+	/**
+	 * Complex hero type
+	 */
 	export interface Hero {
-		address?: any;
+		address?: DemoWebApi_DemoData_Client.Address;
 		death?: Date | null;
+
+		/** Type: DateOnly */
 		dob?: Date | null;
 		emailAddress?: string | null;
+
+		/** Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 */
 		id?: string | null;
-		name: string;
-		phoneNumbers?: Array<any>;
+
+		/**
+		 * Required
+		 * String length: inclusive between 2 and 120
+		 */
+		name?: string | null;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
+
+		/** Min length: 6 */
 		webAddress?: string | null;
 	}
 
@@ -17,175 +49,10 @@ export namespace DemoWebApi_Controllers_Client {
 		super?: boolean | null;
 	}
 
-	export interface FileResult {
-		fileNames?: Array<string>;
-		submitter?: string | null;
-	}
 
-}
-
-export namespace DemoWebApi_DemoData_Base_Client {
-	export interface Entity {
-		addresses?: Array<any>;
-		emailAddress?: string | null;
-		id?: string | null;
-		name: string;
-		phoneNumbers?: Array<any>;
-		web?: string | null;
-	}
-
-}
-
-export namespace WebApplication1_Client {
-	export interface WeatherForecast {
-		date?: Date | null;
-		summary?: string | null;
-		temperatureC?: number | null;
-		temperatureF?: number | null;
-	}
-
-}
-
-export namespace Core3WebApi_Controllers_Client {
-	@Injectable()
-	export class Statistics {
-		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
-		}
-
-		/**
-		 * GET api/Statistics/distribution
-		 */
-		getDistribution(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.get(this.baseUri + 'api/Statistics/distribution', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
-		}
-	}
-
-}
-
-export namespace DemoCoreWeb_Controllers_Client {
-	@Injectable()
-	export class SpecialTypes {
-		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousDynamic
-		 */
-		getAnonymousDynamic(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousDynamic2
-		 */
-		getAnonymousDynamic2(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousObject
-		 */
-		getAnonymousObject(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
-		}
-
-		/**
-		 * GET api/SpecialTypes/AnonymousObject2
-		 */
-		getAnonymousObject2(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
-		}
-
-		/**
-		 * POST api/SpecialTypes/AnonymousObject
-		 */
-		postAnonymousObject(obj?: any, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? headersHandler().append('Content-Type', 'application/json;charset=UTF-8') : new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' }), observe: 'response', responseType: 'text' });
-		}
-
-		/**
-		 * POST api/SpecialTypes/AnonymousObject2
-		 */
-		postAnonymousObject2(obj?: any, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
-			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? headersHandler().append('Content-Type', 'application/json;charset=UTF-8') : new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' }), observe: 'response', responseType: 'text' });
-		}
-	}
-
-}
-
-export namespace DemoWebApi_DemoData_Client {
-	export interface Person extends DemoWebApi_DemoData_Base_Client.Entity {
-		baptised?: Date | null;
-		dob?: Date | null;
-		givenName?: string | null;
-		surname?: string | null;
-	}
-
-	export interface Company extends DemoWebApi_DemoData_Base_Client.Entity {
-		businessNumber?: string | null;
-		businessNumberType?: string | null;
-		foundDate?: Date | null;
-		registerDate?: Date | null;
-		textMatrix?: Array<Array<string>>;
-		int2D?: number[][];
-		int2DJagged?: Array<Array<number>>;
-		lines?: Array<string>;
-	}
-
-	export enum Days { Sat = 1, Sun = 2, Mon = 3, Tue = 4, Wed = 5, Thu = 6, Fri = 7 }
-
-	export interface MimsResult<T> {
-		generatedAt?: Date | null;
-		message?: string | null;
-		result?: T;
-		success?: boolean | null;
-	}
-
-	export interface MyGeneric<T, K, U> {
-		myK?: K;
-		myT?: T;
-		myU?: U;
-		status?: string | null;
-	}
-
-	export interface BigNumbers {
-		bigInt?: string | null;
-		signed128?: string | null;
-		signed64?: string | null;
-		unsigned128?: string | null;
-		unsigned64?: string | null;
-	}
-
-	export interface IdMap {
-		id?: string | null;
-		idNotEmitDefaultValue?: string | null;
-		nullableId?: string | null;
-		requiredName: string;
-		text?: string | null;
-	}
-
-	export interface IntegralEntity extends DemoWebApi_DemoData_Base_Client.Entity {
-		byte?: number | null;
-		int?: number | null;
-		itemCount?: number | null;
-		sByte?: number | null;
-		short?: number | null;
-		uInt?: number | null;
-		uShort?: number | null;
-	}
-
-	export interface MimsPackage {
-		kk?: number | null;
-		kK2?: number | null;
-		optionalEnum?: number | null;
-		optionalInt?: number | null;
-		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
-		tag?: string | null;
-	}
-
-}
-
-export namespace DemoWebApi_Controllers_Client {
+	/**
+	 * For testing different commbinations of parameters and returns
+	 */
 	@Injectable()
 	export class DateTypes {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -207,6 +74,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return DateTimeOffset.Now
 		 * GET api/DateTypes/ForDateTimeOffset
 		 */
 		getDateTimeOffset(headersHandler?: () => HttpHeaders): Observable<Date> {
@@ -221,6 +89,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * If Dt is not defined, add a hour from now
 		 * GET api/DateTypes/NextHourNullable?n={n}&dt={dt}
 		 * @param {number} n Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -236,6 +105,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * If Dt is not defined, add a year from now
 		 * GET api/DateTypes/NextYearNullable?n={n}&dt={dt}
 		 * @param {number} n Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -244,6 +114,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Client should send DateTime.Date
 		 * POST api/DateTypes/IsDateTimeDate
 		 */
 		isDateTimeDate(dt?: Date | null, headersHandler?: () => HttpHeaders): Observable<{item1: Date, item2: Date}> {
@@ -288,6 +159,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d;
 		 * POST api/DateTypes/ForDateTimeOffset
 		 */
 		postDateTimeOffset(d?: Date | null, headersHandler?: () => HttpHeaders): Observable<Date> {
@@ -295,6 +167,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * return d.ToString("O")
 		 * POST api/DateTypes/ForDateTimeOffsetForO
 		 */
 		postDateTimeOffsetForO(d?: Date | null, headersHandler?: () => HttpHeaders): Observable<string> {
@@ -309,6 +182,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Returned is DateTimeOffset?
 		 * POST api/DateTypes/DateTimeOffsetNullable
 		 */
 		postDateTimeOffsetNullable(d?: Date | null, headersHandler?: () => HttpHeaders): Observable<Date | null> {
@@ -345,13 +219,21 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return Tuple DateTime?, DateTime?
 		 * GET api/DateTypes/SearchDateRange?startDate={startDate}&endDate={endDate}
+		 * @param {Date | null} startDate DateTime? startDate = null
+		 * @param {Date | null} endDate DateTime? endDate = null
 		 */
 		searchDateRange(startDate?: Date | null, endDate?: Date | null, headersHandler?: () => HttpHeaders): Observable<{item1: Date | null, item2: Date | null}> {
 			return this.http.get<{item1: Date | null, item2: Date | null}>(this.baseUri + 'api/DateTypes/SearchDateRange?' + (startDate ? 'startDate=' + startDate?.toISOString() : '') + (endDate ? '&endDate=' + endDate?.toISOString() : ''), { headers: headersHandler ? headersHandler() : undefined });
 		}
 	}
 
+
+	/**
+	 * Entities, Person and Company
+	 * Some with AuthorizeAttribute
+	 */
 	@Injectable()
 	export class Entities {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -442,6 +324,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post MyGeneric string, decimal, double
 		 * POST api/Entities/MyGeneric
 		 */
 		getMyGeneric(s?: DemoWebApi_DemoData_Client.MyGeneric<string, number, number> | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.MyGeneric<string, number, number>> {
@@ -449,6 +332,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post MyGeneric string, decimal, Person
 		 * POST api/Entities/MyGenericPerson
 		 */
 		getMyGenericPerson(s?: DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person> | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.MyGeneric<string, number, DemoWebApi_DemoData_Client.Person>> {
@@ -456,6 +340,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return empty body, status 204. MaybeNull
 		 * GET api/Entities/NullCompany
 		 */
 		getNullCompany(headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.Company | null> {
@@ -463,8 +348,11 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get a person
+		 * so to know the person
 		 * GET api/Entities/getPerson/{id}
-		 * @param {string} id Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+		 * @param {string} id unique id of that guy
+		 * @return {DemoWebApi_DemoData_Client.Person} person in db
 		 */
 		getPerson(id?: string | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.Person> {
 			return this.http.get<DemoWebApi_DemoData_Client.Person>(this.baseUri + 'api/Entities/getPerson/' + id, { headers: headersHandler ? headersHandler() : undefined });
@@ -487,6 +375,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH
 		 * PATCH api/Entities/patchPerson
 		 */
 		patchPerson(person?: DemoWebApi_DemoData_Client.Person | null, headersHandler?: () => HttpHeaders): Observable<string> {
@@ -508,6 +397,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * Heroes operations. Decorated by nullable directive.
+	 */
 	@Injectable()
 	export class Heroes {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -529,6 +422,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get a hero. Nullable reference. MaybeNull
 		 * GET api/Heroes/{id}
 		 * @param {string} id Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 		 */
@@ -537,6 +431,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get all heroes.
 		 * GET api/Heroes
 		 */
 		getHeroes(headersHandler?: () => HttpHeaders): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
@@ -544,6 +439,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * MaybeNull
 		 * GET api/Heroes/super?id={id}
 		 * @param {string} id Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 		 */
@@ -559,13 +455,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Add a hero. The client will not expect null. NotNull
 		 * POST api/Heroes/q?name={name}
+		 * @param {string} name name of hero
+		 * @return {DemoWebApi_Controllers_Client.Hero} Always object.
 		 */
 		postWithQuery(name?: string | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_Controllers_Client.Hero> {
 			return this.http.post<DemoWebApi_Controllers_Client.Hero>(this.baseUri + 'api/Heroes/q?name=' + (!name ? '' : encodeURIComponent(name)), null, { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
+		 * Update hero.
 		 * PUT api/Heroes
 		 */
 		put(hero?: DemoWebApi_Controllers_Client.Hero | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_Controllers_Client.Hero> {
@@ -573,13 +473,20 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Search heroes
 		 * GET api/Heroes/search/{name}
+		 * @param {string} name keyword contained in hero name.
+		 * @return {Array<DemoWebApi_Controllers_Client.Hero>} Hero array matching the keyword.
 		 */
 		search(name?: string | null, headersHandler?: () => HttpHeaders): Observable<Array<DemoWebApi_Controllers_Client.Hero>> {
 			return this.http.get<Array<DemoWebApi_Controllers_Client.Hero>>(this.baseUri + 'api/Heroes/search/' + (!name ? '' : encodeURIComponent(name)), { headers: headersHandler ? headersHandler() : undefined });
 		}
 	}
 
+
+	/**
+	 * For testing different commbinations of parameters and returns
+	 */
 	@Injectable()
 	export class Numbers {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -596,12 +503,18 @@ export namespace DemoWebApi_Controllers_Client {
 
 		/**
 		 * GET api/Numbers/byteWithRange?d={d}
-		 * @param {number} d Type: byte
-		 *     Range: inclusive between 0 and 100
+		 * @param {number} d Byte for small number.
 		 * @return {number} Type: byte, 0 to 255
 		 */
 		getByteWithRange(d?: number | null, headersHandler?: () => HttpHeaders): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/Numbers/byteWithRange?d=' + d, { headers: headersHandler ? headersHandler() : undefined });
+		}
+
+		/**
+		 * GET api/Numbers/NullableInt?num={num}
+		 */
+		getNullableNumber(num?: number | null, headersHandler?: () => HttpHeaders): Observable<number | null> {
+			return this.http.get<number | null>(this.baseUri + 'api/Numbers/NullableInt?' + (num || num == 0  ? 'num=' + num.toString() : ''), { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -733,6 +646,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Range is with double, not long. Precision of double: ~15-17 digits, while long.MaxValue 9223372036854775807 has 19 decimal digits.
 		 * POST api/Numbers/longRange
 		 * @param {string} d Type: long
 		 *     Range: inclusive between 1000 and 9223372036854775800
@@ -761,14 +675,21 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * For testing posting and getting string data. Returned string is JSON object.
+	 */
 	@Injectable()
 	export class StringData {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
 		}
 
 		/**
+		 * Athlethe Search
 		 * GET api/StringData/AthletheSearch?take={take}&skip={skip}&order={order}&sort={sort}&search={search}
-		 * @param {number} skip Type: int, -2,147,483,648 to 2,147,483,647
+		 * @param {number | null} take Generic optional parameter. Default 10
+		 * @param {number} skip Default 0
+		 * @param {string} order default null
 		 */
 		athletheSearch(take?: number | null, skip?: number | null, order?: string | null, sort?: string | null, search?: string | null, headersHandler?: () => HttpHeaders): Observable<string> {
 			return this.http.get(this.baseUri + 'api/StringData/AthletheSearch?' + (take || take == 0  ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' });
@@ -782,6 +703,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return empty string JSON object. Status 200.
 		 * GET api/StringData/EmptyString
 		 */
 		getEmptyString(headersHandler?: () => HttpHeaders): Observable<string> {
@@ -789,6 +711,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return empty body with status 204 No Content, even though the default mime type is application/json. MaybeNull
 		 * GET api/StringData/NullString
 		 */
 		getNullString(headersHandler?: () => HttpHeaders): Observable<string | null> {
@@ -796,6 +719,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * For testing different commbinations of parameters and returns
+	 */
 	@Injectable()
 	export class SuperDemo {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -890,6 +817,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo
 		 * GET api/SuperDemo/decimalArrayQ?a={a}
 		 */
 		getDecimalArrayQ(a?: Array<number> | null, headersHandler?: () => HttpHeaders): Observable<Array<number>> {
@@ -908,6 +836,7 @@ export namespace DemoWebApi_Controllers_Client {
 		/**
 		 * GET api/SuperDemo/DecimalZero
 		 * @return {number} Type: decimal
+		 * @deprecated Just for test
 		 */
 		getDecimalZero(headersHandler?: () => HttpHeaders): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/SuperDemo/DecimalZero', { headers: headersHandler ? headersHandler() : undefined });
@@ -943,14 +872,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Result of 0.1d + 0.2d - 0.3d
 		 * GET api/SuperDemo/DoubleZero
 		 * @return {number} Type: double
+		 * @deprecated for testing
 		 */
 		getDoubleZero(headersHandler?: () => HttpHeaders): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/SuperDemo/DoubleZero', { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
+		 * Demo IEnumerable Days
 		 * GET api/SuperDemo/enumArrayDays?a={a}
 		 */
 		getEnumArrayDays(a?: Array<DemoWebApi_DemoData_Client.Days> | null, headersHandler?: () => HttpHeaders): Observable<Array<DemoWebApi_DemoData_Client.Days>> {
@@ -967,6 +899,7 @@ export namespace DemoWebApi_Controllers_Client {
 		/**
 		 * GET api/SuperDemo/FloatZero
 		 * @return {number} Type: float
+		 * @deprecated 
 		 */
 		getFloatZero(headersHandler?: () => HttpHeaders): Observable<number> {
 			return this.http.get<number>(this.baseUri + 'api/SuperDemo/FloatZero', { headers: headersHandler ? headersHandler() : undefined });
@@ -1008,6 +941,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo int[];
 		 * GET api/SuperDemo/intArrayQ?a={a}
 		 */
 		getIntArrayQ(a?: Array<number> | null, headersHandler?: () => HttpHeaders): Observable<Array<number>> {
@@ -1015,6 +949,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo IEnumerable long
 		 * GET api/SuperDemo/intArrayQ2?a={a}
 		 */
 		getIntArrayQ2(a?: Array<string> | null, headersHandler?: () => HttpHeaders): Observable<Array<string>> {
@@ -1059,6 +994,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * False to return null, and true to return 1000
 		 * GET api/SuperDemo/NullableDecimal/{hasValue}
 		 */
 		getNullableDecimal(hasValue?: boolean | null, headersHandler?: () => HttpHeaders): Observable<number | null> {
@@ -1066,6 +1002,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * MaybeNull
 		 * GET api/SuperDemo/NullObject
 		 */
 		getNullPerson(headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.Person | null> {
@@ -1103,6 +1040,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo string array
 		 * GET api/SuperDemo/stringArrayQ?a={a}
 		 */
 		getStringArrayQ(a?: Array<string> | null, headersHandler?: () => HttpHeaders): Observable<Array<string>> {
@@ -1110,6 +1048,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo List string
 		 * GET api/SuperDemo/stringArrayQ2?a={a}
 		 */
 		getStringArrayQ2(a?: Array<string> | null, headersHandler?: () => HttpHeaders): Observable<Array<string>> {
@@ -1117,6 +1056,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * ActionResult with FileStreamResult
 		 * GET api/SuperDemo/TextStream
 		 */
 		getTextStream(headersHandler?: () => HttpHeaders): Observable<HttpResponse<Blob>> {
@@ -1169,6 +1109,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post a collection of person
 		 * POST api/SuperDemo/Collection
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1184,6 +1125,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo Dic string and person
 		 * POST api/SuperDemo/StringPersonDic
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1199,6 +1141,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post ICollection of person
 		 * POST api/SuperDemo/ICollection
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1207,6 +1150,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post IList of person
 		 * POST api/SuperDemo/IList
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1222,6 +1166,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo int[][]
 		 * POST api/SuperDemo/int2djagged
 		 */
 		postInt2DJagged(a?: Array<Array<number>> | null, headersHandler?: () => HttpHeaders): Observable<boolean> {
@@ -1229,6 +1174,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Demo int[]
 		 * POST api/SuperDemo/intArray
 		 * @param {Array<number>} a Min length: 1
 		 *     Max length: 10
@@ -1238,6 +1184,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post IReadOnlyCollection of person
 		 * POST api/SuperDemo/IReadOnlyCollection
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1246,6 +1193,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post e of person
 		 * POST api/SuperDemo/IReadOnlyList
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1254,6 +1202,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post a list of person
 		 * POST api/SuperDemo/List
 		 * @return {number} Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1270,6 +1219,10 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * For testing posting and getting string data. String returned is text/plain by default
+	 */
 	@Injectable()
 	export class TextData {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
@@ -1291,6 +1244,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return empty body with status 200.
 		 * GET api/TextData/EmptyString
 		 */
 		getEmptyString(headersHandler?: () => HttpHeaders): Observable<string> {
@@ -1298,6 +1252,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * MaybeNull
 		 * GET api/TextData/NullableString
 		 */
 		getNullableString(headersHandler?: () => HttpHeaders): Observable<string | null> {
@@ -1305,6 +1260,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Return empty body with status 204 No Content.
 		 * GET api/TextData/NullString
 		 */
 		getNullString(headersHandler?: () => HttpHeaders): Observable<string | null> {
@@ -1312,12 +1268,17 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
+
+	/**
+	 * https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.3.3
+	 */
 	@Injectable()
 	export class Tuple {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
 		}
 
 		/**
+		 * Update in a transaction
 		 * PUT api/Tuple/A1TupleArray
 		 */
 		a1TupleArray(idAndOrderArray?: Array<{item1: string, item2: number}> | null, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
@@ -1325,6 +1286,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Update IEnumerable Tuple in a transaction
 		 * PUT api/Tuple/A2TupleArray
 		 */
 		a2TupleIEnumerable(idAndOrderArray?: Array<{item1: string, item2: number}> | null, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
@@ -1332,6 +1294,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post tuple
 		 * POST api/Tuple/ChangeName
 		 */
 		changeName(d?: {item1: string, item2: DemoWebApi_DemoData_Client.Person} | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.Person> {
@@ -1339,6 +1302,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get Tuple in return. MaybeNull
 		 * GET api/Tuple/PeopleCompany4
 		 */
 		getPeopleCompany4(headersHandler?: () => HttpHeaders): Observable<{item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Company} | null> {
@@ -1346,6 +1310,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * MaybeNull
 		 * GET api/Tuple/PeopleCompany5
 		 */
 		getPeopleCompany5(headersHandler?: () => HttpHeaders): Observable<{item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Person, item5: DemoWebApi_DemoData_Client.Company} | null> {
@@ -1402,6 +1367,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post nested tuple
 		 * GET api/Tuple/Tuple8
 		 */
 		getTuple8(headersHandler?: () => HttpHeaders): Observable<{item1: string, item2: string, item3: string, item4: string, item5: string, item6: string, item7: number, rest: {item1: string, item2: string, item3: string}}> {
@@ -1444,6 +1410,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post long tuple
 		 * POST api/Tuple/PeopleCompany7
 		 */
 		linkPeopleCompany7(peopleAndCompany?: {item1: DemoWebApi_DemoData_Client.Person, item2: DemoWebApi_DemoData_Client.Person, item3: DemoWebApi_DemoData_Client.Person, item4: DemoWebApi_DemoData_Client.Person, item5: DemoWebApi_DemoData_Client.Person, item6: DemoWebApi_DemoData_Client.Person, item7: DemoWebApi_DemoData_Client.Company} | null, headersHandler?: () => HttpHeaders): Observable<DemoWebApi_DemoData_Client.Person> {
@@ -1473,6 +1440,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Post tuple string int
 		 * POST api/Tuple/Tuple2
 		 */
 		postTuple2(tuple?: {item1: string, item2: number} | null, headersHandler?: () => HttpHeaders): Observable<string> {
@@ -1536,6 +1504,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get a list of value
 		 * GET api/Values
 		 */
 		get(headersHandler?: () => HttpHeaders): Observable<Array<string>> {
@@ -1543,6 +1512,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get by both Id and name
 		 * GET api/Values/Name/{id}?name={name}
 		 * @param {number} id Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1551,6 +1521,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get by name
 		 * GET api/Values?name={name}
 		 */
 		getByNameOfString(name?: string | null, headersHandler?: () => HttpHeaders): Observable<string> {
@@ -1558,6 +1529,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get by Id
 		 * GET api/Values/{id}
 		 * @param {number} id Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1566,6 +1538,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Get a list of value async, it is get2
 		 * GET api/Values/Get2
 		 */
 		get2(headersHandler?: () => HttpHeaders): Observable<Array<string>> {
@@ -1580,6 +1553,7 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 
 		/**
+		 * Update with valjue
 		 * PUT api/Values/{id}
 		 * @param {number} id Type: int, -2,147,483,648 to 2,147,483,647
 		 */
@@ -1590,17 +1564,442 @@ export namespace DemoWebApi_Controllers_Client {
 
 }
 
-export namespace WebApplication1_Controllers_Client {
+export namespace DemoWebApi_DemoDataEx_Client {
+	export interface Trust extends DemoWebApi_DemoData_Client.BizEntity {
+		trustee?: string | null;
+	}
+
+}
+
+export namespace DemoWebApi_DemoData_Another_Client {
+
+	/**
+	 * 2D position
+	 * with X and Y
+	 * for Demo
+	 */
+	export interface MyPoint {
+
+		/**
+		 * X
+		 * Type: double
+		 */
+		x: number;
+
+		/**
+		 * Y
+		 * Type: double
+		 */
+		y: number;
+	}
+
+}
+
+export namespace DemoWebApi_DemoData_Base_Client {
+
+	/**
+	 * Base class of company and person
+	 */
+	export interface Entity {
+
+		/**
+		 * Multiple addresses
+		 */
+		addresses?: Array<DemoWebApi_DemoData_Client.Address>;
+
+		/** Max length: 255 */
+		emailAddress?: string | null;
+		id?: string | null;
+
+		/**
+		 * Name of the entity.
+		 * Required
+		 * Min length: 2
+		 * Max length: 255
+		 */
+		name: string;
+		phoneNumbers?: Array<DemoWebApi_DemoData_Client.PhoneNumber>;
+
+		/** Type: Uri */
+		web?: string | null;
+	}
+
+}
+
+export namespace DemoWebApi_DemoData_Client {
+	export interface Address {
+
+		/** String length: inclusive between 2 and 50 */
+		city?: string | null;
+
+		/** String length: inclusive between 2 and 30 */
+		country?: string | null;
+
+		/** Type: GUID */
+		id?: string | null;
+
+		/** String length: inclusive between 2 and 10 */
+		postalCode?: string | null;
+
+		/** String length: inclusive between 2 and 30 */
+		state?: string | null;
+
+		/** String length: inclusive between 2 and 100 */
+		street1?: string | null;
+
+		/** Length min: 2, max: 100 */
+		street2?: string | null;
+		type?: DemoWebApi_DemoData_Client.AddressType | null;
+
+		/**
+		 * It is a field
+		 */
+		location?: DemoWebApi_DemoData_Another_Client.MyPoint;
+	}
+
+	export enum AddressType { Postal, Residential }
+
+
+	/**  */
+	export interface BigNumbers {
+
+		/** Type: BigInteger */
+		bigInt?: string | null;
+
+		/** Type: Int128, -170141183460469231731687303715884105728 to 170141183460469231731687303715884105727 */
+		signed128?: string | null;
+
+		/** Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 */
+		signed64?: string | null;
+
+		/** Type: UInt128, 0 to 340282366920938463463374607431768211455 */
+		unsigned128?: string | null;
+
+		/** Type: ulong, 0 to 18,446,744,073,709,551,615 */
+		unsigned64?: string | null;
+	}
+
+	export interface BizEntity extends DemoWebApi_DemoData_Base_Client.Entity {
+
+		/** Data type: Date */
+		foundDate?: Date | null;
+
+		/** Type: DateOnly */
+		registerDate?: Date | null;
+	}
+
+	export interface Company extends DemoWebApi_DemoData_Client.BizEntity {
+
+		/**
+		 * BusinessNumber to be serialized as BusinessNum
+		 */
+		business_no?: string | null;
+		businessNumberType?: string | null;
+
+		/** @deprecated */
+		textMatrix?: Array<Array<string>>;
+		int2D?: number[][];
+		int2DJagged?: Array<Array<number>>;
+		lines?: Array<string>;
+	}
+
+	export enum Days {
+		Sat = 1,
+		Sun = 2,
+		Mon = 3,
+		Tue = 4,
+		Wed = 5,
+
+		/**
+		 * Thursday
+		 */
+		Thu = 6,
+		Fri = 7
+	}
+
+
+	/**
+	 * To test different serializations against Guid
+	 */
+	export interface IdMap {
+
+		/** Type: GUID */
+		id?: string | null;
+
+		/** Type: GUID */
+		idNotEmitDefaultValue?: string | null;
+		nullableId?: string | null;
+
+		/** Required */
+		requiredName: string;
+		text?: string | null;
+	}
+
+	export interface IntegralEntity extends DemoWebApi_DemoData_Base_Client.Entity {
+
+		/** Type: byte, 0 to 255 */
+		byte?: number | null;
+
+		/** Type: int, -2,147,483,648 to 2,147,483,647 */
+		int?: number | null;
+
+		/**
+		 * Type: int
+		 * Range: inclusive between -1000 and 1000000
+		 */
+		itemCount?: number | null;
+
+		/** Type: sbyte, -128 to 127 */
+		sByte?: number | null;
+
+		/** Type: short, -32,768 to 32,767 */
+		short?: number | null;
+
+		/** Type: uint, 0 to 4,294,967,295 */
+		uInt?: number | null;
+
+		/** Type: ushort, 0 to 65,535 */
+		uShort?: number | null;
+	}
+
+	export enum MedicalContraindiationResponseTypeReason { M = "Mm", S = "Ss", P = "Pp", I = "I", A = "A" }
+
+	export enum MedicalContraindiationResponseTypeTypeCode { P = "P", T = "Tt" }
+
+
+	/** @deprecated Type deprecated for testing */
+	export interface MimsPackage {
+
+		/**
+		 * Type: int
+		 * Range: inclusive between 10 and 100
+		 */
+		kk?: number | null;
+
+		/**
+		 * Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+		 * and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+		 * Type: int, -2,147,483,648 to 2,147,483,647
+		 */
+		kK2?: number | null;
+		optionalEnum?: DemoWebApi_DemoData_Client.MyEnumType | null;
+		optionalInt?: number | null;
+		result?: DemoWebApi_DemoData_Client.MimsResult<number>;
+		tag?: string | null;
+
+		/** @deprecated Just for testing ~ Is Error. */
+		tagForTest?: string | null;
+
+		/** @deprecated Just for testing */
+		tagForTest2?: string | null;
+
+		/** @deprecated Just for testing ~ Is Error. */
+		tagForTest3?: string | null;
+	}
+
+	export interface MimsResult<T> {
+		generatedAt?: Date | null;
+		message?: string | null;
+		result?: T;
+		success?: boolean | null;
+	}
+
+	export enum MyEnumType { First = 1, Two = 2 }
+
+	export interface MyGeneric<T, K, U> {
+		myK?: K;
+		myT?: T;
+		myU?: U;
+		status?: string | null;
+	}
+
+	export interface MyPeopleDic {
+		anotherDic?: {[id: string]: string };
+		dic?: {[id: string]: DemoWebApi_DemoData_Client.Person };
+		intDic?: {[id: number]: string };
+	}
+
+	export interface Person extends DemoWebApi_DemoData_Base_Client.Entity {
+
+		/** Data type: Date */
+		baptised?: Date | null;
+
+		/**
+		 * Date of Birth.
+		 * This is optional.
+		 */
+		dob?: Date | null;
+		givenName?: string | null;
+		surname?: string | null;
+	}
+
+	export interface PhoneNumber {
+
+		/** Max length: 120 */
+		fullNumber?: string | null;
+		phoneType?: DemoWebApi_DemoData_Client.PhoneType | null;
+	}
+
+
+	/**
+	 * Phone type
+	 * Tel, Mobile, Skyp and Fax
+	 */
+	export enum PhoneType {
+
+		/**
+		 * Land line
+		 */
+		Tel,
+
+		/**
+		 * Mobile phone
+		 */
+		Mobile,
+		Skype,
+		Fax
+	}
+
+}
+
+export namespace DemoWebApi_Models_Client {
+	export interface AddExternalLoginBindingModel {
+
+		/** Required */
+		externalAccessToken?: string | null;
+	}
+
+	export interface ChangePasswordBindingModel {
+
+		/** Data type: Password */
+		confirmPassword?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
+		newPassword: string;
+
+		/**
+		 * Required
+		 * Data type: Password
+		 */
+		OldPwd: string;
+	}
+
+	export interface RegisterBindingModel {
+
+		/** Data type: Password */
+		confirmPassword?: string | null;
+
+		/** Required */
+		email?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
+		password?: string | null;
+	}
+
+	export interface RegisterExternalBindingModel {
+
+		/** Required */
+		email?: string | null;
+	}
+
+	export interface RemoveLoginBindingModel {
+
+		/** Required */
+		loginProvider?: string | null;
+
+		/** Required */
+		providerKey?: string | null;
+	}
+
+	export interface SetPasswordBindingModel {
+
+		/** Data type: Password */
+		confirmPassword?: string | null;
+
+		/**
+		 * Required
+		 * String length: inclusive between 6 and 100
+		 * Data type: Password
+		 */
+		newPassword?: string | null;
+	}
+
+
+	/**
+	 * Auth token
+	 */
+	export interface TokenResponseModel {
+		access_token?: string | null;
+		expires?: string | null;
+
+		/** Type: int, -2,147,483,648 to 2,147,483,647 */
+		expires_in?: number | null;
+		issued?: string | null;
+		token_type?: string | null;
+		username?: string | null;
+	}
+
+}
+
+export namespace DemoCoreWeb_Controllers_Client {
 	@Injectable()
-	export class WeatherForecast {
+	export class SpecialTypes {
 		constructor(@Inject('baseUri') private baseUri: string = window.location.origin + '/', private http: HttpClient) {
 		}
 
 		/**
-		 * GET WeatherForecast
+		 * Anonymous Dynamic of C#
+		 * GET api/SpecialTypes/AnonymousDynamic
+		 * @return {any} dyanmic things
 		 */
-		get(headersHandler?: () => HttpHeaders): Observable<Array<WebApplication1_Client.WeatherForecast>> {
-			return this.http.get<Array<WebApplication1_Client.WeatherForecast>>(this.baseUri + 'WeatherForecast', { headers: headersHandler ? headersHandler() : undefined });
+		getAnonymousDynamic(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * Async function returing dynamic
+		 * GET api/SpecialTypes/AnonymousDynamic2
+		 */
+		getAnonymousDynamic2(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousDynamic2', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * GET api/SpecialTypes/AnonymousObject
+		 */
+		getAnonymousObject(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * Async function returning object
+		 * GET api/SpecialTypes/AnonymousObject2
+		 */
+		getAnonymousObject2(headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.get(this.baseUri + 'api/SpecialTypes/AnonymousObject2', { headers: headersHandler ? headersHandler() : undefined, observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * POST api/SpecialTypes/AnonymousObject
+		 */
+		postAnonymousObject(obj?: any, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject', JSON.stringify(obj), { headers: headersHandler ? headersHandler().append('Content-Type', 'application/json;charset=UTF-8') : new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' }), observe: 'response', responseType: 'text' });
+		}
+
+		/**
+		 * Async returning object, Post dynamic
+		 * POST api/SpecialTypes/AnonymousObject2
+		 */
+		postAnonymousObject2(obj?: any, headersHandler?: () => HttpHeaders): Observable<HttpResponse<string>> {
+			return this.http.post(this.baseUri + 'api/SpecialTypes/AnonymousObject2', JSON.stringify(obj), { headers: headersHandler ? headersHandler().append('Content-Type', 'application/json;charset=UTF-8') : new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' }), observe: 'response', responseType: 'text' });
 		}
 	}
 
