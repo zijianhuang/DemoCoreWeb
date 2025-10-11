@@ -47,7 +47,7 @@ export namespace WebApplication1_Client {
 
 export namespace Core3WebApi_Controllers_Client {
 	export class Statistics {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -62,7 +62,7 @@ export namespace Core3WebApi_Controllers_Client {
 
 export namespace DemoCoreWeb_Controllers_Client {
 	export class SpecialTypes {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -184,7 +184,7 @@ export namespace DemoWebApi_DemoData_Client {
 
 export namespace DemoWebApi_Controllers_Client {
 	export class DateTypes {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -349,7 +349,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Entities {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -504,7 +504,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Heroes {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -575,7 +575,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Numbers {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -755,7 +755,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class StringData {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -763,7 +763,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {number} skip Type: int, -2,147,483,648 to 2,147,483,647
 		 */
 		athletheSearch(take?: number | null, skip?: number | null, order?: string | null, sort?: string | null, search?: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/StringData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+			return Axios.get(this.baseUri + 'api/StringData/AthletheSearch?' + (take || take == 0  ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
 		}
 
 		/**
@@ -789,7 +789,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class SuperDemo {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -1067,14 +1067,14 @@ export namespace DemoWebApi_Controllers_Client {
 		 * GET api/SuperDemo/DoubleNullable?location={location}&dd={dd}&de={de}
 		 */
 		getPrimitiveNullable(location?: string | null, dd?: number | null, de?: number | null, headersHandler?: () => {[header: string]: string}): Promise<{item1: string, item2: number | null, item3: number | null}> {
-			return Axios.get<{item1: string, item2: number | null, item3: number | null}>(this.baseUri + 'api/SuperDemo/DoubleNullable?location=' + (!location ? '' : encodeURIComponent(location)) + (dd ? '&dd=' + dd.toString() : '') + (de ? '&de=' + de.toString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+			return Axios.get<{item1: string, item2: number | null, item3: number | null}>(this.baseUri + 'api/SuperDemo/DoubleNullable?location=' + (!location ? '' : encodeURIComponent(location)) + (dd || dd == 0 ? '&dd=' + dd.toString() : '') + (de || de == 0 ? '&de=' + de.toString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 
 		/**
 		 * GET api/SuperDemo/DoubleNullable2?dd={dd}&de={de}
 		 */
 		getPrimitiveNullable2(dd?: number | null, de?: number | null, headersHandler?: () => {[header: string]: string}): Promise<{item1: number | null, item2: number | null}> {
-			return Axios.get<{item1: number | null, item2: number | null}>(this.baseUri + 'api/SuperDemo/DoubleNullable2?' + (dd ? 'dd=' + dd.toString() : '') + (de ? '&de=' + de.toString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
+			return Axios.get<{item1: number | null, item2: number | null}>(this.baseUri + 'api/SuperDemo/DoubleNullable2?' + (dd || dd == 0  ? 'dd=' + dd.toString() : '') + (de || de == 0 ? '&de=' + de.toString() : ''), { headers: headersHandler ? headersHandler() : undefined }).then(d => {if (d.status<=204) return d.data; throw d;});
 		}
 
 		/**
@@ -1262,7 +1262,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class TextData {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -1270,7 +1270,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {number} skip Type: int, -2,147,483,648 to 2,147,483,647
 		 */
 		athletheSearch(take?: number | null, skip?: number | null, order?: string | null, sort?: string | null, search?: string | null, headersHandler?: () => {[header: string]: string}): Promise<string> {
-			return Axios.get(this.baseUri + 'api/TextData/AthletheSearch?' + (take ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
+			return Axios.get(this.baseUri + 'api/TextData/AthletheSearch?' + (take || take == 0  ? 'take=' + take.toString() : '') + '&skip=' + skip + '&order=' + (!order ? '' : encodeURIComponent(order)) + '&sort=' + (!sort ? '' : encodeURIComponent(sort)) + '&search=' + (!search ? '' : encodeURIComponent(search)), { headers: headersHandler ? headersHandler() : undefined, responseType: 'text' }).then(d => {if (d.status<=204) return d.status == 204 ? null : d.data; throw d;});
 		}
 
 		/**
@@ -1303,7 +1303,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Tuple {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -1512,7 +1512,7 @@ export namespace DemoWebApi_Controllers_Client {
 	}
 
 	export class Values {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
@@ -1580,7 +1580,7 @@ export namespace DemoWebApi_Controllers_Client {
 
 export namespace WebApplication1_Controllers_Client {
 	export class WeatherForecast {
-		constructor(private baseUri: string = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/') {
+		constructor(private baseUri: string = window.location.origin + '/') {
 		}
 
 		/**
