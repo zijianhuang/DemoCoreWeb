@@ -11,12 +11,12 @@ using Microsoft.Maui;
 
 namespace Fonlow.Heroes.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+	
 	public partial class HeroSearch : ContentView
 	{
 		public HeroSearch ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
             BindingContext = new HeroesVM();
 		}
 

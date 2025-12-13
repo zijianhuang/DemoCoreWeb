@@ -70,13 +70,7 @@
     <None Update="Dashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="HeroDetailPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
     <None Update="HeroesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="HeroSearch.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="MainPage.xaml">

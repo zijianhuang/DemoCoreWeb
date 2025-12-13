@@ -10,7 +10,7 @@ using Microsoft.Maui;
 
 namespace Fonlow.Heroes.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+	
 	public partial class Dashboard : ContentView
 	{
 		public Dashboard ()

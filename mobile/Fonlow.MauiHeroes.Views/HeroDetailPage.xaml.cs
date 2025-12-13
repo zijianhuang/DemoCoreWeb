@@ -3,7 +3,7 @@ using Fonlow.Heroes.VM;
 
 namespace Fonlow.Heroes.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    
     public partial class HeroDetailPage : ContentPage
     {
         public HeroDetailPage(long heroId)
