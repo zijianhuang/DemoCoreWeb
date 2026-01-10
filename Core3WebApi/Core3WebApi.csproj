@@ -18,7 +18,7 @@
 		<PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="4.3.1" />
 		<PackageReference Include="Fonlow.WebApiClientGenCore.NG2" Version="4.4.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
