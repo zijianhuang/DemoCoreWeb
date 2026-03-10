@@ -1,5 +1,5 @@
 ﻿# Backend endpoint is defined in siteconfigProd.js
 Set-Location $PSScriptRoot
-$prod="webapiclientgen"
-ng build --configuration=production --output-path="../ngdist/$prod/" --base-href=/$prod/
+$prod="DemoCoreWeb"
+ng build --configuration=production --output-path="../ngdist/$prod/" --base-href=/$prod/angular/
 Write-Output "done $(Get-Date)"
