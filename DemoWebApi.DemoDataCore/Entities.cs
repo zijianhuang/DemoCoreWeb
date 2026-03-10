@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using DemoWebApi.DemoData.Base;
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace DemoWebApi.DemoData.Base
 {
@@ -47,7 +48,7 @@ namespace DemoWebApi.DemoData.Base
 		}
 
 		[DataMember]
-		[RegularExpression(@"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")]
+		[RegularExpression(@"^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$")]
 		public Uri Web { get; set; }
 
 		[DataMember, EmailAddress, MaxLength(255)]
@@ -168,7 +169,7 @@ namespace DemoWebApi.DemoData
 		public string Street1 { get; set; }
 
 		[DataMember]
-		[StringLength(100, MinimumLength = 2)]
+		[Length(2, 100)]
 		public string Street2 { get; set; }
 
 		[DataMember]
@@ -200,7 +201,7 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
-	public class IntegralEntity : Entity
+	public class IntegralEntity
 	{
 		[DataMember]
 		public sbyte SByte { get; set; }
@@ -223,6 +224,25 @@ namespace DemoWebApi.DemoData
 		[Range(-1000, 1000000)]
 		[DataMember]
 		public int ItemCount { get; set; }
+	}
+
+	[DataContract(Namespace = Constants.DataNamespace)]
+	public class MixedDataEntity : IntegralEntity
+	{
+		[DataMember]
+		public DateOnly DOB { get; set; }
+
+		[DataMember(IsRequired = true)]//MVC and Web API does not care
+		[System.ComponentModel.DataAnnotations.Required]//MVC and Web API care about only this
+		[MinLength(2), MaxLength(255)]
+		public string Name { get; set; }
+
+		[DataMember]
+		[RegularExpression(@"^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$")]
+		public Uri Web { get; set; }
+
+		[DataMember, EmailAddress, MaxLength(255)]
+		public string EmailAddress { get; set; }
 	}
 
 
@@ -253,17 +273,31 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
-	public class Company : Entity
+	public class BizEntity : Entity
+	{
+
+		[DataMember]
+		public DateOnly RegisterDate { get; set; }
+
+		[DataMember]
+		[DataType(DataType.Date)]
+		public DateTimeOffset FoundDate { get; set; }
+	};
+
+	[DataContract(Namespace = Constants.DataNamespace)]
+	public class Company : BizEntity
 	{
 		/// <summary>
 		/// BusinessNumber to be serialized as BusinessNum
 		/// </summary>
-		[DataMember(Name = "BusinessNum")]
+		[DataMember(Name = "business_no")]
+		[JsonPropertyName("business_no")]
 		public string BusinessNumber { get; set; }
 
 		[DataMember]
 		public string BusinessNumberType { get; set; }
 
+		[Obsolete]
 		[DataMember]
 		public string[][] TextMatrix
 		{ get; set; }
@@ -277,12 +311,6 @@ namespace DemoWebApi.DemoData
 		[DataMember]
 		public IEnumerable<string> Lines;
 
-		[DataMember]
-		public DateOnly RegisterDate { get; set; }
-
-		[DataMember]
-		[DataType(DataType.Date)]
-		public DateTimeOffset FoundDate { get; set; }
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
@@ -312,6 +340,13 @@ namespace DemoWebApi.DemoData
 		public string Message { get; set; }
 	}
 
+	[Obsolete("Type deprecated for testing", true)]
+	public class TypeDiscontinued
+	{
+
+	}
+
+	[Obsolete("Type with properties deprecated for testing")]
 	[DataContract(Namespace = Constants.DataNamespace)]
 	public class MimsPackage
 	{
@@ -320,6 +355,18 @@ namespace DemoWebApi.DemoData
 
 		[DataMember]
 		public string Tag { get; set; }
+
+		[Obsolete("Just for testing", true)]
+		[DataMember]
+		public string TagForTest { get; set; }
+
+		[Obsolete("Just for testing", DiagnosticId = "someId", UrlFormat = "WhateverFormat")]
+		[DataMember]
+		public string TagForTest2 { get; set; }
+
+		[Obsolete("Just for testing", true, DiagnosticId = "someId", UrlFormat = "WhateverFormat")]
+		[DataMember]
+		public string TagForTest3 { get; set; }
 
 		[DataMember]
 		[Range(10, 100, ErrorMessage = "KK has to be between 10 and 100.")]
@@ -357,7 +404,12 @@ namespace DemoWebApi.DemoData
 	}
 
 	[DataContract(Namespace = Constants.DataNamespace)]
-	[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+	public class MyGenericInt : MyGeneric<int, Entity, DateTime>
+	{
+	}
+
+	[DataContract(Namespace = Constants.DataNamespace)]
+	[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
 	public enum MedicalContraindiationResponseTypeReason
 	{
 

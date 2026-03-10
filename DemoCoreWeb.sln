@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApi.ClientApi", "CoreWebApi.ClientApi\CoreWebApi.ClientApi.csproj", "{2C693CA1-CBE6-4674-9555-2B17B5939B5E}"
 EndProject
@@ -53,6 +53,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroesMvc", "HeroesMvc\HeroesMvc.csproj", "{4E5A8E4D-5D60-4B3F-BB01-A372F68755B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroesRazor", "HeroesRazor\HeroesRazor.csproj", "{61891D9C-80CC-436F-BD5D-C6641A453147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWebApiDemoDataEx", "DemoWebApiDemoDataEx\DemoWebApiDemoDataEx.csproj", "{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -426,6 +428,22 @@ Global
 		{61891D9C-80CC-436F-BD5D-C6641A453147}.Release|x64.Build.0 = Release|Any CPU
 		{61891D9C-80CC-436F-BD5D-C6641A453147}.Release|x86.ActiveCfg = Release|Any CPU
 		{61891D9C-80CC-436F-BD5D-C6641A453147}.Release|x86.Build.0 = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Debug|x86.Build.0 = Debug|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|ARM64.Build.0 = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|x64.Build.0 = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC6CC5B2-280B-DDE3-E711-20301A0A0C1C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
