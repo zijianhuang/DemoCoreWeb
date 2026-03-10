@@ -13,16 +13,20 @@
 	<ItemGroup>
 		<PackageReference Include="Fonlow.DateOnlyExtensionsTextJson" Version="1.2.0" />
 		<PackageReference Include="Fonlow.IntegralExtensionsTextJson" Version="1.2.0" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Aurelia" Version="4.6.0" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="4.6.0" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="4.6.0" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.NG2" Version="4.7.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.2" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Aurelia" Version="4.7.1" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="4.7.1" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="4.7.1" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.NG2FormGroup" Version="2.8.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\DemoCoreWebControllers\DemoCoreWebControllers.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
 	</ItemGroup>
 
 </Project>

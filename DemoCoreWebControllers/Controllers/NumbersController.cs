@@ -1,9 +1,7 @@
 ﻿using DemoWebApi.DemoData;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
-using System.Threading.Tasks;
 namespace DemoWebApi.Controllers
 {
 	/// <summary>
@@ -31,10 +29,6 @@ namespace DemoWebApi.Controllers
 		[Route("IntegralEntityMustBeValid")]
 		public IntegralEntity PostIntegralEntityMustBeValid([FromBody] IntegralEntity integralEntity)
 		{
-			if (integralEntity == null)
-			{
-				throw new ArgumentNullException(nameof(integralEntity), "The client posted null or invalid object.");
-			}
 			return integralEntity;
 		}
 
@@ -166,6 +160,12 @@ namespace DemoWebApi.Controllers
 		public ulong Post([FromBody] ulong d)
 		{
 			return d;
+		}
+
+		[HttpGet("NullableInt")]
+		public int? GetNullableNumber(int? num)
+		{
+			return num;
 		}
 
 	}

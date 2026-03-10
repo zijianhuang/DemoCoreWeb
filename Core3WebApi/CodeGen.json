@@ -6,23 +6,36 @@
 			"DemoWebApi.Controllers.FileUpload"
 		],
 
-		"DataModelAssemblyNames": [
-			"DemoWebApi.DemoDataCore",
-			"DemoCoreWebControllers",
-			"Core3WebApi"
-		],
-		"CherryPickingMethods": 32
+		"DataModels": [
+			{
+				"AssemblyName": "DemoWebApi.DemoDataCore",
+				"CherryPickingMethods": 3
+			},
+
+			{
+				"AssemblyName": "DemoWebApiDemoDataEx",
+				"CherryPickingMethods": 16
+			},
+
+			{
+				"AssemblyName": "DemoCoreWebControllers",
+				"CherryPickingMethods": 3
+			}
+
+		]
 	},
 
 	"ClientApiOutputs": {
 		"ClientLibraryProjectFolderName": "../CoreWebApi.ClientApi",
 		"GenerateBothAsyncAndSync": true,
-		"StringAsString": true,
 		"CamelCase": true,
+		"CSClientNamespaceSuffix": ".Client",
 		"DataAnnotationsEnabled": true,
 		"DataAnnotationsToComments": true,
 		"HandleHttpRequestHeaders": true,
-		"DecorateDataModelWithSerializable": true,
+		"DecorateDataModelWithDataContract": false,
+		"DataContractNamespace": "http://fonlowdemo.com/2020/09",
+		"DecorateDataModelWithSerializable": false,
 		"IEnumerableToArray": false,
 		"MaybeNullAttributeOnMethod": true,
 		"UseEnsureSuccessStatusCodeEx": true,
@@ -33,15 +46,17 @@
 
 		"Plugins": [
 			{
-				"AssemblyName": "Fonlow.WebApiClientGenCore.NG2",
+				"AssemblyName": "Fonlow.WebApiClientGenCore.NG2FormGroup",
 				"TargetDir": "../AngularHeroes/src/ClientApi",
-				"TSFile": "WebApiCoreNG2ClientAuto.ts",
+				"TSFile": "WebApiCoreNG2FormGroupClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8",
 				"ClientNamespaceSuffix": ".Client",
 				"ContainerNameSuffix": "",
 				"DataAnnotationsToComments": true,
-				"HelpStrictMode": true
+				"HelpStrictMode": true,
+				"NgDateOnlyFormControlEnabled": true,
+				"NgUseRegexAttribute": 3
 			},
 
 			{

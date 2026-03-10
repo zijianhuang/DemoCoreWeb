@@ -60,7 +60,7 @@ namespace Fonlow.WebApiClientGen
 				Console.Error.WriteLine(e.Message);
 				return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
 			}
-
+			
 			try
 			{
 				CodeGen.GenerateClientAPIs(this.webRootPath, settings, webApiDescriptions);

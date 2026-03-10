@@ -1,9 +1,13 @@
-﻿using System;
+﻿using DemoWebApi.DemoData;
+using DemoWebApi.DemoData.Base;
+using DemoWebApi.DemoDataEx;
+using DemoWebApi.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 namespace DemoCoreWeb.Controllers
 {
 	[ApiController]
@@ -107,6 +111,17 @@ namespace DemoCoreWeb.Controllers
 			obj.Id = obj.Id + "1";
 			obj.Name = obj.Name + "1";
 			return obj;
+		}
+
+		/// <summary>
+		/// Very complex generic
+		/// </summary>
+		/// <param name="body"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Route("VeryComplexGeneric")]
+		public MyGeneric<MyGeneric<double, MyGenericInt, Entity>, ZListCheck, MimsResult<TextJsonPerson>> PostVeryComplexGeneric([FromBody] MyGeneric<Person, MyGenericInt, MyGeneric<decimal, ZListCheck, Company>> body){
+			return new MyGeneric<MyGeneric<double, MyGenericInt, Entity>, ZListCheck, MimsResult<TextJsonPerson>>();
 		}
 
 	}

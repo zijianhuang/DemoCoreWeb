@@ -19,7 +19,26 @@ namespace DemoWebApi.Controllers.Client
 	using Fonlow.Net.Http;
 	
 	
-	[System.Serializable()]
+	/// <summary>
+	/// This class is used to carry the result of various file uploads.
+	/// </summary>
+	public class FileResult : object
+	{
+		
+		/// <summary>
+		/// Gets or sets the local path of the file saved on the server.
+		/// </summary>
+		public System.Collections.Generic.IEnumerable<string> FileNames { get; set; }
+		
+		/// <summary>
+		/// Gets or sets the submitter as indicated in the HTML form used to upload the data.
+		/// </summary>
+		public string Submitter { get; set; }
+	}
+	
+	/// <summary>
+	/// Complex hero type
+	/// </summary>
 	public class Hero : object
 	{
 		
@@ -33,31 +52,29 @@ namespace DemoWebApi.Controllers.Client
 		
 		public long Id { get; set; }
 		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// String length: inclusive between 2 and 120
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.StringLength(120, MinimumLength=2)]
 		public string Name { get; set; }
 		
 		public System.Collections.Generic.IList<DemoWebApi.DemoData.Client.PhoneNumber> PhoneNumbers { get; set; }
 		
+		/// <summary>
+		/// Min length: 6
+		/// Regex pattern: ^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.MinLength(6)]
-		[System.ComponentModel.DataAnnotations.RegularExpression(@"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")]
+		[System.ComponentModel.DataAnnotations.RegularExpression(@"^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$")]
 		public string WebAddress { get; set; }
 	}
 	
-	[System.Serializable()]
 	public class SuperHero : DemoWebApi.Controllers.Client.Hero
 	{
 		
 		public bool Super { get; set; }
-	}
-	
-	[System.Serializable()]
-	public class FileResult : object
-	{
-		
-		public System.Collections.Generic.IEnumerable<string> FileNames { get; set; }
-		
-		public string Submitter { get; set; }
 	}
 	
 	public partial class DateTypes
@@ -1984,6 +2001,54 @@ namespace DemoWebApi.Controllers.Client
 		}
 		
 		/// <summary>
+		/// POST api/Entities/MixedDataEntity
+		/// </summary>
+		public async Task<DemoWebApi.DemoData.Client.MixedDataEntity> PostMixedDataEntityAsync(DemoWebApi.DemoData.Client.MixedDataEntity entity, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Entities/MixedDataEntity";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(entity, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				return JsonSerializer.Deserialize<DemoWebApi.DemoData.Client.MixedDataEntity>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/Entities/MixedDataEntity
+		/// </summary>
+		public DemoWebApi.DemoData.Client.MixedDataEntity PostMixedDataEntity(DemoWebApi.DemoData.Client.MixedDataEntity entity, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Entities/MixedDataEntity";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(entity, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				return JsonSerializer.Deserialize<DemoWebApi.DemoData.Client.MixedDataEntity>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
 		/// PUT api/Entities/updatePerson
 		/// </summary>
 		public async Task<string> UpdatePersonAsync(DemoWebApi.DemoData.Client.Person person, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
@@ -2550,6 +2615,50 @@ namespace DemoWebApi.Controllers.Client
 				responseMessage.EnsureSuccessStatusCodeEx();
 				var stream = responseMessage.Content.ReadAsStream();
 				return JsonSerializer.Deserialize<byte>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/Numbers/NullableInt?num={num}
+		/// </summary>
+		public async Task<System.Nullable<int>> GetNullableNumberAsync(System.Nullable<int> num, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Numbers/NullableInt?"+(num.HasValue?"num="+num.Value.ToString():String.Empty);
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				return JsonSerializer.Deserialize<System.Nullable<int>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/Numbers/NullableInt?num={num}
+		/// </summary>
+		public System.Nullable<int> GetNullableNumber(System.Nullable<int> num, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/Numbers/NullableInt?"+(num.HasValue?"num="+num.Value.ToString():String.Empty);
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				return JsonSerializer.Deserialize<System.Nullable<int>>(stream, jsonSerializerSettings);
 			}
 			finally
 			{
@@ -3400,6 +3509,331 @@ namespace DemoWebApi.Controllers.Client
 		}
 	}
 	
+	[System.Obsolete("This controller is obsolete, use ValuesController instead.")]
+	public partial class ObsoleteValues
+	{
+		
+		private System.Net.Http.HttpClient client;
+		
+		private JsonSerializerOptions jsonSerializerSettings;
+		
+		public ObsoleteValues(System.Net.Http.HttpClient client, JsonSerializerOptions jsonSerializerSettings=null)
+		{
+			if (client == null)
+				throw new ArgumentNullException(nameof(client), "Null HttpClient.");
+
+			if (client.BaseAddress == null)
+				throw new ArgumentNullException(nameof(client), "HttpClient has no BaseAddress");
+
+			this.client = client;
+			this.jsonSerializerSettings = jsonSerializerSettings;
+		}
+		
+		/// <summary>
+		/// DELETE api/ObsoleteValues/{id}
+		/// </summary>
+		public async Task DeleteAsync(int id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// DELETE api/ObsoleteValues/{id}
+		/// </summary>
+		public void Delete(int id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues
+		/// </summary>
+		public async Task<System.Collections.Generic.IEnumerable<string>> GetAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				return JsonSerializer.Deserialize<System.Collections.Generic.IEnumerable<string>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues
+		/// </summary>
+		public System.Collections.Generic.IEnumerable<string> Get(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = responseMessage.Content.ReadAsStream();
+				return JsonSerializer.Deserialize<System.Collections.Generic.IEnumerable<string>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/Name/{id}?name={name}
+		/// </summary>
+		public async Task<string> GetAsync(int id, string name, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/Name/"+id+"?name="+(name == null ? "" : Uri.EscapeDataString(name));
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/Name/{id}?name={name}
+		/// </summary>
+		public string Get(int id, string name, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/Name/"+id+"?name="+(name == null ? "" : Uri.EscapeDataString(name));
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues?name={name}
+		/// </summary>
+		[System.Obsolete("This method is obsolete, use ValuesController.Get instead.")]
+		public async Task<string> GetAsync(string name, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues?name="+(name == null ? "" : Uri.EscapeDataString(name));
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues?name={name}
+		/// </summary>
+		[System.Obsolete("This method is obsolete, use ValuesController.Get instead.")]
+		public string Get(string name, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues?name="+(name == null ? "" : Uri.EscapeDataString(name));
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/{id}
+		/// </summary>
+		public async Task<string> GetAsync(int id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/{id}
+		/// </summary>
+		public string Get(int id, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				using System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
+				return streamReader.ReadToEnd();;
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/Get2
+		/// </summary>
+		public async Task<System.Collections.Generic.IEnumerable<string>> Get2Async(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/Get2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				return JsonSerializer.Deserialize<System.Collections.Generic.IEnumerable<string>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// GET api/ObsoleteValues/Get2
+		/// </summary>
+		public System.Collections.Generic.IEnumerable<string> Get2(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/Get2";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				var stream = responseMessage.Content.ReadAsStream();
+				return JsonSerializer.Deserialize<System.Collections.Generic.IEnumerable<string>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// PUT api/ObsoleteValues/{id}
+		/// </summary>
+		public async Task PutAsync(int id, string value, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(value, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// PUT api/ObsoleteValues/{id}
+		/// </summary>
+		public void Put(int id, string value, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/ObsoleteValues/"+id;
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(value, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+	}
+	
 	public partial class StringData
 	{
 		
@@ -4164,6 +4598,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/DecimalZero
 		/// </summary>
+		[System.Obsolete("Just for test", DiagnosticId="abc", UrlFormat="efg")]
 		public async Task<decimal> GetDecimalZeroAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/DecimalZero";
@@ -4185,6 +4620,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/DecimalZero
 		/// </summary>
+		[System.Obsolete("Just for test", DiagnosticId="abc", UrlFormat="efg")]
 		public decimal GetDecimalZero(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/DecimalZero";
@@ -4376,6 +4812,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/DoubleZero
 		/// </summary>
+		[System.Obsolete("for testing")]
 		public async Task<double> GetDoubleZeroAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/DoubleZero";
@@ -4397,6 +4834,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/DoubleZero
 		/// </summary>
+		[System.Obsolete("for testing")]
 		public double GetDoubleZero(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/DoubleZero";
@@ -4506,6 +4944,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/FloatZero
 		/// </summary>
+		[System.Obsolete()]
 		public async Task<float> GetFloatZeroAsync(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/FloatZero";
@@ -4527,6 +4966,7 @@ namespace DemoWebApi.Controllers.Client
 		/// <summary>
 		/// GET api/SuperDemo/FloatZero
 		/// </summary>
+		[System.Obsolete()]
 		public float GetFloatZero(Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
 		{
 			var requestUri = "api/SuperDemo/FloatZero";
@@ -8264,12 +8704,22 @@ namespace DemoWebApi.DemoData.Another.Client
 {
 	
 	
-	[System.Serializable()]
+	/// <summary>
+	/// 2D position
+	/// with X and Y
+	/// for Demo
+	/// </summary>
 	public struct MyPoint
 	{
 		
+		/// <summary>
+		/// X
+		/// </summary>
 		public double X;
 		
+		/// <summary>
+		/// Y
+		/// </summary>
 		public double Y;
 	}
 }
@@ -8277,17 +8727,31 @@ namespace DemoWebApi.DemoData.Base.Client
 {
 	
 	
-	[System.Serializable()]
+	/// <summary>
+	/// Base class of company and person
+	/// </summary>
 	public class Entity : object
 	{
 		
+		/// <summary>
+		/// Multiple addresses
+		/// </summary>
 		public System.Collections.Generic.IList<DemoWebApi.DemoData.Client.Address> Addresses { get; set; }
 		
+		/// <summary>
+		/// Max length: 255
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.MaxLength(255)]
 		public string EmailAddress { get; set; }
 		
 		public System.Nullable<System.Guid> Id { get; set; }
 		
+		/// <summary>
+		/// Name of the entity.
+		/// Required. Null or empty is invalid.
+		/// Min length: 2
+		/// Max length: 255
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.Required()]
 		[System.ComponentModel.DataAnnotations.MinLength(2)]
 		[System.ComponentModel.DataAnnotations.MaxLength(255)]
@@ -8295,7 +8759,10 @@ namespace DemoWebApi.DemoData.Base.Client
 		
 		public System.Collections.ObjectModel.ObservableCollection<DemoWebApi.DemoData.Client.PhoneNumber> PhoneNumbers { get; set; }
 		
-		[System.ComponentModel.DataAnnotations.RegularExpression(@"https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")]
+		/// <summary>
+		/// Regex pattern: ^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.RegularExpression(@"^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$")]
 		public System.Uri Web { get; set; }
 	}
 }
@@ -8303,42 +8770,57 @@ namespace DemoWebApi.DemoData.Client
 {
 	
 	
-	[System.Serializable()]
 	public class Address : object
 	{
 		
+		/// <summary>
+		/// String length: inclusive between 2 and 50
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength=2)]
 		public string City { get; set; }
 		
+		/// <summary>
+		/// String length: inclusive between 2 and 30
+		/// </summary>
 		[System.ComponentModel.DefaultValue("Australia")]
 		[System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength=2)]
 		public string Country { get; set; } = "Australia";
 		
-		public DemoWebApi.DemoData.Base.Client.Entity Entity { get; set; }
-		
-		public System.Guid EntityId { get; set; }
-		
 		public System.Guid Id { get; set; }
 		
+		/// <summary>
+		/// String length: inclusive between 2 and 10
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.StringLength(10, MinimumLength=2)]
 		public string PostalCode { get; set; }
 		
+		/// <summary>
+		/// String length: inclusive between 2 and 30
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength=2)]
 		public string State { get; set; }
 		
+		/// <summary>
+		/// String length: inclusive between 2 and 100
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=2)]
 		public string Street1 { get; set; }
 		
-		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=2)]
+		/// <summary>
+		/// Length min: 2, max: 100
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Length(2, 100)]
 		public string Street2 { get; set; }
 		
 		[System.ComponentModel.DefaultValue(AddressType.Residential)]
 		public DemoWebApi.DemoData.Client.AddressType Type { get; set; } = AddressType.Residential;
 		
+		/// <summary>
+		/// It is a field
+		/// </summary>
 		public DemoWebApi.DemoData.Another.Client.MyPoint Location { get; set; }
 	}
 	
-	[System.Serializable()]
 	public enum AddressType
 	{
 		
@@ -8347,115 +8829,8 @@ namespace DemoWebApi.DemoData.Client
 		Residential,
 	}
 	
-	[System.Serializable()]
-	public class PhoneNumber : object
-	{
-		
-		public System.Guid EntityId { get; set; }
-		
-		[System.ComponentModel.DataAnnotations.MaxLength(120)]
-		public string FullNumber { get; set; }
-		
-		public System.Guid Id { get; set; }
-		
-		public DemoWebApi.DemoData.Client.PhoneType PhoneType { get; set; }
-	}
-	
-	[System.Serializable()]
-	public enum PhoneType
-	{
-		
-		Tel,
-		
-		Mobile,
-		
-		Skype,
-		
-		Fax,
-	}
-	
-	[System.Serializable()]
-	public class Person : DemoWebApi.DemoData.Base.Client.Entity
-	{
-		
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-		public System.Nullable<System.DateTimeOffset> Baptised { get; set; }
-		
-		public System.Nullable<System.DateOnly> DOB { get; set; }
-		
-		public string GivenName { get; set; }
-		
-		public string Surname { get; set; }
-	}
-	
-	[System.Serializable()]
-	public class Company : DemoWebApi.DemoData.Base.Client.Entity
-	{
-		
-		public string BusinessNumber { get; set; }
-		
-		public string BusinessNumberType { get; set; }
-		
-		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-		public System.DateTimeOffset FoundDate { get; set; }
-		
-		public System.DateOnly RegisterDate { get; set; }
-		
-		public string[][] TextMatrix { get; set; }
-		
-		public int[,] Int2D { get; set; }
-		
-		public int[][] Int2DJagged { get; set; }
-		
-		public System.Collections.Generic.IEnumerable<string> Lines { get; set; }
-	}
-	
-	[System.Serializable()]
-	public enum Days
-	{
-		
-		Sat = 1,
-		
-		Sun = 2,
-		
-		Mon = 3,
-		
-		Tue = 4,
-		
-		Wed = 5,
-		
-		Thu = 6,
-		
-		Fri = 7,
-	}
-	
-	[System.Serializable()]
-	public class MimsResult<T> : object
-	{
-		
-		public System.DateTime GeneratedAt { get; set; }
-		
-		public string Message { get; set; }
-		
-		public T Result { get; set; }
-		
-		public bool Success { get; set; }
-	}
-	
-	[System.Serializable()]
-	public class MyGeneric<T, K, U> : object
-	{
-		
-		public K MyK { get; set; }
-		
-		public T MyT { get; set; }
-		
-		public U MyU { get; set; }
-		
-		public string Status { get; set; }
-	}
-	
-	[System.Serializable()]
+	/// <summary>
+	/// </summary>
 	public class BigNumbers : object
 	{
 		
@@ -8470,7 +8845,63 @@ namespace DemoWebApi.DemoData.Client
 		public ulong Unsigned64 { get; set; }
 	}
 	
-	[System.Serializable()]
+	public class BizEntity : DemoWebApi.DemoData.Base.Client.Entity
+	{
+		
+		/// <summary>
+		/// Data type: Date
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+		public System.DateTimeOffset FoundDate { get; set; }
+		
+		public System.DateOnly RegisterDate { get; set; }
+	}
+	
+	public class Company : DemoWebApi.DemoData.Client.BizEntity
+	{
+		
+		/// <summary>
+		/// BusinessNumber to be serialized as BusinessNum
+		/// </summary>
+		[System.Text.Json.Serialization.JsonPropertyName("business_no")]
+		public string BusinessNumber { get; set; }
+		
+		public string BusinessNumberType { get; set; }
+		
+		[System.Obsolete()]
+		public string[][] TextMatrix { get; set; }
+		
+		public int[,] Int2D { get; set; }
+		
+		public int[][] Int2DJagged { get; set; }
+		
+		public System.Collections.Generic.IEnumerable<string> Lines { get; set; }
+	}
+	
+	public enum Days
+	{
+		
+		Sat = 1,
+		
+		Sun = 2,
+		
+		Mon = 3,
+		
+		Tue = 4,
+		
+		Wed = 5,
+		
+		/// <summary>
+		/// Thursday
+		/// </summary>
+		Thu = 6,
+		
+		Fri = 7,
+	}
+	
+	/// <summary>
+	/// To test different serializations against Guid
+	/// </summary>
 	public class IdMap : object
 	{
 		
@@ -8480,20 +8911,25 @@ namespace DemoWebApi.DemoData.Client
 		
 		public System.Nullable<System.Guid> NullableId { get; set; }
 		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.Required()]
 		public string RequiredName { get; set; }
 		
 		public string Text { get; set; }
 	}
 	
-	[System.Serializable()]
-	public class IntegralEntity : DemoWebApi.DemoData.Base.Client.Entity
+	public class IntegralEntity : object
 	{
 		
 		public byte Byte { get; set; }
 		
 		public int Int { get; set; }
 		
+		/// <summary>
+		/// Range: inclusive between -1000 and 1000000
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.Range(typeof(System.Int32), "-1000", "1000000")]
 		public int ItemCount { get; set; }
 		
@@ -8506,14 +8942,44 @@ namespace DemoWebApi.DemoData.Client
 		public ushort UShort { get; set; }
 	}
 	
-	[System.Serializable()]
+	[System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+	public enum MedicalContraindiationResponseTypeReason
+	{
+		
+		M,
+		
+		S,
+		
+		P,
+		
+		I,
+		
+		A,
+	}
+	
+	public enum MedicalContraindiationResponseTypeTypeCode
+	{
+		
+		P,
+		
+		T,
+	}
+	
+	[System.Obsolete("Type with properties deprecated for testing")]
 	public class MimsPackage : object
 	{
 		
+		/// <summary>
+		/// Range: inclusive between 10 and 100
+		/// </summary>
 		[System.ComponentModel.DefaultValue(20)]
 		[System.ComponentModel.DataAnnotations.Range(typeof(System.Int32), "10", "100", ErrorMessage="KK has to be between 10 and 100.")]
 		public int KK { get; set; } = 20;
 		
+		/// <summary>
+		/// Having an initialized value in the property is not like defining a DefaultValueAttribute. Such intialization happens at run time,
+		/// and there's no reliable way for a codegen to know if the value is declared by the programmer, or is actually the natural default value like 0.
+		/// </summary>
 		public int KK2 { get; set; }
 		
 		public System.Nullable<DemoWebApi.DemoData.Client.MyEnumType> OptionalEnum { get; set; }
@@ -8523,9 +8989,51 @@ namespace DemoWebApi.DemoData.Client
 		public DemoWebApi.DemoData.Client.MimsResult<decimal> Result { get; set; }
 		
 		public string Tag { get; set; }
+		
+		[System.Obsolete("Just for testing", DiagnosticId="someId", UrlFormat="WhateverFormat")]
+		public string TagForTest2 { get; set; }
 	}
 	
-	[System.Serializable()]
+	public class MimsResult<T> : object
+	{
+		
+		public System.DateTime GeneratedAt { get; set; }
+		
+		public string Message { get; set; }
+		
+		public T Result { get; set; }
+		
+		public bool Success { get; set; }
+	}
+	
+	public class MixedDataEntity : DemoWebApi.DemoData.Client.IntegralEntity
+	{
+		
+		public System.DateOnly DOB { get; set; }
+		
+		/// <summary>
+		/// Max length: 255
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.MaxLength(255)]
+		public string EmailAddress { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// Min length: 2
+		/// Max length: 255
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.MinLength(2)]
+		[System.ComponentModel.DataAnnotations.MaxLength(255)]
+		public string Name { get; set; }
+		
+		/// <summary>
+		/// Regex pattern: ^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.RegularExpression(@"^(https?:\/\/)?[da-z.-]+.[a-z.]{2,6}([/\w .-]*)*\/?$")]
+		public System.Uri Web { get; set; }
+	}
+	
 	public enum MyEnumType
 	{
 		
@@ -8533,12 +9041,305 @@ namespace DemoWebApi.DemoData.Client
 		
 		Two = 2,
 	}
+	
+	public class MyGeneric<T, K, U> : object
+	{
+		
+		public K MyK { get; set; }
+		
+		public T MyT { get; set; }
+		
+		public U MyU { get; set; }
+		
+		public string Status { get; set; }
+	}
+	
+	public class MyGenericInt : DemoWebApi.DemoData.Client.MyGeneric<int, DemoWebApi.DemoData.Base.Client.Entity, System.DateTime>
+	{
+	}
+	
+	public class MyPeopleDic : object
+	{
+		
+		public System.Collections.Generic.IDictionary<string, string> AnotherDic { get; set; }
+		
+		public System.Collections.Generic.IDictionary<string, DemoWebApi.DemoData.Client.Person> Dic { get; set; }
+		
+		public System.Collections.Generic.IDictionary<int, string> IntDic { get; set; }
+	}
+	
+	public class Person : DemoWebApi.DemoData.Base.Client.Entity
+	{
+		
+		/// <summary>
+		/// Data type: Date
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+		public System.Nullable<System.DateTimeOffset> Baptised { get; set; }
+		
+		/// <summary>
+		/// Date of Birth.
+		/// This is optional.
+		/// </summary>
+		public System.Nullable<System.DateOnly> DOB { get; set; }
+		
+		public string GivenName { get; set; }
+		
+		public string Surname { get; set; }
+	}
+	
+	public class PhoneNumber : object
+	{
+		
+		/// <summary>
+		/// Max length: 120
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.MaxLength(120)]
+		public string FullNumber { get; set; }
+		
+		public DemoWebApi.DemoData.Client.PhoneType PhoneType { get; set; }
+	}
+	
+	/// <summary>
+	/// Phone type
+	/// Tel, Mobile, Skyp and Fax
+	/// 
+	/// </summary>
+	public enum PhoneType
+	{
+		
+		/// <summary>
+		/// Land line
+		/// </summary>
+		Tel,
+		
+		/// <summary>
+		/// Mobile phone
+		/// </summary>
+		Mobile,
+		
+		Skype,
+		
+		Fax,
+	}
+}
+namespace DemoWebApi.DemoDataEx.Client
+{
+	
+	
+	public class AAMyGenericNested : DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Client.MyGeneric<decimal, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.Company>>
+	{
+		
+		public DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.MyGeneric<double, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Base.Client.Entity>, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.MimsResult<DemoWebApi.DemoDataEx.Client.TextJsonPerson>> Special { get; set; }
+	}
+	
+	public class DotNetJsonType : object
+	{
+		
+		public string Description { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// Description: mostly about UI / content concerning users
+		/// JSON Required. Null or empty may be fine.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.Description("mostly about UI / content concerning users")]
+		[System.Text.Json.Serialization.JsonRequired()]
+		[System.Text.Json.Serialization.JsonPropertyName("double_required")]
+		public string DoubleRequired { get; set; }
+		
+		/// <summary>
+		/// Required means the property is required and cannot be null or empty string.
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string Location { get; set; }
+		
+		/// <summary>
+		/// JsonRequired means the property is required in JSON, but it can be null or empty string.
+		/// JSON Required. Null or empty may be fine.
+		/// </summary>
+		[System.Text.Json.Serialization.JsonRequired()]
+		public string Name { get; set; }
+	}
+	
+	public class TextJsonPerson : object
+	{
+		
+		public string GivenName { get; set; }
+		
+		public string Surname { get; set; }
+	}
+	
+	public class Trust : DemoWebApi.DemoData.Client.BizEntity
+	{
+		
+		public string Trustee { get; set; }
+	}
+	
+	public class ZListCheck : object
+	{
+		
+		public System.Collections.Generic.IReadOnlyCollection<DemoWebApi.DemoData.Client.BizEntity> BizEntities { get; set; }
+		
+		public System.Collections.Generic.HashSet<byte> BytesHashSet { get; set; }
+		
+		public System.Linq.IQueryable<DemoWebApi.DemoData.Client.Company> Companies { get; set; }
+		
+		public decimal[] Decimals { get; set; }
+		
+		public System.Collections.ObjectModel.ObservableCollection<DemoWebApi.DemoData.Base.Client.Entity> Entities { get; set; }
+		
+		public System.Collections.Generic.IEnumerable<int> Numbers { get; set; }
+		
+		public System.Collections.Generic.IList<DemoWebApi.DemoData.Client.Person> People { get; set; }
+		
+		public System.Collections.Generic.IList<DemoWebApi.DemoDataEx.Client.TextJsonPerson> People2 { get; set; }
+		
+		public System.Collections.ObjectModel.Collection<string> Strings { get; set; }
+		
+		public System.Collections.Generic.IReadOnlyList<DemoWebApi.DemoDataEx.Client.Trust> Trusts { get; set; }
+	}
+}
+namespace DemoWebApi.Models.Client
+{
+	
+	
+	public class AddExternalLoginBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string ExternalAccessToken { get; set; }
+	}
+	
+	public class ChangePasswordBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string NewPassword { get; set; }
+		
+		/// <summary>
+		/// JSON Required. Null or empty may be fine.
+		/// Data type: Password
+		/// </summary>
+		[System.Text.Json.Serialization.JsonRequired()]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		[System.Text.Json.Serialization.JsonPropertyName("oldPwd")]
+		public string OldPassword { get; set; }
+	}
+	
+	public class RegisterBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string Email { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string Password { get; set; }
+	}
+	
+	public class RegisterExternalBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string Email { get; set; }
+	}
+	
+	public class RemoveLoginBindingModel : object
+	{
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string LoginProvider { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		public string ProviderKey { get; set; }
+	}
+	
+	public class SetPasswordBindingModel : object
+	{
+		
+		/// <summary>
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string ConfirmPassword { get; set; }
+		
+		/// <summary>
+		/// Required. Null or empty is invalid.
+		/// String length: inclusive between 6 and 100
+		/// Data type: Password
+		/// </summary>
+		[System.ComponentModel.DataAnnotations.Required()]
+		[System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength=6, ErrorMessage="The {0} must be at least {2} characters long.")]
+		[System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+		public string NewPassword { get; set; }
+	}
+	
+	/// <summary>
+	/// Auth token
+	/// </summary>
+	public class TokenResponseModel : object
+	{
+		
+		public string AccessToken { get; set; }
+		
+		public string Expires { get; set; }
+		
+		public int ExpiresIn { get; set; }
+		
+		public string Issued { get; set; }
+		
+		public string TokenType { get; set; }
+		
+		public string Username { get; set; }
+	}
 }
 namespace WebApplication1.Client
 {
 	
 	
-	[System.Serializable()]
 	public class WeatherForecast : object
 	{
 		
@@ -8923,6 +9724,54 @@ namespace DemoCoreWeb.Controllers.Client
 				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
 				var stream = responseMessage.Content.ReadAsStream();
 				return JsonSerializer.Deserialize<System.Text.Json.Nodes.JsonObject>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/VeryComplexGeneric
+		/// </summary>
+		public async Task<DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.MyGeneric<double, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Base.Client.Entity>, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.MimsResult<DemoWebApi.DemoDataEx.Client.TextJsonPerson>>> PostVeryComplexGenericAsync(DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Client.MyGeneric<decimal, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.Company>> body, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/VeryComplexGeneric";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(body, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = await client.SendAsync(httpRequestMessage);
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = await responseMessage.Content.ReadAsStreamAsync();
+				return JsonSerializer.Deserialize<DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.MyGeneric<double, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Base.Client.Entity>, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.MimsResult<DemoWebApi.DemoDataEx.Client.TextJsonPerson>>>(stream, jsonSerializerSettings);
+			}
+			finally
+			{
+				responseMessage.Dispose();
+			}
+		}
+		
+		/// <summary>
+		/// POST api/SpecialTypes/VeryComplexGeneric
+		/// </summary>
+		public DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.MyGeneric<double, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Base.Client.Entity>, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.MimsResult<DemoWebApi.DemoDataEx.Client.TextJsonPerson>> PostVeryComplexGeneric(DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.Person, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Client.MyGeneric<decimal, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.Company>> body, Action<System.Net.Http.Headers.HttpRequestHeaders> handleHeaders = null)
+		{
+			var requestUri = "api/SpecialTypes/VeryComplexGeneric";
+			using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+			var content = System.Net.Http.Json.JsonContent.Create(body, mediaType: null, jsonSerializerSettings);
+			httpRequestMessage.Content = content;
+			handleHeaders?.Invoke(httpRequestMessage.Headers);
+			var responseMessage = client.SendAsync(httpRequestMessage).Result;
+			try
+			{
+				responseMessage.EnsureSuccessStatusCodeEx();
+				if (responseMessage.StatusCode == System.Net.HttpStatusCode.NoContent) { return null; }
+				var stream = responseMessage.Content.ReadAsStream();
+				return JsonSerializer.Deserialize<DemoWebApi.DemoData.Client.MyGeneric<DemoWebApi.DemoData.Client.MyGeneric<double, DemoWebApi.DemoData.Client.MyGenericInt, DemoWebApi.DemoData.Base.Client.Entity>, DemoWebApi.DemoDataEx.Client.ZListCheck, DemoWebApi.DemoData.Client.MimsResult<DemoWebApi.DemoDataEx.Client.TextJsonPerson>>>(stream, jsonSerializerSettings);
 			}
 			finally
 			{
