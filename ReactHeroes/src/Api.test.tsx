@@ -741,22 +741,22 @@ describe('SuperDemo API', () => {
   }
   );
 
-  it('getInt2D', (done) => {
-    service.getInt2D().then(
-      data => {
-        expect(data[0][0]).toBe(1);
-        expect(data[0][3]).toBe(4);
-        expect(data[1][0]).toBe(5);
-        expect(data[1][3]).toBe(8);
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-      }
-    );
+  // it('getInt2D', (done) => { only NewtonSoft.Json can handle
+  //   service.getInt2D().then(
+  //     data => {
+  //       expect(data[0][0]).toBe(1);
+  //       expect(data[0][3]).toBe(4);
+  //       expect(data[1][0]).toBe(5);
+  //       expect(data[1][3]).toBe(8);
+  //       done();
+  //     },
+  //     error => {
+  //       fail(errorResponseToString(error));
+  //     }
+  //   );
 
-  }
-  );
+  // }
+  // );
 
 
   it('getInt2DJagged', (done) => {
@@ -777,19 +777,19 @@ describe('SuperDemo API', () => {
   );
 
 
-  it('postInt2D', (done) => {
-    service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]).then(
-      data => {
-        expect(data).toBeTruthy();
-        done();
-      },
-      error => {
-        fail(errorResponseToString(error));
-      }
-    );
+  // it('postInt2D', (done) => {
+  //   service.postInt2D([[1, 2, 3, 4], [5, 6, 7, 8]]).then(
+  //     data => {
+  //       expect(data).toBeTruthy();
+  //       done();
+  //     },
+  //     error => {
+  //       fail(errorResponseToString(error));
+  //     }
+  //   );
 
-  }
-  );
+  // }
+  // );
 
   it('postIntArray', (done) => {
     service.postIntArray([1, 2, 3, 4, 5, 6, 7, 8]).then(
@@ -1122,7 +1122,7 @@ describe('Numbers API', () => {
   );
 
   it('postIntegralEntity', (done) => {
-    service.postIntegralEntity({ name: 'Some one', byte: 255, uShort: 65535 }).then(
+    service.postIntegralEntity({ byte: 255, uShort: 65535 }).then(
       r => {
         expect(r.byte).toBe(255);
         expect(r.uShort).toBe(65535);
@@ -1136,12 +1136,12 @@ describe('Numbers API', () => {
   );
 
   it('postIntegralEntityInvalid', (done) => {
-    service.postIntegralEntity({ name: 'Some one', byte: 260, uShort: 65540 }).then(
+    service.postIntegralEntity({ byte: 260, uShort: 65540 }).then(
       r => {
         fail('validation');
       },
       error => {
-        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        expect(errorResponseToString(error)).toContain('One or more validation errors occurred');
         done();
       }
     );
@@ -1152,12 +1152,12 @@ describe('Numbers API', () => {
    * Backend checks if the data is null, likely due to invalid properties. And throw error.
    */
   it('postIntegralEntityInvalidButBackendCheckNull', (done) => {
-    service.postIntegralEntityMustBeValid({ name: 'Some one', byte: 260, uShort: 65540 }).then(
+    service.postIntegralEntityMustBeValid({ byte: 260, uShort: 65540 }).then(
       r => {
         fail('backend should throw 500')
       },
       error => {
-        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        expect(errorResponseToString(error)).toContain('One or more validation errors occurred');
         done();
       }
     );
@@ -1184,7 +1184,7 @@ describe('Numbers API', () => {
         fail('validation');
       },
       error => {
-        expect(errorResponseToString(error)).toContain('Error converting value 65540 to type');
+        expect(errorResponseToString(error)).toContain('One or more validation errors occurred');
         done();
       }
     );
@@ -1278,7 +1278,7 @@ describe('Numbers API', () => {
         fail('validation')
       },
       async error => {
-        expect(await errorResponseToString(error)).toContain('Error converting value 130 to type ');
+        expect(await errorResponseToString(error)).toContain('One or more validation errors occurred');
         done();
       }
     );
