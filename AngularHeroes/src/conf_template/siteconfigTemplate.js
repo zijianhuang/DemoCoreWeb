@@ -8,6 +8,10 @@ const SITE_CONFIG = {
 	},
 	themeLoaderSettings: {
 		storageKey: 'app.theme',
-		themeLinkId: 'theme'
+		themeLinkId: 'theme',
+		appColorsDir: 'conf/',
+		appColorsLinkId: 'app-colors',
+		colorsCss: 'colors.css',
+		colorsDarkCss: 'colors-dark.css'
 	}
 }
