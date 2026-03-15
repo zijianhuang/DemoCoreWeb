@@ -1,5 +1,5 @@
 import { HttpClient } from 'aurelia-fetch-client';
-import {DemoWebApi_Controllers_Client} from 'clientapi/WebApiCoreAureliaClientAuto';
+import {DemoWebApi_Controllers_Client} from 'clientapi/WebApiAureliaClientAuto';
 
 import {inject} from 'aurelia-framework';
 

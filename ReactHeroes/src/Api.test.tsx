@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import * as namespaces from './clientapi/WebApiCoreFetchClientAuto';
+import * as namespaces from './clientapi/WebApiFetchClientAuto';
 //import * as namespaces from './clientapi/WebApiFetchClientAuto';
 const DemoWebApi_Controllers_Client = namespaces.DemoWebApi_Controllers_Client;
 

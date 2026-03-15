@@ -1,4 +1,4 @@
-import {DemoWebApi_Controllers_Client} from '../clientapi/WebApiCoreAureliaClientAuto';
+import {DemoWebApi_Controllers_Client} from '../clientapi/WebApiAureliaClientAuto';
 import { Router } from 'aurelia-router';
 import {inject} from 'aurelia-framework';
 

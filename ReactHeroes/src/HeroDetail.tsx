@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './HeroDetail.css';
-import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreFetchClientAuto';
+import { DemoWebApi_Controllers_Client } from './clientapi/WebApiFetchClientAuto';
 import { HeroesApi } from './HeroesApi';
 
 export default function HeroDetail() { //https://stackoverflow.com/questions/47561848/property-value-does-not-exist-on-type-readonly

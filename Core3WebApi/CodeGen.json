@@ -48,7 +48,7 @@
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.NG2FormGroup",
 				"TargetDir": "../AngularHeroes/src/ClientApi",
-				"TSFile": "WebApiCoreNG2FormGroupClientAuto.ts",
+				"TSFile": "WebApiNG2FormGroupClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8",
 				"ClientNamespaceSuffix": ".Client",
@@ -62,7 +62,7 @@
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Aurelia",
 				"TargetDir": "../AureliaHeroes/src/clientapi",
-				"TSFile": "WebApiCoreAureliaClientAuto.ts",
+				"TSFile": "WebApiAureliaClientAuto.ts",
 				"AsModule": true,
 				"DataAnnotationsToComments": true,
 				"ContentType": "application/json;charset=UTF-8"
@@ -71,7 +71,7 @@
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Fetch",
 				"TargetDir": "../ReactHeroes/src/clientapi",
-				"TSFile": "WebApiCoreFetchClientAuto.ts",
+				"TSFile": "WebApiFetchClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8",
 				"DataAnnotationsToComments": true,

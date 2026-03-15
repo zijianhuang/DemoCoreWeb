@@ -2,7 +2,7 @@ import {Aurelia} from 'aurelia-framework';
 import environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
 import { HttpClient } from 'aurelia-fetch-client';
-import {DemoWebApi_Controllers_Client} from 'clientapi/WebApiCoreAureliaClientAuto';
+import {DemoWebApi_Controllers_Client} from 'clientapi/WebApiAureliaClientAuto';
 
 export function configure(aurelia: Aurelia): void {
   aurelia.use
