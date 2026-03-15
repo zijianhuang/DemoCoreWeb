@@ -13,11 +13,11 @@
 	<ItemGroup>
 		<PackageReference Include="Fonlow.DateOnlyExtensionsTextJson" Version="1.2.0" />
 		<PackageReference Include="Fonlow.IntegralExtensionsTextJson" Version="1.2.0" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Aurelia" Version="4.7.1" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="4.7.1" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="4.7.1" />
-		<PackageReference Include="Fonlow.WebApiClientGenCore.NG2FormGroup" Version="2.8.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.3" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Aurelia" Version="4.7.2" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Axios" Version="4.7.2" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.Fetch" Version="4.7.2" />
+		<PackageReference Include="Fonlow.WebApiClientGenCore.NG2FormGroup" Version="2.8.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.5" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
 	</ItemGroup>
 
