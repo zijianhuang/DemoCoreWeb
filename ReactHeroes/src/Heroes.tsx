@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './Heroes.css';
-import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreAxiosClientAuto';
+import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreFetchClientAuto';
 
 import { Link, useNavigate } from 'react-router-dom';
 import {HeroesApi} from './HeroesApi';

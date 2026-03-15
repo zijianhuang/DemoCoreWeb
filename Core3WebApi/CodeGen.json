@@ -60,16 +60,6 @@
 			},
 
 			{
-				"AssemblyName": "Fonlow.WebApiClientGenCore.Axios",
-				"TargetDir": "../ReactHeroes/src/clientapi",
-				"TSFile": "WebApiCoreAxiosClientAuto.ts",
-				"AsModule": true,
-				"DataAnnotationsToComments": true,
-				"ContentType": "application/json;charset=UTF-8",
-				"HelpStrictMode": true
-			},
-
-			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Aurelia",
 				"TargetDir": "../AureliaHeroes/src/clientapi",
 				"TSFile": "WebApiCoreAureliaClientAuto.ts",
@@ -80,7 +70,7 @@
 
 			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Fetch",
-				"TargetDir": "../fetchapi/src/clientapi",
+				"TargetDir": "../ReactHeroes/src/clientapi",
 				"TSFile": "WebApiCoreFetchClientAuto.ts",
 				"AsModule": true,
 				"ContentType": "application/json;charset=UTF-8",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
-import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreAxiosClientAuto';
+import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreFetchClientAuto';
 import { HeroesApi } from './HeroesApi';
 
 export default class Dashboard extends Component<{}, { loading: boolean }> {

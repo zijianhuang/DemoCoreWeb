@@ -1,4 +1,4 @@
-import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreAxiosClientAuto';
+import { DemoWebApi_Controllers_Client } from './clientapi/WebApiCoreFetchClientAuto';
 
 export  let HeroesApi = heroesApi();
 function heroesApi() {
