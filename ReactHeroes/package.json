@@ -24,8 +24,8 @@
 		"@types/node": "^25.0.4",
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
-		"react-test-renderer": "^19.2.3",
-		"ts-jest": "^29.4.6",
+		"jsdom": "^28.1.0",
+		"vitest": "^4.1.0",
 		"typescript": "~5.1.2"
 	},
 	"scripts": {
