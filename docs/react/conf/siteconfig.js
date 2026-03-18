@@ -1,3 +1,3 @@
 const SITE_CONFIG = {
-	apiBaseUri: 'http://localhost:5000/',
+	apiBaseUri: 'https://heroes.fonlow.net/webapi/',
 }

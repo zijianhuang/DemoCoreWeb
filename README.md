@@ -18,8 +18,9 @@ And this repository contains the demo applications.
 
 ## Client Demo
 1. Tour of the Heroes with MAUI, migrated from Xamarin Heroes, in folder mobile.
+1. [Tour of the Heroes with Angular](https://zijianhuang.github.io/DemoCoreWeb/angular/) in folder AngularHeroes.
 1. Tour of the Heroes with Aurelia in folder AureliaHeroes. Integration test suite included.
-1. Tour of the Heroes with React TS in folder ReactHeroes.  Integration test suite included.
+1. [Tour of the Heroes with React TS](https://zijianhuang.github.io/DemoCoreWeb/react/) in folder ReactHeroes.  Integration test suite included.
 1. vueTS, JEST test suite with Vue TypeScript and the generated TypeScript codes.
 
 ## Troubleshooting

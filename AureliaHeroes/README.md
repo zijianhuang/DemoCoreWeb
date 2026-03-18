@@ -26,8 +26,3 @@ For long time aurelia-cli user, you can still use `au run` with those arguments 
 
 Run `npm run build`, or the old way `au build --env prod`.
 
-## Unit tests
-
-Run `au test` (or `au jest`).
-
-To run in watch mode, `au test --watch` or `au jest --watch`.
