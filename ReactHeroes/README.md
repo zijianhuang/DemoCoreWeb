@@ -5,10 +5,17 @@
 
 # Test with React Heroes
 
-This is based on "Tour of the Heroes", the official Angular tutorial Demo. This demostrates how a real world React TS app talks to a real backend through generated client API.
+This is based on "Tour of the Heroes", the official Angular tutorial Demo. This demonstrates how a real world React TS app talks to a real backend through generated client API.
 
+## App
 1. Launch Web API with StartCoreWebApi.ps1
 2. Run npm start
+
+## Test Cases
+
+Run `npx vitest --run`
+
+or `runtest.ps1` or `runtestRemote.ps1`.
 
 **Remarks:**
 Eslint may give warning "Unexpected use of 'location'  no-restricted-globals" about the client API.

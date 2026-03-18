@@ -24,7 +24,7 @@ function AppRouteMap() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/react">
       <AppRouteMap />
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import { DemoWebApi_Controllers_Client, DemoWebApi_DemoData_Client, DemoWebApi_DemoData_Base_Client } from './clientapi/WebApiFetchClientAuto';
-import { APIConfigConstants } from './testSettings';
+import { SiteConfigConstants } from './testSettings';
 import { describe, it, expect } from 'vitest'
 
 export async function errorResponseToString(error: Response | any): Promise<string> {
@@ -33,7 +33,7 @@ describe('Basic', () => {
 	});
 });
 
-const apiBaseUri = APIConfigConstants.apiBaseUri;
+const apiBaseUri = SiteConfigConstants.apiBaseUri;
 console.info('Back apiBaseUri: ' + apiBaseUri);
 
 describe('Values API', () => {

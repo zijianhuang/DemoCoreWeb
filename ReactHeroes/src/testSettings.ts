@@ -1,9 +1,9 @@
-interface API_Config {
+interface Site_Config {
 	apiBaseUri?: string;
 }
 
-declare const API_CONFIG: API_Config
+declare const SITE_CONFIG: Site_Config
 
-export const APIConfigConstants: API_Config = {
-	...(typeof API_CONFIG === 'undefined' ? {} : API_CONFIG),
+export const SiteConfigConstants: Site_Config = {
+	...(typeof SITE_CONFIG === 'undefined' ? {} : SITE_CONFIG),
 }

@@ -1,15 +1,15 @@
 import { defineConfig } from "vitest/config";
 
 export default defineConfig(
-	({ mode } : {mode: string}) => ({
+	({ mode }: { mode: string }) => ({
 		test: {
-			setupFiles: mode === 'remote'
-				? ['./vitestSetupRemote.ts']
-				: ['./vitestSetup.ts'],
-
-		globals: true,
-		environment: "jsdom",
-		include: ["src/**/*.test.ts"],
-		}
+			setupFiles: ['./vitestSetup.ts'],
+			globals: true,
+			environment: "jsdom",
+			include: ["src/**/*.test.ts"],
+			env: {
+				VITEST_MODE: mode, // pass mode as an env variable
+			},
+		},
 	})
 );
