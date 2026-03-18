@@ -25,7 +25,8 @@
     "open": false,
     "port": 8080,
     "host": "localhost",
-    "output": "dist"
+    "output": "dist/aurelia",
+    "baseUrl": "/aurelia/"
   },
   "cssProcessor": {
     "id": "none",

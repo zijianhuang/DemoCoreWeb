@@ -24,7 +24,7 @@ function AppRouteMap() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/react">
+    <BrowserRouter basename="/DemoCoreWeb/react">
       <AppRouteMap />
     </BrowserRouter>
   );
