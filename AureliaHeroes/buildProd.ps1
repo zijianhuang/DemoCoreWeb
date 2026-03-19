@@ -1,2 +1,2 @@
 ﻿Set-Location $PSScriptRoot
-npm run build
+$env:BASE_HREF="/aurelia/"; npm run build

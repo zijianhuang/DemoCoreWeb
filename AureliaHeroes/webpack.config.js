@@ -198,8 +198,8 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       // only when the issuer is a .js/.ts file, so the loaders are not applied inside html templates
       {
         test: /\.css$/i,
-        issuer: { not: [ /\.html$/i ] },
-        use: [ { loader: MiniCssExtractPlugin.loader }, ...cssRules ]
+        issuer: { not: [/\.html$/i] },
+        use: [{ loader: MiniCssExtractPlugin.loader }, ...cssRules]
       },
       {
         test: /\.css$/i,
@@ -214,10 +214,12 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       { test: /\.ts$/, loader: "ts-loader" },
       // embed small images and fonts as Data Urls and larger ones as files:
       { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
-      { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset' },
-      { test: /environment\.json$/i, use: [
-        {loader: "app-settings-loader", options: {env: production ? 'production' : 'development' }},
-      ]}
+      { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, type: 'asset' },
+      {
+        test: /environment\.json$/i, use: [
+          { loader: "app-settings-loader", options: { env: production ? 'production' : 'development' } },
+        ]
+      }
     ]
   },
   plugins: [
@@ -225,6 +227,9 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
     new AureliaPlugin(),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
+      templateParameters: {
+        baseHref: process.env.BASE_HREF || '/'
+      },
       metadata: {
         // available in index.ejs //
         baseUrl

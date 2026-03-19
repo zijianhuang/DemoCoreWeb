@@ -3,6 +3,7 @@ import environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
 import { HttpClient } from 'aurelia-fetch-client';
 import {DemoWebApi_Controllers_Client} from 'clientapi/WebApiAureliaClientAuto';
+import { SiteConfigConstants } from 'testSettings';
 
 export function configure(aurelia: Aurelia): void {
   aurelia.use
@@ -16,7 +17,7 @@ export function configure(aurelia: Aurelia): void {
   }
 
   const c= new HttpClient();
-  c.baseUrl='http://localhost:5000/';
+  c.baseUrl=SiteConfigConstants.apiBaseUri;
   aurelia.container.registerInstance(DemoWebApi_Controllers_Client.Heroes, new DemoWebApi_Controllers_Client.Heroes(c));
 
   aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
