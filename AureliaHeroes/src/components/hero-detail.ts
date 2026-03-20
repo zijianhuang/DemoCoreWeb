@@ -34,5 +34,3 @@ export class HeroDetailComponent implements IRouteViewModel {
     void this.router.load('heroes');
   }
 }
-
-export { HeroDetailComponent as HeroDetailPage };

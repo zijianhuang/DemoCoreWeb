@@ -15,5 +15,3 @@ export class DashboardComponent {
     }
   }
 }
-
-export { DashboardComponent as DashboardPage };

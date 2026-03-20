@@ -57,5 +57,3 @@ export class HeroesComponent {
         this.heroName.value = '';
     }
 }
-
-export { HeroesComponent as HeroesPage };
