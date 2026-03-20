@@ -1,15 +1,14 @@
-import {DemoWebApi_Controllers_Client} from '../clientapi/WebApiAureliaClientAuto';
-import { Router } from 'aurelia-router';
-import {inject} from 'aurelia-framework';
+import { resolve } from 'aurelia';
+import { IRouter } from '@aurelia/router';
+import './heroes.css';
+import { DemoWebApi_Controllers_Client } from '../clientapi/WebApiAureliaClientAuto';
 
-@inject(Router, DemoWebApi_Controllers_Client.Heroes)
 export class HeroesComponent {
     heroes?: DemoWebApi_Controllers_Client.Hero[];
     selectedHero?: DemoWebApi_Controllers_Client.Hero;
-    private heroName: HTMLInputElement;
-
-    constructor(private router: Router, private heroesService: DemoWebApi_Controllers_Client.Heroes) { 
-    }
+    private heroName!: HTMLInputElement;
+    private readonly router = resolve(IRouter);
+    private readonly heroesService = resolve(DemoWebApi_Controllers_Client.Heroes);
 
     getHeroes(): void {
         this.heroesService.getHeroes().then(
@@ -37,7 +36,7 @@ export class HeroesComponent {
             });
     }
 
-    created() {
+    binding() {
         this.getHeroes();
     }
 
@@ -46,12 +45,17 @@ export class HeroesComponent {
     }
 
     gotoDetail(): void {
-        this.router.navigateToRoute('/detail', this.selectedHero?.id);
+        if (this.selectedHero?.id == null) {
+            return;
+        }
+
+        void this.router.load(`detail/${this.selectedHero.id}`);
     }
 
-    addAndClear(){
-        this.add(this.heroName.value); 
-        this.heroName.value='';
+    addAndClear() {
+        this.add(this.heroName.value);
+        this.heroName.value = '';
     }
-
 }
+
+export { HeroesComponent as HeroesPage };

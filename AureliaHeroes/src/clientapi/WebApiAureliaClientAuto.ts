@@ -1,5 +1,4 @@
-import { HttpClient } from 'aurelia-fetch-client';
-import { autoinject } from 'aurelia-framework';
+import { HttpClient } from '@aurelia/fetch-client';
 export namespace DemoWebApi_Controllers_Client {
 
 	/**
@@ -51,7 +50,6 @@ export namespace DemoWebApi_Controllers_Client {
 		super?: boolean | null;
 	}
 
-	@autoinject()
 	export class DateTypes {
 		constructor(private http: HttpClient) {
 		}
@@ -217,7 +215,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class Entities {
 		constructor(private http: HttpClient) {
 		}
@@ -288,7 +285,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {string} id Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 		 */
 		delete(id: string | null, headersHandler?: () => { [header: string]: string }): Promise<Response> {
-			return this.http.delete('api/Entities/' + id, { headers: headersHandler ? headersHandler() : undefined });
+			return this.http.delete('api/Entities/' + id, undefined, { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -380,7 +377,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class Heroes {
 		constructor(private http: HttpClient) {
 		}
@@ -390,7 +386,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {string} id Type: long, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 		 */
 		delete(id: string | null, headersHandler?: () => { [header: string]: string }): Promise<Response> {
-			return this.http.delete('api/Heroes/' + id, { headers: headersHandler ? headersHandler() : undefined });
+			return this.http.delete('api/Heroes/' + id, undefined, { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -452,7 +448,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class Numbers {
 		constructor(private http: HttpClient) {
 		}
@@ -642,7 +637,6 @@ export namespace DemoWebApi_Controllers_Client {
 
 
 	/** @deprecated This controller is obsolete, use ValuesController instead. */
-	@autoinject()
 	export class ObsoleteValues {
 		constructor(private http: HttpClient) {
 		}
@@ -652,7 +646,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {number} id Type: int, -2,147,483,648 to 2,147,483,647
 		 */
 		delete(id: number | null, headersHandler?: () => { [header: string]: string }): Promise<Response> {
-			return this.http.delete('api/ObsoleteValues/' + id, { headers: headersHandler ? headersHandler() : undefined });
+			return this.http.delete('api/ObsoleteValues/' + id, undefined, { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -702,7 +696,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class StringData {
 		constructor(private http: HttpClient) {
 		}
@@ -737,7 +730,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class SuperDemo {
 		constructor(private http: HttpClient) {
 		}
@@ -1214,7 +1206,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class TextData {
 		constructor(private http: HttpClient) {
 		}
@@ -1256,7 +1247,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class Tuple {
 		constructor(private http: HttpClient) {
 		}
@@ -1466,7 +1456,6 @@ export namespace DemoWebApi_Controllers_Client {
 		}
 	}
 
-	@autoinject()
 	export class Values {
 		constructor(private http: HttpClient) {
 		}
@@ -1476,7 +1465,7 @@ export namespace DemoWebApi_Controllers_Client {
 		 * @param {number} id Type: int, -2,147,483,648 to 2,147,483,647
 		 */
 		delete(id: number | null, headersHandler?: () => { [header: string]: string }): Promise<Response> {
-			return this.http.delete('api/Values/' + id, { headers: headersHandler ? headersHandler() : undefined });
+			return this.http.delete('api/Values/' + id, undefined, { headers: headersHandler ? headersHandler() : undefined });
 		}
 
 		/**
@@ -2003,7 +1992,6 @@ export namespace WebApplication1_Client {
 }
 
 export namespace Core3WebApi_Controllers_Client {
-	@autoinject()
 	export class Statistics {
 		constructor(private http: HttpClient) {
 		}
@@ -2019,7 +2007,6 @@ export namespace Core3WebApi_Controllers_Client {
 }
 
 export namespace DemoCoreWeb_Controllers_Client {
-	@autoinject()
 	export class SpecialTypes {
 		constructor(private http: HttpClient) {
 		}
@@ -2077,7 +2064,6 @@ export namespace DemoCoreWeb_Controllers_Client {
 }
 
 export namespace WebApplication1_Controllers_Client {
-	@autoinject()
 	export class WeatherForecast {
 		constructor(private http: HttpClient) {
 		}

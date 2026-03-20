@@ -19,7 +19,8 @@
     "baseUrl": "src",
     "resolveJsonModule": true,
     "importHelpers": true,
-    "allowJs": true
+    "allowJs": true,
+    "skipLibCheck": true
   },
   "include": [
     "src",

@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const project = require('./aurelia_project/aurelia.json');
-const { AureliaPlugin } = require('aurelia-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -28,25 +27,10 @@ const cssRules = [
 module.exports = ({ production }, { analyze, hmr, port, host }) => ({
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [srcDir, 'node_modules'],
-
-    alias: {
-      // https://github.com/aurelia/dialog/issues/387
-      // Uncomment next line if you had trouble to run aurelia-dialog on IE11
-      // 'aurelia-dialog': path.resolve(__dirname, 'node_modules/aurelia-dialog/dist/umd/aurelia-dialog.js'),
-
-      // https://github.com/aurelia/binding/issues/702
-      // Enforce single aurelia-binding, to avoid v1/v2 duplication due to
-      // out-of-date dependencies on 3rd party aurelia plugins
-      'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding')
-    }
+    modules: [srcDir, 'node_modules']
   },
   entry: {
-    app: [
-      // Uncomment next line if you need to support IE11
-      // 'promise-polyfill/src/polyfill',
-      'aurelia-bootstrapper'
-    ]
+    app: './src/main.ts'
   },
   mode: production ? 'production' : 'development',
   output: {
@@ -208,10 +192,12 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
         // because Aurelia would try to require it again in runtime
         use: cssRules
       },
-      // Skip minimize in production build to avoid complain on unescaped < such as
-      // <span>${ c < 5 ? c : 'many' }</span>
-      { test: /\.html$/i, loader: 'html-loader', options: { minimize: false } },
-      { test: /\.ts$/, loader: "ts-loader" },
+      { test: /\.html$/i, type: 'asset/source' },
+      {
+        test: /\.ts$/i,
+        use: ['ts-loader'],
+        exclude: /node_modules/
+      },
       // embed small images and fonts as Data Urls and larger ones as files:
       { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
       { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, type: 'asset' },
@@ -224,7 +210,6 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
   },
   plugins: [
     new DuplicatePackageCheckerPlugin(),
-    new AureliaPlugin(),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
       templateParameters: {

@@ -1,25 +1,15 @@
-import { Router, RouterConfiguration } from 'aurelia-router';
-import { PLATFORM } from 'aurelia-pal';
-import { Container } from 'aurelia-dependency-injection';
-import {inject} from 'aurelia-framework';
+import { DashboardPage } from './components/dashboard';
+import { HeroDetailPage } from './components/hero-detail';
+import { HeroesPage } from './components/heroes';
 
-@inject(Container)
 export class App {
+  static title = 'Heroes';
 
-  constructor(){
-  }
-
-  configureRouter(config: RouterConfiguration, router: Router) {
-    config.title = 'Heroes';
-    config.options.pushState = true;
-    //config.options.root = '/';
-    config.map([
-      //{ route: '', redirect: '/dashboard' },
-      { route: ['', 'dashboard'], moduleId: PLATFORM.moduleName('components/dashboard'), title: 'Dashboard', name: 'dashboard' },
-      { route: 'heroes', moduleId: PLATFORM.moduleName('components/heroes'), title: 'Heroes', name: 'heroes' },
-      { route: 'detail/:id', moduleId: PLATFORM.moduleName('components/hero-detail'), name: 'detail' },
-    ]);
-  }
+  static routes = [
+    { id: 'dashboard', path: ['', 'dashboard'], component: DashboardPage, title: 'Dashboard' },
+    { id: 'heroes', path: 'heroes', component: HeroesPage, title: 'Heroes' },
+    { id: 'detail', path: 'detail/:id', component: HeroDetailPage, title: 'Hero Detail' },
+  ];
 
   public message = 'Aurelia Heroes!';
 }

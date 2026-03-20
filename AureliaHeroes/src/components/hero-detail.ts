@@ -1,34 +1,25 @@
-import {DemoWebApi_Controllers_Client} from '../clientapi/WebApiAureliaClientAuto';
-import { Router, RouterConfiguration, RouteConfig } from 'aurelia-router';
-import {inject} from 'aurelia-framework';
+import { resolve } from 'aurelia';
+import { IRouteViewModel, IRouter, Params } from '@aurelia/router';
+import './hero-detail.css';
+import { DemoWebApi_Controllers_Client } from '../clientapi/WebApiAureliaClientAuto';
 
-@inject(Router, DemoWebApi_Controllers_Client.Heroes)
-export class HeroDetailComponent {
+export class HeroDetailComponent implements IRouteViewModel {
   hero?: DemoWebApi_Controllers_Client.Hero;
-  routeConfig?: RouteConfig;
- 
-  constructor(
-    private router: Router,
-    private heroesService: DemoWebApi_Controllers_Client.Heroes
-  ) {
-  }
+  private readonly router = resolve(IRouter);
+  private readonly heroesService = resolve(DemoWebApi_Controllers_Client.Heroes);
 
-  created(){
+  async loading(params: Params) {
+    const id = String(params.id);
 
-  }
-
-  activate(params: any, routeConfig: RouteConfig) {
-    this.routeConfig = routeConfig;
-    const id = params.id;
-    console.debug('service: ' + JSON.stringify(this.heroesService));
-    this.heroesService.getHero(id).then(
-      hero => {
-        if (hero) {
-          this.hero = hero;
-          this.routeConfig.navModel.setTitle(this.hero.name);
-        }
+    try {
+      const hero = await this.heroesService.getHero(id);
+      if (hero) {
+        this.hero = hero;
+        document.title = `${hero.name} | Heroes`;
       }
-    ).catch(error => alert(error));
+    } catch (error) {
+      alert(error);
+    }
   }
 
   save(): void {
@@ -40,7 +31,8 @@ export class HeroDetailComponent {
   }
 
   goBack(): void {
-    this.router.navigateBack();
+    void this.router.load('heroes');
   }
-
 }
+
+export { HeroDetailComponent as HeroDetailPage };
