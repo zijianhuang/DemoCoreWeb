@@ -1,12 +1,14 @@
-import { resolve } from 'aurelia';
 import { IRouteViewModel, IRouter, Params } from '@aurelia/router';
 import './hero-detail.css';
 import { DemoWebApi_Controllers_Client } from '../clientapi/WebApiAureliaClientAuto';
 
 export class HeroDetailComponent implements IRouteViewModel {
-  hero?: DemoWebApi_Controllers_Client.Hero;
-  private readonly router = resolve(IRouter);
-  private readonly heroesService = resolve(DemoWebApi_Controllers_Client.Heroes);
+  hero: DemoWebApi_Controllers_Client.Hero={};
+
+  constructor(
+    private readonly router: IRouter,
+    private readonly heroesService: DemoWebApi_Controllers_Client.Heroes
+  ) {}
 
   async loading(params: Params) {
     const id = String(params.id);

@@ -1,4 +1,5 @@
 import Aurelia, { Registration } from 'aurelia';
+import { DI } from '@aurelia/kernel';
 import { HttpClient } from '@aurelia/fetch-client';
 import { RouterConfiguration } from '@aurelia/router';
 import { StandardConfiguration } from '@aurelia/runtime-html';
@@ -7,7 +8,7 @@ import { App } from './app';
 import { DemoWebApi_Controllers_Client } from './clientapi/WebApiAureliaClientAuto';
 import { SiteConfigConstants } from './testSettings';
 
-const httpClient = new HttpClient();
+const httpClient = DI.createContainer().get(HttpClient);
 httpClient.baseUrl = SiteConfigConstants.apiBaseUri ?? '';
 
 void Aurelia

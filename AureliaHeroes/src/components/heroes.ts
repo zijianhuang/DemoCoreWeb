@@ -1,4 +1,3 @@
-import { resolve } from 'aurelia';
 import { IRouter } from '@aurelia/router';
 import './heroes.css';
 import { DemoWebApi_Controllers_Client } from '../clientapi/WebApiAureliaClientAuto';
@@ -7,8 +6,11 @@ export class HeroesComponent {
     heroes?: DemoWebApi_Controllers_Client.Hero[];
     selectedHero?: DemoWebApi_Controllers_Client.Hero;
     private heroName!: HTMLInputElement;
-    private readonly router = resolve(IRouter);
-    private readonly heroesService = resolve(DemoWebApi_Controllers_Client.Heroes);
+
+    constructor(
+        private readonly router: IRouter,
+        private readonly heroesService: DemoWebApi_Controllers_Client.Heroes
+    ) {}
 
     getHeroes(): void {
         this.heroesService.getHeroes().then(

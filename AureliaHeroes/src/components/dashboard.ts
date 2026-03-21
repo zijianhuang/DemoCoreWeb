@@ -1,10 +1,10 @@
-import { resolve } from 'aurelia';
 import './dashboard.css';
 import { DemoWebApi_Controllers_Client } from '../clientapi/WebApiAureliaClientAuto';
 
 export class DashboardComponent {
   heroes: DemoWebApi_Controllers_Client.Hero[] = [];
-  private readonly heroesService = resolve(DemoWebApi_Controllers_Client.Heroes);
+
+  constructor(private readonly heroesService: DemoWebApi_Controllers_Client.Heroes) {}
 
   async binding() {
     try {
