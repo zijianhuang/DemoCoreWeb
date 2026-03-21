@@ -8,18 +8,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@aurelia/fetch-client": "2.0.0-beta.25",
-    "@aurelia/router": "2.0.0-beta.25",
-    "aurelia": "2.0.0-beta.25"
+    "@aurelia/fetch-client": "2.0.0-rc.1",
+    "@aurelia/router": "^2.0.0-rc.1",
+    "aurelia": "2.0.0-rc.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.6",
     "@types/node": "^20.8.7",
-    "@types/webpack": "^5.28.4",
+    "@types/webpack": "^5.28.5",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
-    "app-settings-loader": "^2.0.9",
-    "aurelia-cli": "^3.0.2",
+    "app-settings-loader": "^2.0.16",
+    "aurelia-cli": "^3.0.7",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",

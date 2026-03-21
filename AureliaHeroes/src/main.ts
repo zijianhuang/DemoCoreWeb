@@ -13,10 +13,10 @@ httpClient.baseUrl = SiteConfigConstants.apiBaseUri ?? '';
 
 void Aurelia
   .register(
-    StandardConfiguration,
-    RouterConfiguration.customize({
-      historyStrategy: 'push',
-    }),
+    // StandardConfiguration,
+    // RouterConfiguration.customize({
+    //   historyStrategy: 'push',
+    // }),
     Registration.instance(
       DemoWebApi_Controllers_Client.Heroes,
       new DemoWebApi_Controllers_Client.Heroes(httpClient),
