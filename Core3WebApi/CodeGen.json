@@ -60,16 +60,6 @@
 			},
 
 			{
-				"AssemblyName": "Fonlow.WebApiClientGenCore.Aurelia",
-				"TargetDir": "../AureliaHeroes/src/clientapi",
-				"TSFile": "WebApiAureliaClientAuto.ts",
-				"AsModule": true,
-				"DataAnnotationsToComments": true,
-				"ContentType": "application/json;charset=UTF-8",
-				"HelpStrictMode": true
-			},
-
-			{
 				"AssemblyName": "Fonlow.WebApiClientGenCore.Fetch",
 				"TargetDir": "../ReactHeroes/src/clientapi",
 				"TSFile": "WebApiFetchClientAuto.ts",
