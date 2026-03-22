@@ -48,7 +48,3 @@ a {
     box-sizing: content-box;
   }
 }
-
-a:hover {
-  background-color: black;
-}
