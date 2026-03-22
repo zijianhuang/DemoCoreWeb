@@ -16,6 +16,9 @@ export interface ThemesDic {
 }
 
 export interface ThemeLoaderSettings {
+	/**
+	 * The key to store the theme in local storage. Each app or site should have a unique key to avoid conflict with other apps or sites.
+	 */
 	storageKey: string;
 	themeLinkId: string;
 
