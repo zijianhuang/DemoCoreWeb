@@ -6,7 +6,7 @@ const SITE_CONFIG = {
 		"assets/themes/pink-theme.css": { display: "Pink", dark: false }
 	},
 	themeLoaderSettings: {
-		storageKey: 'app.theme',
+		storageKey: 'reactheroesapp.theme',
 		themeLinkId: 'theme',
 		appColorsDir: 'conf/',
 		appColorsLinkId: 'app-colors',
