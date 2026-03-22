@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/DemoCoreWeb/react/static/css/main.d046a60b.css",
-    "main.js": "/DemoCoreWeb/react/static/js/main.32f34c21.js",
+    "main.css": "/DemoCoreWeb/react/static/css/main.0b534072.css",
+    "main.js": "/DemoCoreWeb/react/static/js/main.b4a68b6d.js",
     "static/media/logo.svg": "/DemoCoreWeb/react/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/DemoCoreWeb/react/index.html"
   },
   "entrypoints": [
-    "static/css/main.d046a60b.css",
-    "static/js/main.32f34c21.js"
+    "static/css/main.0b534072.css",
+    "static/js/main.b4a68b6d.js"
   ]
 }

@@ -3,6 +3,7 @@ import './HeroDetail.css';
 import { ThemeDef } from './themeDef';
 import { AppConfigConstants } from './testSettings';
 import { ThemeLoader } from './themeLoader';
+import { useState } from 'react';
 
 export default function Home() {
 	const themes = AppConfigConstants.themesDic ? Object.keys(AppConfigConstants.themesDic).map(k => {
@@ -15,9 +16,11 @@ export default function Home() {
 		return obj;
 	}) : undefined;
 
-	const currentTheme = ThemeLoader.selectedTheme;
+	const [currentTheme, setCurrentTheme] = useState(() => ThemeLoader.selectedTheme ?? undefined);
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		ThemeLoader.loadTheme(event.target.value);
+		const v = event.target.value;
+		setCurrentTheme(v);
+		ThemeLoader.loadTheme(v);
 	};
 
 	return (
@@ -27,11 +30,11 @@ export default function Home() {
 				<label htmlFor="theme-select">Themes </label>
 				<select
 					id="theme-select"
-					value={currentTheme!}
+					value={currentTheme ?? ""}
 					onChange={handleChange}
 				>
-					{themes?.map((item, index) => (
-						<option key={index} value={item.filePath}>
+					{themes?.map((item) => (
+						<option key={item.filePath} value={item.filePath}>
 							{item.display}
 						</option>
 					))}

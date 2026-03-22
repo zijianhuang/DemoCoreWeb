@@ -2,7 +2,8 @@ const SITE_CONFIG = {
 	apiBaseUri: 'http://localhost:5000/',
 	themesDic: {
 		"assets/themes/light-theme.css": { display: "Light", dark: false },
-		"assets/themes/dark-theme.css": { display: "Dark", dark: true }
+		"assets/themes/dark-theme.css": { display: "Dark", dark: true },
+		"assets/themes/pink-theme.css": { display: "Pink", dark: false }
 	},
 	themeLoaderSettings: {
 		storageKey: 'app.theme',

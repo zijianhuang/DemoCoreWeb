@@ -39,7 +39,6 @@ input {
   font-size: small;
 
   padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
   line-height: 1em;
   position: relative;
   left: -1px;
@@ -67,7 +66,3 @@ button.delete {
   padding: 1px 10px 3px 10px;
 }
 
-button.delete:hover {
-  background-color: #525252;
-  color: white;
-}

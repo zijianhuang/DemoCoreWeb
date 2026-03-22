@@ -1,0 +1,14 @@
+body {
+  background-color: #121212; /* typical dark background */
+  color: #e0e0e0; /* default text color for readability */
+}
+
+a {
+  background-color: #2c3a47; /* darker, muted base */
+  color: #e0e0e0; /* softer than pure white */
+}
+
+a:hover {
+  background-color: #90caf9; /* lighter accent for hover */
+  color: #121212; /* maintain contrast */
+}
