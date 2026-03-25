@@ -1,9 +1,5 @@
 
 using Fonlow.IntegralExtensions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using System;
-using Microsoft.Extensions.DependencyInjection;
 
 System.Reflection.Assembly appAssembly = System.Reflection.Assembly.GetExecutingAssembly();
 string dirOfAppAssembly = System.IO.Path.GetDirectoryName(appAssembly.Location);

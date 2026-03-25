@@ -1,16 +1,28 @@
 {
+	"$schema": "CodeGenSchema.json",
 	"ApiSelections": {
 		"ExcludedControllerNames": [
 			"DemoWebApi.Controllers.Home",
 			"DemoWebApi.Controllers.FileUpload"
 		],
 
-		"DataModelAssemblyNames": [
-			"DemoWebApi.DemoDataCore",
-			"DemoCoreWebControllers",
-			"Core3WebApi"
-		],
-		"CherryPickingMethods": 3
+		"DataModels": [
+			{
+				"AssemblyName": "DemoWebApi.DemoDataCore",
+				"CherryPickingMethods": 11
+			},
+
+			{
+				"AssemblyName": "DemoWebApiDemoDataEx",
+				"CherryPickingMethods": 16
+			},
+
+			{
+				"AssemblyName": "DemoCoreWebControllers",
+				"CherryPickingMethods": 3
+			}
+
+		]
 	},
 
 	"ClientApiOutputs": {
