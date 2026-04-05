@@ -1,4 +1,4 @@
-#Run `npm run build` for prod build first. https://create-react-app.dev/docs/production-build 
+#Run `npm run build` for prod build first.
 #Launch local Web API
 #Then use in Web browser
 Set-Location $PSScriptRoot
