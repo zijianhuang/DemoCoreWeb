@@ -1,5 +1,7 @@
 const SITE_CONFIG = {
-	apiBaseUri: 'http://localhost:5000/',
+	apiBaseUri: 'http://localhost:5000/'
+}
+const THEME_CONFIG = {
 	themesDic: {
 		"assets/themes/light-theme.css": { display: "Light", dark: false },
 		"assets/themes/dark-theme.css": { display: "Dark", dark: true },

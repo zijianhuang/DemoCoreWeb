@@ -1,13 +1,12 @@
 import { Link, Outlet } from 'react-router-dom';
 import './HeroDetail.css';
-import { ThemeDef } from './themeDef';
 import { AppConfigConstants } from './testSettings';
-import { ThemeLoader } from './themeLoader';
 import { useState } from 'react';
+import { ThemeConfigConstants, ThemeDef, ThemeLoader } from 'theme-loader-api';
 
 export default function Home() {
-	const themes = AppConfigConstants.themesDic ? Object.keys(AppConfigConstants.themesDic).map(k => {
-		const c = AppConfigConstants.themesDic![k];
+	const themes = ThemeConfigConstants.themesDic ? Object.keys(ThemeConfigConstants.themesDic).map(k => {
+		const c = ThemeConfigConstants.themesDic![k];
 		const obj: ThemeDef = {
 			display: c.display,
 			filePath: k,
